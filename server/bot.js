@@ -6,7 +6,7 @@ if (!process.env.token) {
 var Botkit = require('botkit');
 var os = require('os');
 var port = process.env.PORT || 3000
-
+var botModel = require('./botModel.js');
 var express = require('express');
 var app = express();
 
@@ -76,7 +76,12 @@ controller.hears(['what is my name','who am i'],'direct_message,direct_mention,m
     });
 });
 
-
+controller.hears('', 'ambient', function(bot, message) {
+    console.log(message.text);
+    console.log(message);
+    botModel(message);
+    bot.reply(message,'messaged received');
+})
 controller.hears(['shutdown'],'direct_message,direct_mention,mention',function(bot, message) {
 
     bot.startConversation(message,function(err, convo) {
