@@ -8,6 +8,7 @@ var os = require('os');
 var port = process.env.PORT || 3000
 var botModel = require('./botModel.js');
 var express = require('express');
+var sentiment = require('sentiment');
 var app = express();
 
 app.get('/', function (req, res) {
@@ -79,6 +80,7 @@ controller.hears(['what is my name','who am i'],'direct_message,direct_mention,m
 controller.hears('', 'ambient', function(bot, message) {
     console.log(message.text);
     console.log(message);
+    bot.reply(message, sentiment(message.text).score.toString());
     botModel(message);
     bot.reply(message,'messaged received');
 })
