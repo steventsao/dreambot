@@ -35,6 +35,9 @@ var bot = controller.spawn({
 controller.hears('', 'ambient', function(bot, message) {
     if(isQuestion(message.text)){
       bot.reply(message, 'question');
+      bot.startPrivateConversation(message, function(err, conversation) {
+        conversation.say('You asked me a question');
+      });
       classifyQuestion(message);
       bot.startPrivateConversation(message, function(err, convo){
         convo.say('hello');
