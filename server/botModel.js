@@ -18,7 +18,7 @@ r.connect({ host: 'localhost', port: 28015 }, function(err, conn) {
   // });
 });
 
-module.exports = function(msg){
+module.exports = function(msg, cb){
   console.log('saving message');
   r.table('rawMessages').insert(msg).run(globalConn, function(err, res){
   console.log('saving message and anaylizing message');
@@ -26,6 +26,7 @@ module.exports = function(msg){
   require('./witai.js')(msg.text, function(res){
     console.log('categorizing messages...')
     console.log(res);
+    cb(res.outcomes[0].confidence);
   })
 });
   r.table('dreambot').insert(msg).run(globalConn, function(err, res){
