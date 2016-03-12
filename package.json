@@ -6,8 +6,8 @@
   "scripts": {
     "production": "webpack -p",
     "start": "node ./server/bot.js",
-    "dev": "webpack-dev-server --port 3000",
-    "test": "mocha --compilers js:babel-core/register --recursive"
+    "test": "mocha --compilers js:babel-core/register --recursive",
+    "dev": "webpack-dev-server --port 1337"
   },
   "author": "",
   "license": "MIT",
