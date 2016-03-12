@@ -30,10 +30,8 @@ module.exports = function(msg, cb){
   r.table('rawMessages').insert(msg).run(globalConn, function(err, res){
   console.log('saving message and anaylizing message');
   console.log(sentiment(msg.text));
-  require('./witai.js')(msg.text, function(res){
     console.log('categorizing messages...')
     console.log(res);
-    cb(res.outcomes[0].confidence);
   })
 });
 }
