@@ -33,7 +33,7 @@ module.exports = function(msg){
   });
 
   console.log('saving message and anaylizing message');
-  r.table('dreambot').insert(msg).run(globalConn, function(err, res)
+  r.table('rawMessages').insert(msg).run(globalConn, function(err, res)
     {
       if(err) throw err;
       console.log(res);
