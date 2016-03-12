@@ -84,8 +84,10 @@ controller.hears('', 'ambient', function(bot, message) {
     console.log(message.text);
     console.log(message);
     bot.reply(message, sentiment(message.text).score.toString());
-    botModel(message);
-    bot.reply(message,'messaged received');
+    botModel(message, function(confidence) {
+        bot.reply(message, 'I am ' + confidence + ' sure this is JavaScript related');
+    });
+    // bot.reply(message,'messaged received');
 })
 controller.hears(['shutdown'],'direct_message,direct_mention,mention',function(bot, message) {
 
