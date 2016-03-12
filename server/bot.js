@@ -78,6 +78,9 @@ controller.hears(['what is my name','who am i'],'direct_message,direct_mention,m
 });
 
 controller.hears('', 'ambient', function(bot, message) {
+    if(isQuestion(message.text)){
+        bot.reply(message, 'question detected');
+    }
     console.log(message.text);
     console.log(message);
     bot.reply(message, sentiment(message.text).score.toString());
@@ -137,4 +140,18 @@ function formatUptime(uptime) {
 
     uptime = uptime + ' ' + unit;
     return uptime;
+}
+
+
+var isQuestion = function(message){
+    var array = message.split(' ');
+    var questionWords = ['who', 'what', 'where', 'when', 'how', 'when', 'why', 'does', 'can', 'is'];
+    if(questionWords.indexOf(array[0]) !== -1){
+        return true;
+    }
+    if(array[array.length - 1][array[array.length - 1].length - 1] === '?'){
+        return true;
+    }
+
+    return false;
 }
