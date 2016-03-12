@@ -1,13 +1,10 @@
-var React = require('react');
-var ReactRouter = require('react-router');
-var Router = ReactRouter.Router;
-var Route = ReactRouter.Route;
-var IndexRoute = ReactRouter.IndexRoute;
-var browserHistory = ReactRouter.hashHistory;
-var Main = require('../components/Main');
-var Home = require('../components/Home');
+import React from 'react';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
-var routes = (
+import Main from '../components/Main';
+import Home from '../components/Home';
+
+const Routes = (
   <Router history={browserHistory}>
     <Route path='/' component={Main}>
       <IndexRoute component={Home} />
@@ -15,4 +12,4 @@ var routes = (
   </Router>
 );
 
-module.exports = routes;
+export default Routes;

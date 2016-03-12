@@ -1,6 +1,6 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var routes = require('./config/routes');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Routes from './config/routes';
 
 // var io = require('socket.io-client');
 // var socket = io('http://localhost:8090')
@@ -38,6 +38,6 @@ var routes = require('./config/routes');
 
 
 ReactDOM.render(
-  routes,
+  Routes,
   document.getElementById('app')
 );

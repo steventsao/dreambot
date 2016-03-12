@@ -1,8 +1,8 @@
-var React = require('react');
-var ReactRouter = require('react-router');
-var styles = require('../styles');
+import React from 'react';
+import ReactRouter from 'react-router';
+import styles from '../styles';
 
-var Home = React.createClass({
+const Home = React.createClass({
   render: function () {
     return (
       <div style={styles.title}>
@@ -12,4 +12,4 @@ var Home = React.createClass({
   }
 });
 
-module.exports = Home;
+export default Home;
