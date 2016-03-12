@@ -10,6 +10,8 @@ var botModel = require('./botModel.js');
 var express = require('express');
 var sentiment = require('sentiment');
 var app = express();
+var natural = require('natural');
+var _ = require('lodash');
 
 app.get('/', function (req, res) {
   res.send('Hello World!');
@@ -28,67 +30,21 @@ var bot = controller.spawn({
 }).startRTM();
 
 
-controller.hears(['hello','hi'],'direct_message,direct_mention,mention',function(bot, message) {
 
-    bot.api.reactions.add({
-        timestamp: message.ts,
-        channel: message.channel,
-        name: 'robot_face',
-    },function(err, res) {
-        if (err) {
-            bot.botkit.log('Failed to add emoji reaction :(',err);
-        }
-    });
-
-
-    controller.storage.users.get(message.user,function(err, user) {
-        if (user && user.name) {
-            bot.reply(message,'Hello ' + user.name + '!!');
-        } else {
-            bot.reply(message,'Hello.');
-        }
-    });
-});
-
-controller.hears(['call me (.*)'],'direct_message,direct_mention,mention',function(bot, message) {
-    var matches = message.text.match(/call me (.*)/i);
-    var name = matches[1];
-    controller.storage.users.get(message.user,function(err, user) {
-        if (!user) {
-            user = {
-                id: message.user,
-            };
-        }
-        user.name = name;
-        controller.storage.users.save(user,function(err, id) {
-            bot.reply(message,'Got it. I will call you ' + user.name + ' from now on.');
-        });
-    });
-});
-
-controller.hears(['what is my name','who am i'],'direct_message,direct_mention,mention',function(bot, message) {
-
-    controller.storage.users.get(message.user,function(err, user) {
-        if (user && user.name) {
-            bot.reply(message,'Your name is ' + user.name);
-        } else {
-            bot.reply(message,'I don\'t know yet!');
-        }
-    });
-});
 
 controller.hears('', 'ambient', function(bot, message) {
     if(isQuestion(message.text)){
-        bot.reply(message, 'question detected');
+      bot.reply(message, 'question');
+      classifyQuestion(message);
     }
     console.log(message.text);
     console.log(message);
     bot.reply(message, sentiment(message.text).score.toString());
-    botModel(message, function(confidence) {
-        bot.reply(message, 'I am ' + confidence + ' sure this is JavaScript related');
-    });
+    botModel(message);
     // bot.reply(message,'messaged received');
 })
+
+//for cody <3
 controller.hears(['shutdown'],'direct_message,direct_mention,mention',function(bot, message) {
 
     bot.startConversation(message,function(err, convo) {
@@ -156,4 +112,19 @@ var isQuestion = function(message){
     }
 
     return false;
+}
+
+
+//TODO: find a way to extract classifier so we aren't loading the json file on each request
+
+var classifyQuestion = function(message){
+    natural.BayesClassifier.load('classifier.json', null, function(err, classifier) {
+      var classification = {
+        classification: classifier.classify(message.text)
+      }
+      var allData = _.extend(message, classification);
+      botModel(allData, function(){
+        console.log('I am categorizing your question');
+      })
+    });
 }
