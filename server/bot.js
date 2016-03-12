@@ -36,6 +36,9 @@ controller.hears('', 'ambient', function(bot, message) {
     if(isQuestion(message.text)){
       bot.reply(message, 'question');
       classifyQuestion(message);
+      bot.startPrivateConversation(message, function(err, convo){
+        convo.say('hello');
+      })
     }
     console.log(message.text);
     console.log(message);
