@@ -20,6 +20,13 @@ r.connect({ host: 'localhost', port: 28015 }, function(err, conn) {
 
 module.exports = function(msg, cb){
   console.log('saving message');
+  r.table('parsedMessages').insert(sentiment(msg.text)).run(globalConn, function(err, res){
+    if(err){
+      throw err;
+    } else{
+      console.log(res);
+    }
+  });
   r.table('rawMessages').insert(msg).run(globalConn, function(err, res){
   console.log('saving message and anaylizing message');
   console.log(sentiment(msg.text));
@@ -29,9 +36,6 @@ module.exports = function(msg, cb){
     cb(res.outcomes[0].confidence);
   })
 });
-  r.table('dreambot').insert(msg).run(globalConn, function(err, res){
-      if(err) throw err;
-      console.log(res);
-    });
 }
+
 
