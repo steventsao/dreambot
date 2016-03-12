@@ -32,7 +32,6 @@ module.exports = function(msg, cb){
   console.log(sentiment(msg.text));
     console.log('categorizing messages...')
     console.log(res);
-    cb(res.outcomes[0].confidence);
   })
 });
 }
