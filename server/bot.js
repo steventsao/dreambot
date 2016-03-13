@@ -2,7 +2,7 @@ if (!process.env.token) {
     console.log('Error: Specify token in environment');
     process.exit(1);
 }
-
+var fs = require('fs');
 var Botkit = require('botkit');
 var os = require('os');
 var port = process.env.PORT || 3000
@@ -124,7 +124,7 @@ var isQuestion = function(message){
 //TODO: find a way to extract classifier so we aren't loading the json file on each request
 
 var classifyQuestion = function(message){
-    natural.BayesClassifier.load('classifier.json', null, function(err, classifier) {
+    natural.BayesClassifier.load('./server/classifier.json', null, function(err, classifier) {
       var classification = {
         classification: classifier.classify(message.text)
       }
