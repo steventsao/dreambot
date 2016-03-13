@@ -1,5 +1,5 @@
 var _ = require('lodash');
-var botModel = require('./botModel.js');
+var botModel = require('../botModel.js');
 var sentiment = require('sentiment');
 var natural = require('natural');
 
