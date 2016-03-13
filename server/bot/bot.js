@@ -40,7 +40,7 @@ controller.hears('', 'ambient', function(bot, message) {
       bot.reply(message, sentiment(message.text).score.toString());
       // saves raw statements
       botModel(message);
-      
+
     }
     // bot.reply(message,'messaged received');
 })
@@ -122,7 +122,7 @@ var classifyQuestion = function(bot, message){
 
 
     natural.BayesClassifier.load('./server/classifier.json', null, function(err, classifier) {
-  
+
       bot.startPrivateConversation(message,function(err, convo) {
 
           convo.ask('Was your question about ' + classifier.classify(message.text) + '?',[
