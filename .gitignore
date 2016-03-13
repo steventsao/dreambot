@@ -1,3 +1,6 @@
+# RethinkDb
+*/rethinkdb_data/
+
 # Logs
 logs
 *.log
