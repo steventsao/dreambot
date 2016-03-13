@@ -1,3 +1,5 @@
+// This file spawns a bot and attaches all listeners from the `listeners/` directory
+
 if (!process.env.token) {
   console.log('Error: Specify token in environment');
   process.exit(1);
