@@ -4,7 +4,7 @@ if (!process.env.token) {
 }
 
 // Start the bot and grab the controller
-var controller = require('./spawnBot');
+var controller = require('../utils/spawnBot');
 
 var listeners = require('./listeners');
 
