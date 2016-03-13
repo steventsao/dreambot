@@ -32,20 +32,16 @@ var bot = controller.spawn({
 
 
 controller.hears('', 'ambient', function(bot, message) {
+    // categorizes message by whether it is a question or a statement
     if(isQuestion(message.text)){
       bot.reply(message, 'question');
-      bot.startPrivateConversation(message, function(err, conversation) {
-        conversation.say('You asked me a question');
-      });
-      classifyQuestion(message);
-      bot.startPrivateConversation(message, function(err, convo){
-        convo.say('hello');
-      })
+      classifyQuestion(bot, message);
+    } else {
+      bot.reply(message, sentiment(message.text).score.toString());
+      // saves raw statements
+      botModel(message);
+      
     }
-    console.log(message.text);
-    console.log(message);
-    bot.reply(message, sentiment(message.text).score.toString());
-    botModel(message);
     // bot.reply(message,'messaged received');
 })
 
@@ -122,14 +118,68 @@ var isQuestion = function(message){
 
 //TODO: find a way to extract classifier so we aren't loading the json file on each request
 
-var classifyQuestion = function(message){
+var classifyQuestion = function(bot, message){
+
+
     natural.BayesClassifier.load('./server/classifier.json', null, function(err, classifier) {
+  
+      bot.startPrivateConversation(message,function(err, convo) {
+
+          convo.ask('Was your question about ' + classifier.classify(message.text) + '?',[
+              {
+                  pattern: bot.utterances.yes,
+                  callback: function(response, convo) {
+                      convo.say('Noted');
+
+                      saveMsg(message, classifier.classify(message.text));
+
+                      console.log(JSON.stringify(classifier.getClassifications(classifier.classify(message.text))));
+                      classifier.addDocument(message.text, classifier.classify(message.text));
+
+                      classifier.train();
+                      classifier.save('./server/classifier.json', function(err, results) {
+                        if(err) console.error(err);
+                      });
+                      console.log(JSON.stringify(classifier.getClassifications(classifier.classify(message.text))));
+                      convo.next();
+                  }
+              },
+          {
+              pattern: bot.utterances.no,
+              default: true,
+              callback: function(response, convo) {
+                var sortedArr = classifier.getClassifications(message.text).sort(function (a, b) {
+                    return b.value - a.value;
+                  });
+
+                var topThree = [sortedArr[0].label, sortedArr[1].label, sortedArr[2].label];
+
+
+                  convo.say(JSON.stringify(sortedArr));
+                  convo.ask('Select one of the topics listed: ' + topThree.join(', ') + '?', function(res, convo) {
+                    convo.next();
+
+                    // saveMsg(message, res.text);
+                    convo.say('Recorded your ' + res.text + ' question.');
+                    classifier.addDocument(message.text, res.text);
+                    classifier.train();
+                    convo.next();
+                  });
+                  convo.next();
+              }
+          }
+          ]);
+      });
+
+    var saveMsg = function(message, label) {
       var classification = {
-        classification: classifier.classify(message.text)
+        classification: label
       }
       var allData = _.extend(message, classification);
       botModel(allData, function(){
         console.log('I am categorizing your question');
       })
-    });
+    }
+
+  });
 }
