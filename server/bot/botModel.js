@@ -1,7 +1,7 @@
 var r = require('rethinkdb')
 var sentiment = require('sentiment');
 var _ = require('lodash');
-var connect = require('./utils/connect');
+var connect = require('../utils/connect');
 
 module.exports = function(msg, cb){
   console.log('saving message');

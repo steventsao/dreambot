@@ -121,7 +121,7 @@ var isQuestion = function(message){
 var classifyQuestion = function(bot, message){
 
 
-    natural.BayesClassifier.load('./server/classifier.json', null, function(err, classifier) {
+    natural.BayesClassifier.load('./data/classifier.json', null, function(err, classifier) {
 
       bot.startPrivateConversation(message,function(err, convo) {
 
@@ -137,7 +137,7 @@ var classifyQuestion = function(bot, message){
                       classifier.addDocument(message.text, classifier.classify(message.text));
 
                       classifier.train();
-                      classifier.save('./server/classifier.json', function(err, results) {
+                      classifier.save('./data/classifier.json', function(err, results) {
                         if(err) console.error(err);
                       });
                       console.log(JSON.stringify(classifier.getClassifications(classifier.classify(message.text))));
