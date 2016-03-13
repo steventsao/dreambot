@@ -22,4 +22,3 @@ module.exports = function(msg, cb){
       console.log(err);
     });
 }
-
