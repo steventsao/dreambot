@@ -2,7 +2,6 @@ if (!process.env.token) {
     console.log('Error: Specify token in environment');
     process.exit(1);
 }
-var fs = require('fs');
 var Botkit = require('botkit');
 var os = require('os');
 var port = process.env.PORT || 3000
