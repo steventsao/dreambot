@@ -4,6 +4,8 @@ var io = require('socket.io')(server);
 var r = require('rethinkdb');
 var connect = require('./utils/connect');
 
+require('./bot/bot.js');
+
 
 server.listen(8090);
 
