@@ -2,20 +2,13 @@ if (!process.env.token) {
     console.log('Error: Specify token in environment');
     process.exit(1);
 }
-var Botkit = require('botkit');
 var os = require('os');
 var botModel = require('./botModel.js');
 var sentiment = require('sentiment');
 var natural = require('natural');
 var _ = require('lodash');
+var controller = require('./spawnBot');
 
-var controller = Botkit.slackbot({
-    debug: true,
-});
-
-var bot = controller.spawn({
-    token: process.env.token
-}).startRTM();
 
 
 
