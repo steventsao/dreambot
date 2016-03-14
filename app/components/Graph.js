@@ -1,6 +1,6 @@
 import React from 'react';
 import io from 'socket.io-client';
-const socket = io('http://localhost:8090');
+const socket = io('http://localhost:1337');
 
 const Graph = React.createClass({
   getInitialState: function() {
