@@ -1,4 +1,6 @@
-// from: https://github.com/reactjs/redux/blob/master/examples/real-world/index.js
+// from:
+// https://github.com/reactjs/redux/blob/master/examples/real-world/index.js
+// https://github.com/reactjs/redux/pull/1455/files
 
 /*
   Research: Why does he import the babel-polyfill?
@@ -6,25 +8,55 @@
 import 'babel-polyfill';
 
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
 import { browserHistory } from 'react-router';
 import { createStore } from 'redux';
 // import { syncHistoryWithStore } from 'react-router-redux';
-import Root from './containers/Root';
 // import configureStore from './store/configureStore';
 
 // const store = configureStore();
 // const history = syncHistoryWithStore(browserHistory, store)
 
 /*
-  We're ignoring what he does with react-router-redux and what he dies in `./store/configureStore` for now.
+  We're ignoring what he does with react-router-redux and what he does in `./store/configureStore` for now.
   So, we'll make our own simple placeholder store
   Later, we should hook this up to a RootReducer ( I think )
 */
 const store = createStore((state, action) => 'newstate');
+const rootEl = document.getElementById('app');
 
-// TODO: Turn this into a function and use hot-reloading
-render(
-  <Root store={store} history={browserHistory} />,
-  document.getElementById('app')
-);
+let render = () => {
+  // https://github.com/reactjs/redux/pull/1455/files#r54380102
+  const Root = require('./containers/Root').default;
+  ReactDOM.render(
+    <Root store={store} history={browserHistory} />,
+   rootEl
+  );
+};
+
+if (module.hot) {
+  if (module.hot) {
+    // Support hot reloading of components
+    // and display an overlay for runtime errors
+    const renderApp = render;
+    const renderError = (error) => {
+      const RedBox = require('redbox-react');
+      ReactDOM.render(
+        <RedBox error={error} />,
+       rootEl
+      );
+    };
+    render = () => {
+      try {
+        renderApp();
+      } catch (error) {
+        renderError(error);
+      }
+    };
+    module.hot.accept('./containers/Root', () => {
+      // https://github.com/reactjs/redux/pull/1455/files#r55138543
+      setTimeout(render);
+    });
+  }
+  render();
+}
