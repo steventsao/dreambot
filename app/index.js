@@ -23,7 +23,7 @@ import { createStore } from 'redux';
   Later, we should hook this up to a RootReducer ( I think )
 */
 const store = createStore((state, action) => 'newstate');
-const rootEl = document.getElementById('app');
+const rootEl = document.getElementById('root');
 
 let render = () => {
   // https://github.com/reactjs/redux/pull/1455/files#r54380102
