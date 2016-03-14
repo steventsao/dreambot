@@ -19,7 +19,7 @@ module.exports = function (controller) {
 
   var isQuestion = function (message) {
     var array = message.split(' ');
-    var questionWords = ['who', 'what', 'where', 'when', 'how', 'when', 'why', 'does', 'can', 'is'];
+    var questionWords = ['who', 'what', 'where', 'how', 'when', 'why', 'does', 'can', 'is'];
     if (questionWords.indexOf(array[0]) !== -1) {
       return true;
     }
