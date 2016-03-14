@@ -1,43 +1,30 @@
+// from: https://github.com/reactjs/redux/blob/master/examples/real-world/index.js
+
+/*
+  Research: Why does he import the babel-polyfill?
+*/
+import 'babel-polyfill';
+
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Routes from './config/routes';
+import { render } from 'react-dom';
+import { browserHistory } from 'react-router';
+import { createStore } from 'redux';
+// import { syncHistoryWithStore } from 'react-router-redux';
+import Root from './containers/Root';
+// import configureStore from './store/configureStore';
 
-// var io = require('socket.io-client');
-// var socket = io('http://localhost:8090')
+// const store = configureStore();
+// const history = syncHistoryWithStore(browserHistory, store)
 
-// socket.on('connection', function() {
-//   console.log('connected');
-// });
+/*
+  We're ignoring what he does with react-router-redux and what he dies in `./store/configureStore` for now.
+  So, we'll make our own simple placeholder store
+  Later, we should hook this up to a RootReducer ( I think )
+*/
+const store = createStore((state, action) => 'newstate');
 
-// socket.on('test', function(data) {
-//   console.log(data);
-// })
-
-// var App = React.createClass({
-//   getInitialState: function() {
-//     return {
-//       n: 0
-//     }
-//   },
-
-//   componentDidMount: function() {
-//     var self = this;
-//     socket.on('n', function(data) {
-//       console.log(data);
-//       self.setState({n: data})
-//     })
-//   },
-
-//   render: function() {
-//     return (
-//       <div> the number is: {this.state.n} </div>
-//     )
-//   }
-// })
-
-
-
-ReactDOM.render(
-  Routes,
+// TODO: Turn this into a function and use hot-reloading
+render(
+  <Root store={store} history={browserHistory} />,
   document.getElementById('app')
 );
