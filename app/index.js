@@ -23,23 +23,18 @@ import configureStore from './store/configureStore';
   Later, we should hook this up to a RootReducer ( I think )
 */
 
-let initialState = {
-  messages: ['Hello World', '2']
-}
 // Set default state
-const store = configureStore(initialState); 
+const store = configureStore(); 
+
 const rootEl = document.getElementById('root');
 let render = () => {
   // https://github.com/reactjs/redux/pull/1455/files#r54380102
   const Root = require('./containers/Root').default;
   ReactDOM.render(
-    <Provider store = {store}>
-      <Root store={store} history={browserHistory} />
-    </Provider>,
+    <Root store={store} history={browserHistory}/>,
    rootEl
   );
 };
-
 if (module.hot) {
   if (module.hot) {
     // Support hot reloading of components
