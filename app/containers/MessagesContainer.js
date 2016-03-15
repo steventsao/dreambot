@@ -11,7 +11,6 @@ const MessagesContainer = React.createClass({
 })
 
 const mapStateToProps = (state) => {
-  console.log(state, " is state");
   return state;
 }
 
