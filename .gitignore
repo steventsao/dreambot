@@ -5,7 +5,10 @@
 config.js
 
 # RethinkDb
+*/dist/
 */rethinkdb_data/
+*/server/bot/rethinkdb_data/
+*/data/classifier.json
 
 # Logs
 logs
@@ -41,3 +44,4 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+
