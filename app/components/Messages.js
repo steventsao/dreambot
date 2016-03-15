@@ -2,7 +2,7 @@ import React from 'react';
 import io from 'socket.io-client';
 const socket = io('http://localhost:1337');
 
-const Graph = React.createClass({
+const Messages = React.createClass({
   getInitialState: function() {
     return {
       messages: []
@@ -28,4 +28,4 @@ const Graph = React.createClass({
   }
 })
 
-export default Graph;
+export default Messages;
