@@ -7,9 +7,10 @@ import { connect } from 'react-redux';
 
 const Home = React.createClass({
   render: function () {
+    const { messages } = this.props;
     return (
       <div style={styles.title}>
-        <Navbar messages = {this.props.messages}/>
+        <Navbar messages = {messages}/>
         <h1>Dream Bot</h1>
         <Graph />
       </div>
