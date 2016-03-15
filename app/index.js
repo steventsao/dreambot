@@ -6,7 +6,7 @@
   Research: Why does he import the babel-polyfill?
 */
 import 'babel-polyfill';
-
+import { Provider } from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { browserHistory } from 'react-router';
@@ -23,14 +23,19 @@ import configureStore from './store/configureStore';
   Later, we should hook this up to a RootReducer ( I think )
 */
 
+let initialState = {
+  messages: ['Hello World', '2']
+}
 // Set default state
-const store = configureStore(); 
+const store = configureStore(initialState); 
 const rootEl = document.getElementById('root');
 let render = () => {
   // https://github.com/reactjs/redux/pull/1455/files#r54380102
   const Root = require('./containers/Root').default;
   ReactDOM.render(
-    <Root store={store} history={browserHistory} />,
+    <Provider store = {store}>
+      <Root store={store} history={browserHistory} />
+    </Provider>,
    rootEl
   );
 };
