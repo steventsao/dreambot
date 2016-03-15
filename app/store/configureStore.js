@@ -10,7 +10,6 @@ import { addMessage } from '../actions';
 export default function configureStore(initialState){
   const store = createStore(rootReducer);
   socket.on('test', (data) => {
-    // console.log(data);
     store.dispatch(addMessage(data.new_val));
   });
   return store;
