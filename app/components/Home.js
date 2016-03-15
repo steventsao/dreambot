@@ -2,7 +2,7 @@ import React from 'react';
 import ReactRouter from 'react-router';
 import styles from '../styles';
 import Graph from '../components/Graph';
-
+import Navbar from '../components/Navbar';
 const Home = React.createClass({
   render: function () {
     return (

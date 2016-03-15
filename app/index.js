@@ -10,7 +10,7 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { browserHistory } from 'react-router';
-import { createStore } from 'redux';
+import configureStore from './store/configureStore';
 // import { syncHistoryWithStore } from 'react-router-redux';
 // import configureStore from './store/configureStore';
 
@@ -22,9 +22,10 @@ import { createStore } from 'redux';
   So, we'll make our own simple placeholder store
   Later, we should hook this up to a RootReducer ( I think )
 */
-const store = createStore((state, action) => 'newstate');
-const rootEl = document.getElementById('root');
 
+// Set default state
+const store = configureStore(); 
+const rootEl = document.getElementById('root');
 let render = () => {
   // https://github.com/reactjs/redux/pull/1455/files#r54380102
   const Root = require('./containers/Root').default;
