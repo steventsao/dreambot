@@ -1,8 +1,6 @@
-const getMessages = (message) => {
+export const addMessage = (message) => {
   return {
       type: "ADD_MESSAGE",
-      data: message
+      msg: message
     }
 }
-
-export default getMessages;
