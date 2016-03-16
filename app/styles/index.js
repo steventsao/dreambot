@@ -5,6 +5,9 @@ var styles = {
   },
   space: {
     marginTop: '25px'
+  },
+  graph: {
+   marginLeft: '0px'
   }
 };
 
