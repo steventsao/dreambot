@@ -38,10 +38,10 @@ export const fetchMessages = () => {
     // starts get request to API
     dispatch(requestMessages())
      return axios.get('/api/messages')
-     .then(function(messagesReceived) {
+     .then( (messagesReceived) => {
         dispatch(receiveMessages(messagesReceived))
      })
-     .catch(function(err) {
+     .catch( (err) => {
         console.log(err);
      })
   }

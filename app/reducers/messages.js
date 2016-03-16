@@ -8,7 +8,8 @@ export default function messages(state = [], action) {
     case ADD_MESSAGE:
       return state.concat(action.message);
     case RECEIVE_MESSAGES:
-      return state.concat(action.messages)
+      return state.concat(action.messages);
+    case REQUEST_MESSAGES:
     default:
       return state;
   }
