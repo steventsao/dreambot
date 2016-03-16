@@ -26,14 +26,14 @@ export const RECEIVE_MESSAGES = 'RECEIVE_MESSAGES';
 export const receiveMessages = (messages) => {
   return {
     type: RECEIVE_MESSAGES,
-    messages
+    messages: messages.data
   }
 }
 
 // thunk action creators to enable async calls
 // thunk returns functions instead of objects
 
-export const fetchMessages = () => {
+export function fetchMessages() {
   return function (dispatch) {
     // starts get request to API
     dispatch(requestMessages())

@@ -4,7 +4,7 @@ import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 import io from 'socket.io-client';
 const socket = io('http://localhost:1337');
-import { addMessage } from '../actions';
+import { addMessage, fetchMessages } from '../actions';
 
 export default function configureStore(initialState) {
   const logger = createLogger();
@@ -18,5 +18,14 @@ export default function configureStore(initialState) {
     store.dispatch(addMessage(data.new_val));
   });
 
+  store.dispatch(fetchMessages())
+    .then(() => {
+      console.log('Fetched all messages from database');
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  
   return store;
 }
+
