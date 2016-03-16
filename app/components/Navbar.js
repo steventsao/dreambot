@@ -1,8 +1,15 @@
 /* eslint-disable */
 import React from 'react';
 
-const Navbar = ({messages}) => 
-  <div> There are new {messages} messages</div>
+const Navbar = ({messages, printMsg}) => {
+  return (
+      <div> 
+        There are new {messages} messages 
+        <button onClick={printMsg}> Hello </button>
+      </div>
+
+    )
+}
 
 
 export default Navbar;
