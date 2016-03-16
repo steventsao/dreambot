@@ -1,10 +1,10 @@
 import React from 'react';
-import css from 'bulma/css/bulma.css';
+
 const LeftPanel = ({}) => {
   return (
-    <nav className="menu"> 
+    <nav className="menu">
       <p className="menu-heading is-primary is-fullwidth">
-      This is the user panel 
+      This is the user panel
       </p>
       <div className="menu-block">
         <button className="button is-fullwidth">

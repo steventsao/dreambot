@@ -11,6 +11,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { browserHistory } from 'react-router';
 import configureStore from './store/configureStore';
+import 'bulma/css/bulma.css';
 // import { syncHistoryWithStore } from 'react-router-redux';
 // import configureStore from './store/configureStore';
 
@@ -24,7 +25,7 @@ import configureStore from './store/configureStore';
 */
 
 // Set default state
-const store = configureStore(); 
+const store = configureStore();
 
 const rootEl = document.getElementById('root');
 let render = () => {

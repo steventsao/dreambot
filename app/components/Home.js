@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactRouter from 'react-router';
-import styles from '../styles';
 import MessagesContainer from '../containers/MessagesContainer';
 import GraphContainer from '../containers/GraphContainer';
 import NavbarContainer from '../containers/NavbarContainer';
 import LeftPanel from './LeftPanel';
-import css from 'bulma/css/bulma.css';
 
 const Home = React.createClass({
   render: function () {
@@ -16,10 +14,10 @@ const Home = React.createClass({
         <div className='columns'>
           <div className="column is-2">
             <LeftPanel />
-          </div> 
+          </div>
           <div className="column is-text-centered">
             <GraphContainer />
-          </div> 
+          </div>
           <div className="column is-quarter">
             <MessagesContainer />
           </div>
