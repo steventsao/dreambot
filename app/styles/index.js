@@ -7,7 +7,9 @@ var styles = {
     marginTop: '25px'
   },
   graph: {
-   marginLeft: '0px'
+    marginLeft: '0px',
+    width: '600px',
+    backgroundColor: 'lightblue'
   }
 };
 
