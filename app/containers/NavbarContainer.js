@@ -3,22 +3,36 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 
 let NavbarContainer = React.createClass({
-  createClickHandler() {
-      console.log(`There are ${this.props.messages.length} messages`);
+  getAnalytics() {
+    let analytics = this.props.messages.reduce((acc, message) => {
+      acc.totalSentiment += message.score;
+      if (message.classification) {
+        acc.topics[message.classification] = acc.topics[message.classification]
+        ? acc.topics[message.classification] + 1
+        : 1;
+      }
+      return acc;
+    }, {totalSentiment: 0, topics: {}});
+  
+    let topThreeTopics = Object.keys(analytics.topics).sort( (a, b) => {
+      return analytics.topics[b] - analytics.topics[a];
+    }).slice(0,3).join(', ');
+
+    analytics.topics = topThreeTopics;
+
+    return analytics;
   },
   render() {
     const { messages } = this.props;
+    const analytics = this.getAnalytics();
     return (
-      <Navbar printMsg={this.createClickHandler} messages={messages}/>
+      <Navbar messages={messages} analytics={analytics} />
       )
   }
 })
 
 let mapStateToProps = (state) => {
   return state;
-  // return {
-  //   messages: state.messages
-  // }
 }
 
 export default connect(mapStateToProps)(NavbarContainer)
