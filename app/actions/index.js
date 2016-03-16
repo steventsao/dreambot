@@ -33,8 +33,8 @@ export const receiveMessages = (messages) => {
 // thunk action creators to enable async calls
 // thunk returns functions instead of objects
 
-export function fetchMessages() {
-  return function (dispatch) {
+export const fetchMessages = () => {
+  return (dispatch) => {
     // starts get request to API
     dispatch(requestMessages())
      return axios.get('/api/messages')
