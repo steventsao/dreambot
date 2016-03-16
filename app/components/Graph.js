@@ -29,7 +29,7 @@ const Graph = ({labels, data, dataAvg}) => {
       ]
     };
       return (
-      <LineChart style={styles.graph} data={dataset} width="800" height="400"/>
+      <LineChart style={styles.graph} data={dataset} width="500" height="500"/>
     )
 }
 
