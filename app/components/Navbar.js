@@ -1,8 +1,8 @@
 /* eslint-disable */
 import React from 'react';
+import styles from '../styles';
 
 const Navbar = ({messages, analytics}) => {
-
 
   return (
     <div>
@@ -13,6 +13,5 @@ const Navbar = ({messages, analytics}) => {
     </div>
     )
 }
-
 
 export default Navbar;

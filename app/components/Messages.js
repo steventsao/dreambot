@@ -1,10 +1,9 @@
 import React from 'react';
-import io from 'socket.io-client';
-const socket = io('http://localhost:1337');
+import styles from '../styles';
 
 const Messages = ({messages}) => {
       return (
-        <div> Hello from DreamBot:
+        <div style={styles.title}> Hello from DreamBot:
 
       {messages.map(message => {
         return <span> <br/> {message.text} </span>
