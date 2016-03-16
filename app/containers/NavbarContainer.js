@@ -31,8 +31,7 @@ let NavbarContainer = React.createClass({
   }
 })
 
-let mapStateToProps = (state) => {
-  return state;
-}
+let mapStateToProps = (state) => state;
+
 
 export default connect(mapStateToProps)(NavbarContainer)
