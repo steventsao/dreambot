@@ -1,5 +1,5 @@
 import React from 'react';
-import css from '../styles/bulma.css';
+import css from 'bulma/css/bulma.css';
 const LeftPanel = ({}) => {
   return (
     <nav className="menu"> 

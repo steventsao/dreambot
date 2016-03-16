@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React from 'react';
 import styles from '../styles';
-import css from '../styles/bulma.css';
+import css from 'bulma/css/bulma.css';
 
 const Navbar = ({messages, analytics}) => {
 

@@ -5,7 +5,7 @@ import MessagesContainer from '../containers/MessagesContainer';
 import GraphContainer from '../containers/GraphContainer';
 import NavbarContainer from '../containers/NavbarContainer';
 import LeftPanel from './LeftPanel';
-import css from '../styles/bulma.css';
+import css from 'bulma/css/bulma.css';
 
 const Home = React.createClass({
   render: function () {
