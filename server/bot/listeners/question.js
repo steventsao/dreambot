@@ -2,19 +2,27 @@ var _ = require('lodash');
 var botModel = require('../botModel.js');
 var sentiment = require('sentiment');
 var natural = require('natural');
+var getUserInfo = require('../../utils/botUtils').getUserInfo;
 
 module.exports = function (controller) {
   controller.hears('', 'ambient', function (bot, message) {
-      // categorizes message by whether it is a question or a statement
-      if (isQuestion(message.text)) {
-        bot.reply(message, 'question');
-        classifyQuestion(bot, message);
-      } else {
-        bot.reply(message, sentiment(message.text).score.toString());
-        // saves raw statements
-        botModel(message);
-      }
-      // bot.reply(message,'messaged received');
+    getUserInfo(bot, message.user)
+      .then((user) => {
+        // add real name to message object
+        Object.assign(message, {
+          name: user.name,
+        });
+        // categorizes message by whether it is a question or a statement
+        if (isQuestion(message.text)) {
+          bot.reply(message, 'question');
+          classifyQuestion(bot, message);
+        } else {
+          bot.reply(message, sentiment(message.text).score.toString());
+          // saves raw statements
+          botModel(message);
+        }
+        // bot.reply(message,'messaged received');
+      });
   });
 
   var isQuestion = function (message) {
