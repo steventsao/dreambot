@@ -11,8 +11,8 @@ const Home = React.createClass({
       <div>
         <NavbarContainer />
         <h1 style={styles.title}>Dream Bot</h1>
-        <MessagesContainer />
         <GraphContainer />
+        <MessagesContainer />
       </div>
     );
   }
