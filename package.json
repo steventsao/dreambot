@@ -13,6 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "botkit": "0.0.8",
+    "bulma": "0.0.16",
     "express": "^4.13.4",
     "glob": "^7.0.3",
     "immutable": "^3.7.6",
