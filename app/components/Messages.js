@@ -1,14 +1,11 @@
 import React from 'react';
 import styles from '../styles';
-
+import css from 'bulma/css/bulma.css';
 const Messages = ({messages}) => {
       return (
-        <div style={styles.messages}> Hello from DreamBot:
-
+        <div> 
       {messages.map(message => {
-        return (
-          <span> <br/> <span style={styles.user}> {message.user}</span>: {message.text} </span>
-        )
+        return <div className='notification'>{message.text} </div>
       })}
 
       </div>
