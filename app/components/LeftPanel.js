@@ -4,7 +4,7 @@ const LeftPanel = ({}) => {
   return (
     <nav className="menu">
       <p className="menu-heading is-primary is-fullwidth">
-      This is the user panel
+      GUEST
       </p>
       <div className="menu-block">
         <button className="button is-fullwidth">

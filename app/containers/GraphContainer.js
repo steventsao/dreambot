@@ -12,8 +12,8 @@ const GraphContainer = React.createClass({
 
 const mapStateToProps = (state) => {
   return {
-    labels: state.messages.map( (message) => new Date(message.ts * 1000).toLocaleDateString()),
-    data: state.messages.map( (message) => message.score ),
+    labels: state.messages.map(message => new Date(message.ts * 1000).toLocaleDateString()),
+    data: state.messages.map(message => message.score ),
     // dataAvg: state.messages.reduce( (avgArray, message, index) => {
     //   if (!avgArray.length){
     //     avgArray = [message.score];
@@ -23,6 +23,7 @@ const mapStateToProps = (state) => {
     //     return avgArray;
     // }, [])
     dataAvg: state.messages.map(message => message.comparative)
+
   };
 };
 
