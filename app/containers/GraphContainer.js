@@ -1,7 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Graph from '../components/Graph';
+// import d3 from 'd3';
 
+const GraphContainer = React.createClass({
+  render: function() {
+    return (
+      <Graph labels={this.props.labels} data={this.props.data} dataAvg={this.props.dataAvg}/>
+    )
+  }
+})
 
 const mapStateToProps = (state) => {
   return {
