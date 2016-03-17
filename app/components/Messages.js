@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 const Messages = ({ messages }) => {
   const comparator = (a, b) => { return b.ts - a.ts };
@@ -6,10 +7,18 @@ const Messages = ({ messages }) => {
   return (
     <div>
       {sorted.map(message => {
-        return <div className="notification">{message.name}:{message.text} </div>;
+        let time = moment(new Date(message.ts * 1000));
+        return (
+          <div className="box">
+            <div className="content">
+              <p>
+              <strong>{message.name}:</strong> {message.text} <small>{time.fromNow()}</small>
+              </p>
+            </div>
+          </div>
+          )
       })}
     </div>
   );
 };
-
 export default Messages;

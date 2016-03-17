@@ -12,6 +12,7 @@ import ReactDOM from 'react-dom';
 import { browserHistory } from 'react-router';
 import configureStore from './store/configureStore';
 import 'bulma/css/bulma.css';
+import moment from 'moment';
 // import { syncHistoryWithStore } from 'react-router-redux';
 // import configureStore from './store/configureStore';
 
