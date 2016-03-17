@@ -8,10 +8,12 @@ module.exports = function (controller) {
   controller.hears('', 'ambient', function (bot, message) {
     getUserInfo(bot, message.user)
       .then((user) => {
-        // add real name to message object
+        // add real name to message object and convert timestamp to Date object
         Object.assign(message, {
           name: user.name,
+          ts: new Date(parseFloat(message.ts) * 1000)
         });
+
         // categorizes message by whether it is a question or a statement
         if (isQuestion(message.text)) {
           bot.reply(message, 'question');
