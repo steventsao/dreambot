@@ -10,16 +10,16 @@ const Navbar = ({messages, analytics}) => {
     <p className="heading">New Messages</p>
   </div>
      <div className="navbar-item is-text-centered">
-    <p className="title">{analytics.totalSentiment}</p>
-    <p className="heading">Sentiment Points</p>
+    <p className="title">{analytics.topThreeActiveUsers}</p>
+    <p className="heading">{analytics.topThreeActiveUsers.length <= 1 ? 'is' : 'are'} Active</p>
   </div>
      <div className="navbar-item is-text-centered">
     <p className="title">{ (analytics.totalSentiment / messages.length).toFixed(1) }</p>
     <p className="heading">Average Sentiment</p>
   </div>
   <div className="navbar-item is-text-centered">
-    <p className="title">{analytics.topics}</p>
-    <p className="heading">are Trending</p>
+    <p className="title">{analytics.topics || 'N/A'}</p>
+    <p className="heading">{analytics.topics.length <= 1 ? 'is' : 'are'} Trending</p>
   </div>
     </nav>
     )

@@ -11,14 +11,24 @@ let NavbarContainer = React.createClass({
         ? acc.topics[message.classification] + 1
         : 1;
       }
+      if (message.name) {
+        acc.names[message.name] = acc.names[message]
+        ? [...acc.names[message], message]
+        : [];
+      }
+
       return acc;
-    }, {totalSentiment: 0, topics: {}});
+    }, {names: {}, totalSentiment: 0, topics: {}});
   
     let topThreeTopics = Object.keys(analytics.topics).sort( (a, b) => {
       return analytics.topics[b] - analytics.topics[a];
     }).slice(0,3).join(', ');
 
+    let topThreeActiveUsers = Object.keys(analytics.names).sort( (a, b) => {
+      return analytics.names[b].length - analytics.names[a];
+    })
     analytics.topics = topThreeTopics;
+    analytics.topThreeActiveUsers = topThreeActiveUsers;
 
     return analytics;
   },
