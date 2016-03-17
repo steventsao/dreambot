@@ -25,7 +25,7 @@ let NavbarContainer = React.createClass({
     ).slice(0, 3);
 
     let mostActiveUsers = Object.keys(analytics.names).sort((a, b) =>
-      analytics.names[b].length - analytics.names[a]
+      analytics.names[b].length - analytics.names[a].length
     );
 
     analytics.topics = topThreeTopics;
