@@ -14,14 +14,15 @@ const mapStateToProps = (state) => {
   return {
     labels: state.messages.map( (message) => new Date(message.ts * 1000).toLocaleDateString()),
     data: state.messages.map( (message) => message.score ),
-    dataAvg: state.messages.reduce( (avgArray, message, index) => {
-      if (!avgArray.length){
-        avgArray = [message.score];
-      }
-      let currentAvg = (avgArray[avgArray.length - 1] * (index + 1) + message.score) / (avgArray.length + 1)
-        avgArray.push(currentAvg);
-        return avgArray;
-    }, [])
+    // dataAvg: state.messages.reduce( (avgArray, message, index) => {
+    //   if (!avgArray.length){
+    //     avgArray = [message.score];
+    //   }
+    //   let currentAvg = (avgArray[avgArray.length - 1] * (index + 1) + message.score) / (avgArray.length + 1)
+    //     avgArray.push(currentAvg);
+    //     return avgArray;
+    // }, [])
+    dataAvg: state.messages.map(message => message.comparative)
   };
 };
 
