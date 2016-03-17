@@ -14,11 +14,11 @@ const Navbar = ({messages, analytics}) => {
       <p className="heading">Average Sentiment</p>
     </div>
      <div className="navbar-item is-text-centered">
-      <p className="title">{analytics.topThreeActiveUsers}</p>
-      <p className="heading">{analytics.topThreeActiveUsers.length <= 1 ? 'is' : 'are'} Active</p>
+      <p className="title">{analytics.mostActiveUsers.join(', ')}</p>
+      <p className="heading">{analytics.mostActiveUsers.length <= 1 ? 'is' : 'are'} Active</p>
     </div>
     <div className="navbar-item is-text-centered">
-      <p className="title">{analytics.topics || 'N/A'}</p>
+      <p className="title">{analytics.topics.join(', ') || 'N/A'}</p>
       <p className="heading">{analytics.topics.length <= 1 ? 'is' : 'are'} Trending</p>
     </div>
     </nav>

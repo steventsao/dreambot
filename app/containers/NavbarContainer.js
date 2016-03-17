@@ -22,19 +22,19 @@ let NavbarContainer = React.createClass({
 
     let topThreeTopics = Object.keys(analytics.topics).sort((a, b) =>
       analytics.topics[b] - analytics.topics[a]
-    ).slice(0, 3).join(', ');
+    ).slice(0, 3);
 
-    let topThreeActiveUsers = Object.keys(analytics.names).sort((a, b) =>
+    let mostActiveUsers = Object.keys(analytics.names).sort((a, b) =>
       analytics.names[b].length - analytics.names[a]
     );
 
     analytics.topics = topThreeTopics;
-    analytics.topThreeActiveUsers = topThreeActiveUsers;
+    analytics.mostActiveUsers = mostActiveUsers;
 
     return analytics;
   },
   render() {
-    const { messages } = this.props;
+    const { messages, dispatch } = this.props;
     const analytics = this.getAnalytics();
     return (
       <Navbar messages={messages} analytics={analytics} />
