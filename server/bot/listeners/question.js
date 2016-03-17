@@ -14,10 +14,9 @@ module.exports = function (controller) {
         });
         // categorizes message by whether it is a question or a statement
         if (isQuestion(message.text)) {
-          bot.reply(message, 'question');
           classifyQuestion(bot, message);
         } else {
-          bot.reply(message, sentiment(message.text).score.toString());
+          //bot.reply(message, sentiment(message.text).score.toString());
           // saves raw statements
           botModel(message);
         }
