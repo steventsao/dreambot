@@ -7,7 +7,7 @@ const Messages = ({ messages }) => {
   return (
     <div>
       {sorted.map(message => {
-        let time = moment(new Date(message.ts * 1000));
+        let time = moment(new Date(message.ts));
         return (
           <div className="box">
             <div className="content">
