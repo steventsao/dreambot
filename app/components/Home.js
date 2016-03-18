@@ -10,7 +10,9 @@ const Home = React.createClass({
     return (
       <div className="container is-fluid">
         <NavbarContainer/>
-        <h1 className="title is-text-centered" >Dream Bot</h1>
+        <h1 className="control">
+          <input className="input is-text-centered" type="text" placeholder="Ask Dream Bot Here..."/>
+        </h1>
         <div className='columns'>
           <div className="column is-2">
             <LeftPanelContainer />
