@@ -2,7 +2,8 @@ import React from 'react';
 import moment from 'moment';
 
 const Messages = ({ messages }) => {
-  const comparator = (a, b) => { return b.ts - a.ts };
+  const comparator = (a, b) => { return new Date(b.ts) - new Date(a.ts) };
+  console.log()
   const sorted = messages.sort(comparator);
   return (
     <div>
