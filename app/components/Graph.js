@@ -49,33 +49,46 @@ import styles from '../styles';
 // USING REACT-CHARTJS
 
 const Graph = ({labels, data, dataAvg}) => {
+  const dataOptions = {
+        xAxes: [{
+            display: false
+        }]
+  }
   const dataset = {
       labels: labels,
       datasets: [
         {
-          label: 'My First dataset',
-          fillColor: 'rgba(0,0,0,0.2)',
-          strokeColor: 'rgba(0,0,0,1)',
-          pointColor: 'rgba(0,0,0,1)',
-          pointStrokeColor: '#fff',
-          pointHighlightFill: '#fff',
-          pointHighlightStroke: 'rgba(0,0,0,1)',
+          label: "My Second dataset",
+          fill: false,
+          backgroundColor: "rgba(220,220,220,0.2)",
+          borderColor: "rgba(220,220,220,1)",
+          pointBorderColor: "rgba(220,220,220,1)",
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: "rgba(220,220,220,1)",
+          pointHoverBorderColor: "rgba(220,220,220,1)",
+          pointHoverBorderWidth: 2,
           data: data
         },
         {
-          label: 'My First dataset',
-          fillColor: 'rgba(0,144,255,0.2)',
-          strokeColor: 'rgba(0,144,255,1)',
-          pointColor: 'rgba(0,144,255,1)',
-          pointStrokeColor: '#fff',
-          pointHighlightFill: '#fff',
-          pointHighlightStroke: 'rgba(0,144,255,1)',
+          label: "My Second dataset",
+          fill: false,
+          backgroundColor: "rgba(0,144,255,0.2)",
+          borderColor: "rgba(0,144,255,1)",
+          pointBorderColor: "rgba(0,144,255,1)",
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: "rgba(0,144,255,1)",
+          pointHoverBorderColor: "rgba(0,144,255,1)",
+          pointHoverBorderWidth: 2,
           data: dataAvg
-        },
+        }
       ]
     };
       return (
-      <LineChart style={styles.graph} data={dataset} width="500" height="500"/>
+      <LineChart style={styles.graph} data={dataset} options={dataOptions} width="500" height="500"/>
     )
 }
 
