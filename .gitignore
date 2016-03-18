@@ -3,6 +3,7 @@
 
 # Env
 config.js
+.env
 
 # RethinkDb
 */dist/
