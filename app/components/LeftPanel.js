@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LeftPanel = ({}) => {
+const LeftPanel = ({ printMessage }) => {
   return (
     <nav className="menu">
       <p className="menu-heading is-primary is-fullwidth">
@@ -12,7 +12,7 @@ const LeftPanel = ({}) => {
         </button>
       </div>
       <div className="menu-block">
-      <button className="button is-fullwidth">
+      <button onClick={ printMessage } className="button is-fullwidth">
         Messages</button>
       </div>
       <div className="menu-block">
