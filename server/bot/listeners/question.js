@@ -41,11 +41,11 @@ module.exports = function (controller) {
   var classifyQuestion = function (bot, message) {
     natural.BayesClassifier.load('./data/classifier.json', null, function (err, classifier) {
       bot.startPrivateConversation(message, function (err, convo) {
-        convo.ask('Was your question about ' + classifier.classify(message.text) + '?', [
+        convo.ask('Was your question about ' + classifier.classify(message.text) + '? If you would like to stop recieving these messages, please reply with "stop".', [
           {
             pattern: bot.utterances.yes,
             callback: function (response, convo) {
-              convo.say('Noted');
+              convo.say('Noted, thanks for making me smarter!');
 
               saveMsg(message, classifier.classify(message.text));
 
@@ -72,16 +72,38 @@ module.exports = function (controller) {
               });
 
               var topThree = [sortedArr[0].label, sortedArr[1].label, sortedArr[2].label];
-              convo.say(JSON.stringify(sortedArr));
-              convo.ask('Select one of the topics listed: ' + topThree.join(', ') + '?', function (res, convo) {
-                convo.next();
+              //convo.say(JSON.stringify(sortedArr));
+              convo.ask('Hmm, was it about ' + topThree[0] + ', ' + topThree[1] + ' or ' + topThree[2] + '? If you do not see a fitting category, reply with "none"', [
+                {
+                  pattern: 'none',
+                  default: false,
+                  callback: function(response, convo){
+                    convo.say("Okay, sorry we couldn't categorize your question!");
+                    convo.next();
+                  },
+                },
+                {
+                  default: true,
+                  callback: function(res, convo){
+                    convo.next();
+                    // saveMsg(message, res.text);
+                    convo.say('Recorded your question about ' + res.text + ', thanks for making me smarter!');
+                    classifier.addDocument(message.text, res.text);
+                    classifier.train();
+                    convo.next();
+                  }
+                }
+              ]
 
-                // saveMsg(message, res.text);
-                convo.say('Recorded your ' + res.text + ' question.');
-                classifier.addDocument(message.text, res.text);
-                classifier.train();
-                convo.next();
-              });
+              );
+              convo.next();
+            }
+          },
+          {
+            pattern: 'stop',
+            default: false,
+            callback: function (response, convo){
+              convo.say('You have been added to my do not disturb list, if you would ever like to contribute in the future please DM me with they keyword, "join", thanks!');
               convo.next();
             }
           }
