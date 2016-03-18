@@ -12,10 +12,8 @@ var HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 /*
   Should we use this or just have a `webpack.config.js` and a `webpack.production.config.js`?
 */
-var env = process.env.NODE_ENV;
-
 var WebpackEnvPlugin = new webpack.DefinePlugin({
-  'process.env.NODE_ENV': JSON.stringify(env)
+  __DEV__: JSON.stringify(process.env.NODE_ENV || 'development')
 });
 
 module.exports = {
@@ -27,7 +25,7 @@ module.exports = {
   output: {
     path: __dirname + '/dist',
     filename: 'index_bundle.js',
-    publicPath: '/'
+    publicPath: '/assets'
   },
   module: {
     loaders: [

@@ -63,7 +63,7 @@ if (env.isDev) {
     res.end();
   });
 } else {
-  app.use(express.static(__dirname + '../dist'));
+  app.use('/assets', express.static('dist'));
 
   // This redirects any GET requests that aren't for '/' or our above-mentioned
   // routes to the home-page, letting the router on our SPA front-end handle it.
