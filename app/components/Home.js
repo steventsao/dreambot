@@ -4,6 +4,7 @@ import MessagesContainer from '../containers/MessagesContainer';
 import GraphContainer from '../containers/GraphContainer';
 import NavbarContainer from '../containers/NavbarContainer';
 import LeftPanelContainer from '../containers/LeftPanelContainer';
+import SearchBoxContainer from '../containers/SearchBoxContainer';
 
 const Home = React.createClass({
   render: function () {
@@ -11,7 +12,7 @@ const Home = React.createClass({
       <div className="container is-fluid">
         <NavbarContainer/>
         <h1 className="control">
-          <input className="input is-text-centered" type="text" placeholder="Ask Dream Bot Anything"/>
+          <SearchBoxContainer />
         </h1>
         <div className='columns'>
           <div className="column is-2">
