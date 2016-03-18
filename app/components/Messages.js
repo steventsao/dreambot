@@ -1,17 +1,24 @@
 import React from 'react';
-import io from 'socket.io-client';
-const socket = io('http://localhost:1337');
+import moment from 'moment';
 
-const Messages = ({messages}) => {
-      return (
-        <div> Hello from DreamBot:
-
-      {messages.map(message => {
-        return <span> <br/> {message.text} </span>
+const Messages = ({ messages }) => {
+  const comparator = (a, b) => { return b.ts - a.ts };
+  const sorted = messages.sort(comparator);
+  return (
+    <div>
+      {sorted.map(message => {
+        let time = moment(new Date(message.ts * 1000));
+        return (
+          <div className="box">
+            <div className="content">
+              <p>
+              <strong>{message.name}:</strong> {message.text} <small>{time.fromNow()}</small>
+              </p>
+            </div>
+          </div>
+          )
       })}
-
-      </div>
-    )
-}
-
+    </div>
+  );
+};
 export default Messages;

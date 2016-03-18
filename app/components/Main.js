@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 const Main = React.createClass({
   render: function () {
     return (
-        <div className='main-container'>
+        <div>
           {this.props.children}
         </div>
       )
