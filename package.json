@@ -6,9 +6,9 @@
   "scripts": {
     "build": "webpack -p",
     "prod": "NODE_ENV=production node -r dotenv/config server/index.js",
-    "start": "node -r dotenv/config server/index.js",
+    "start": "npm run build && npm run prod",
     "test": "jest",
-    "dev": "webpack-dev-server --port 1337"
+    "dev": "node -r dotenv/config server/index.js"
   },
   "author": "",
   "license": "MIT",
