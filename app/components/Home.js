@@ -3,7 +3,7 @@ import ReactRouter from 'react-router';
 import MessagesContainer from '../containers/MessagesContainer';
 import GraphContainer from '../containers/GraphContainer';
 import NavbarContainer from '../containers/NavbarContainer';
-import LeftPanel from './LeftPanel';
+import LeftPanelContainer from '../containers/LeftPanelContainer';
 
 const Home = React.createClass({
   render: function () {
@@ -13,7 +13,7 @@ const Home = React.createClass({
         <h1 className="title is-text-centered" >Dream Bot</h1>
         <div className='columns'>
           <div className="column is-2">
-            <LeftPanel />
+            <LeftPanelContainer />
           </div>
           <div className="column is-text-centered">
             <GraphContainer />

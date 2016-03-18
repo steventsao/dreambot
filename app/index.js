@@ -25,7 +25,7 @@ import moment from 'moment';
   Later, we should hook this up to a RootReducer ( I think )
 */
 
-// Set default state
+// Set default state/
 const store = configureStore();
 
 const rootEl = document.getElementById('root');
