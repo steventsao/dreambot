@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "production": "webpack -p",
+    "build": "webpack -p",
+    "prod": "NODE_ENV=production node -r dotenv/config server/index.js",
     "start": "node -r dotenv/config server/index.js",
     "test": "jest",
     "dev": "webpack-dev-server --port 1337"
