@@ -9,9 +9,6 @@ var HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   inject: 'body'
 });
 
-/*
-  Should we use this or just have a `webpack.config.js` and a `webpack.production.config.js`?
-*/
 var WebpackEnvPlugin = new webpack.DefinePlugin({
   __DEV__: JSON.stringify(process.env.NODE_ENV || 'development')
 });

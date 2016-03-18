@@ -62,4 +62,6 @@ if (module.hot) {
     });
   }
   render();
+} else {
+  render();
 }
