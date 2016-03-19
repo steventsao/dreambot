@@ -19,7 +19,6 @@ const mapDispatchToProps = (dispatch) => {
       if (input) {
         dispatch(searchKeyword(input))
         .then(() => {
-          console.log('HAI')
         })
         .catch(err => {
           console.log(err);
