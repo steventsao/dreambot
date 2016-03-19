@@ -13,7 +13,7 @@ const GraphContainer = React.createClass({
 
 const mapStateToProps = (state) => {
   return {
-    labels: state.messages.messages.map(message => new Date(message.ts * 1000).toLocaleDateString()),
+    labels: state.messages.messages.map(message => new Date(message.ts).toLocaleDateString()),
     data: state.messages.messages.map(message => message.score ),
     dataAvg: state.messages.messages.map(message => message.comparative)
   };
