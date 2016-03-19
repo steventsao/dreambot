@@ -50,16 +50,20 @@ import styles from '../styles';
 
 const Graph = ({labels, data, dataAvg}) => {
   const dataOptions = {
+        animation: {
+          duration: 2000,
+          easing: "easeOutQuart"
+        },
         xAxes: [{
-            display: false
+            id: "x-axis-0"
         }]
   }
   const dataset = {
       labels: labels,
       datasets: [
         {
-          label: "My Second dataset",
-          fill: false,
+          label: "Message Score",
+          fill: true,
           backgroundColor: "rgba(220,220,220,0.2)",
           borderColor: "rgba(220,220,220,1)",
           pointBorderColor: "rgba(220,220,220,1)",
@@ -72,8 +76,8 @@ const Graph = ({labels, data, dataAvg}) => {
           data: data
         },
         {
-          label: "My Second dataset",
-          fill: false,
+          label: "Average Mood",
+          fill: true,
           backgroundColor: "rgba(0,144,255,0.2)",
           borderColor: "rgba(0,144,255,1)",
           pointBorderColor: "rgba(0,144,255,1)",
