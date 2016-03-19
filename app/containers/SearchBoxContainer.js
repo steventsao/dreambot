@@ -7,13 +7,6 @@ const detectChange = () => {
   console.log('Detecting changes...');
 }
 
-// const handleKeyPress = (input) => {
-//     console.log(input);
-//     fetchMessages(input)
-//     .then()
-//     console.log('****************');
-// };
-
 const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => {
   return {

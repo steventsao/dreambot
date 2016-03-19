@@ -3,20 +3,6 @@ import { connect } from 'react-redux';
 import LeftPanel from '../components/LeftPanel';
 import { addMessage } from '../actions/index';
 
-// const LeftPanelContainer = React.createClass({
-//   printMessage(){
-//     let { dispatch } = this.props;
-//     dispatch(addMessage('Hello from container'));
-//   },
-//   componentDidMount(){
-//   },
-//   render(){
-//     return (
-//       <LeftPanel  printMessage={ this.printMessage }/>
-//       )
-//   }
-// })
-
 const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => {
   return {

@@ -32,14 +32,6 @@ const getAnalytics = (messages) => {
 
   return analytics;
 };
-  // ,
-  // render() {
-  //   const { messages, dispatch } = this.props;
-  //   const analytics = this.getAnalytics();
-  //   return (
-  //     <Navbar messages={messages} analytics={analytics} />
-  //     );
-  // }
 
 let mapStateToProps = (state) => {
   return {
