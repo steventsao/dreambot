@@ -22,6 +22,14 @@ export const filterMessages = (username) => {
   }
 }
 
+export const filterSearchResults = (messages) => {
+  return {
+    type: 'FILTER_SEARCH_RESULTS',
+    messages: messages.data
+  }
+}
+
+
 export const disableFilterMessages = () => {
   console.log('disabling...');
   return {
@@ -59,6 +67,19 @@ export const fetchMessages = () => {
      .catch( (err) => {
         console.log(err);
      })
+  }
+}
+
+export const searchKeyword = (input) => {
+  console.log('searching...')
+  return (dispatch) => {
+    return axios.get(`/api/messages/search?word=${input}`)
+      .then(messagesReceived => {
+        dispatch(receiveMessages(messagesReceived))
+      })
+      .catch(err => {
+        console.log(err);
+      })
   }
 }
 

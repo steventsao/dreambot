@@ -16,7 +16,7 @@ export default function messages(state = initialState, action) {
     case 'RECEIVE_MESSAGES':
       return Object.assign({}, state,
         {
-          messages: state.rawMessages.concat(action.messages),
+          messages: action.messages,
           rawMessages: state.rawMessages.concat(action.messages)
         });
     case 'FILTER_MESSAGES':
