@@ -27,7 +27,7 @@
     "babel-preset-react": "^6.5.0",
     "botkit": "0.0.8",
     "bulma": "0.0.16",
-    "chart.js": "git://github.com/nnnick/Chart.js.git#2.0.0-beta2",
+    "chart.js": "git://github.com/danmolitor/Chart.js.git#v2.0-dev",
     "dotenv": "^2.0.0",
     "express": "^4.13.4",
     "glob": "^7.0.3",
