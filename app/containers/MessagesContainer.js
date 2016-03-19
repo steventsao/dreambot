@@ -12,7 +12,7 @@ import Messages from '../components/Messages';
 
 const mapStateToProps = (state) => {
   return {
-    messages: state.messages
+    messages: state.messages.messages
   }
 };
 

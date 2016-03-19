@@ -43,8 +43,8 @@ const getAnalytics = (messages) => {
 
 let mapStateToProps = (state) => {
   return {
-    messages: state.messages,
-    analytics: getAnalytics(state.messages)
+    messages: state.messages.messages,
+    analytics: getAnalytics(state.messages.messages)
   }
 };
 
