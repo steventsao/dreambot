@@ -1,17 +1,17 @@
 import { requestSearch } from '../actions/index';
 
-let initialState = {
+const initialState = {
   inputField: '',
   placeHolder: 'Ask Dream Bot Anything'
 }
 
 
 // TODO: Insert a payload somewhere to display query results
-export default SearchBox = (state = initialState, action) => {
+export default function SearchBoxReducer(state = initialState, action){
   switch (action.type) {
-    case 'REQUEST_SEARCH':
-      state.inputField = '';
+    case 'FILTER_MESSAGES':
+      return Object.assign({}, state, { inputField: action.username });
     default:
-      state.inputField = '';
+      return state
   }
 }

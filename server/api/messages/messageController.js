@@ -30,5 +30,18 @@ module.exports = {
             cursor.toArray().then(result => res.send(result));
           });
       });
+  },
+  getSearchResults(req, res) {
+    console.log(req.query.word);
+    connect()
+      .then(conn => {
+        r.table('messages').filter(message => {
+          return message('name').eq(req.query.word)
+            .or(message('tokens').contains(req.query.word))
+        }).run(conn)
+        .then(cursor => {
+          cursor.toArray().then(result => res.send(result)); 
+        });
+    });
   }
 };
