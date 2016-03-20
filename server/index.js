@@ -2,39 +2,26 @@ var path = require('path');
 
 var express = require('express');
 var app = express();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
-var r = require('rethinkdb');
+var server = require('http').createServer(app);
+var RethinkdbWebsocketServer = require('rethinkdb-websocket-server');
 
 var webpack = require('webpack');
 var webpackMiddleware = require('webpack-dev-middleware');
 var webpackHotMiddleware = require('webpack-hot-middleware');
 
 var config = require('../webpack.config.js');
-var connect = require('./utils/connect');
 var env = require('./utils/envDefaults');
 var apiRoutes = require('./api');
 
-require('./bot/bot.js');
-
-// TODO: move this into it's own module? placement depends on file structure?
-// Returns a promise
-function getChangeFeed() {
-  return connect()
-    .then(conn => r.table('messages').changes().run(conn));
-}
-
-getChangeFeed()
-  .then(cursor => {
-    cursor.each((err, change) => {
-      console.log('change detected!', change);
-      io.emit('test', change);
-    });
-  });
-
-io.on('connection', (socket) => {
-  console.log('a user connected');
+RethinkdbWebsocketServer.listen({
+  httpServer: server,
+  httpPath: '/db',
+  dbHost: env.rethinkHost,
+  dbPort: env.rethinkPort,
+  unsafelyAllowAnyQuery: true
 });
+
+require('./bot/bot.js');
 
 // Add routes to app here:
 // ex: app.use('/api', apiRoutes);
