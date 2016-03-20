@@ -25,7 +25,6 @@ require('./bot/bot.js');
 
 // Add routes to app here:
 // ex: app.use('/api', apiRoutes);
-app.use('/api', apiRoutes);
 
 // referenced https://github.com/christianalfoni/webpack-express-boilerplate
 if (env.isDev) {
