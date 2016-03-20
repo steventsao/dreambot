@@ -1,6 +1,12 @@
 'use strict';
 const r = require('rethinkdb');
-const testMessages = require('../data/testMessages.json');
+let testMessages = require('../data/testMessages.json');
+
+testMessages = testMessages.map(message =>
+  Object.assign(message, {
+    ts: new Date(message.ts)
+  })
+);
 
 r.connect({ host: 'localhost', port: 28015 }).then(conn => {
   r.db('test').table('messages').insert(testMessages)
