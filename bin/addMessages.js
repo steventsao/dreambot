@@ -4,7 +4,8 @@ let testMessages = require('../data/testMessages.json');
 
 testMessages = testMessages.map(message =>
   Object.assign(message, {
-    ts: new Date(message.ts)
+    ts: new Date(message.ts),
+    score: Number(message.score)
   })
 );
 
