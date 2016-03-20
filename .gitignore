@@ -11,7 +11,7 @@ config.js
 */dist/
 */rethinkdb_data/
 */server/bot/rethinkdb_data/
-*/data/classifier.json
+data/
 
 # Logs
 logs
