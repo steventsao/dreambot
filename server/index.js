@@ -11,7 +11,6 @@ var webpackHotMiddleware = require('webpack-hot-middleware');
 
 var config = require('../webpack.config.js');
 var env = require('./utils/envDefaults');
-var apiRoutes = require('./api');
 
 RethinkdbWebsocketServer.listen({
   httpServer: server,
