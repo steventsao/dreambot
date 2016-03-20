@@ -21,21 +21,23 @@ export function getSearchResults(word) {
     );
 }
 
-export function getMessagesByHour() {
+export function getAvgMessagesByHour() {
   return connection
     .then(conn =>
       r.table('messages')
         .group(r.row('ts').hours())
+        .avg('score')
         .run(conn)
         .then(cursor => cursor.toArray())
     );
 }
 
-export function getMessagesByDayOfWeek() {
+export function getAvgMessagesByDayOfWeek() {
   return connection
     .then(conn =>
       r.table('messages')
         .group(r.row('ts').dayOfWeek())
+        .avg('score')
         .run(conn)
         .then(cursor => cursor.toArray())
     );
