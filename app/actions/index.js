@@ -10,11 +10,7 @@ export const FILTER_MESSAGES = 'FILTER_MESSAGES';
 export const filterMessages = username => ({ type: FILTER_MESSAGES, username });
 
 export const FILTER_SEARCH_RESULTS = 'FILTER_SEARCH_RESULTS';
-<<<<<<< HEAD
 export const filterSearchResults = messages => (
-=======
-export const filterSearchResults = (messages) => (
->>>>>>> (chore) clean actions/index
   { type: FILTER_SEARCH_RESULTS, messages: messages.data }
 );
 
