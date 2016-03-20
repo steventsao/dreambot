@@ -1,4 +1,4 @@
-import axios from 'axios';
+import * as queries from './queries';
 
 export const ADD_MESSAGE = 'ADD_MESSAGE';
 export const addMessage = message => ({ type: ADD_MESSAGE, message });
@@ -24,23 +24,21 @@ export const IS_FETCHING_MESSAGES = 'IS_FETCHING_MESSAGES';
 export const isFetchingMessages = () => ({ type: IS_FETCHING_MESSAGES });
 
 export const RECEIVE_MESSAGES = 'RECEIVE_MESSAGES';
-export const receiveMessages = messages => ({ type: RECEIVE_MESSAGES, messages: messages.data });
+export const receiveMessages = messages => ({ type: RECEIVE_MESSAGES, messages });
 
 export const requestSearch = query => ({ type: 'REQUEST_SEARCH', query });
 
 // thunk action creators to enable async calls
 // thunk returns functions instead of objects
 
-// @return Object of messages Array
 export const fetchMessages = () => dispatch => {
-  // starts get request to API
   dispatch(requestMessages());
-  return axios.get('/api/messages/')
+  return queries.getMessages()
     .then(messagesReceived => dispatch(receiveMessages(messagesReceived)))
     .catch(err => console.log(err));
 };
 
 export const searchKeyword = (input) =>
-  dispatch => axios.get(`/api/messages/search?word=${input}`)
+  dispatch => queries.getSearchResults(input)
     .then(messagesReceived => dispatch(receiveMessages(messagesReceived)))
     .catch(err => console.log(err));
