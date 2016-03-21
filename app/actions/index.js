@@ -1,91 +1,42 @@
 import axios from 'axios';
 
 export const ADD_MESSAGE = 'ADD_MESSAGE';
-export const addMessage = (message) => {
-  return {
-      type: ADD_MESSAGE,
-      message
-    }
-}
+export const addMessage = message => ({ type: ADD_MESSAGE, message });
 
 export const REQUEST_MESSAGES = 'REQUEST_MESSAGES';
-export const requestMessages = () => {
-  return {
-    type: REQUEST_MESSAGES
-  };
-}
+export const requestMessages = () => ({ type: REQUEST_MESSAGES });
 
-export const filterMessages = (username) => {
-  return {
-    type: 'FILTER_MESSAGES',
-    username
-  }
-}
+export const FILTER_MESSAGES = 'FILTER_MESSAGES';
+export const filterMessages = username => ({ type: FILTER_MESSAGES, username });
 
-export const filterSearchResults = (messages) => {
-  return {
-    type: 'FILTER_SEARCH_RESULTS',
-    messages: messages.data
-  }
-}
+export const FILTER_SEARCH_RESULTS = 'FILTER_SEARCH_RESULTS';
+export const filterSearchResults = messages => (
+  { type: FILTER_SEARCH_RESULTS, messages: messages.data }
+);
 
-
-export const disableFilterMessages = () => {
-  console.log('disabling...');
-  return {
-    type: 'SHOW_ALL'
-  }
-}
+export const disableFilterMessages = () => ({ type: 'SHOW_ALL' });
 
 export const IS_FETCHING_MESSAGES = 'IS_FETCHING_MESSAGES';
-export const isFetchingMessages = () => {
-  return {
-    type: IS_FETCHING_MESSAGES
-  }
-}
+export const isFetchingMessages = () => ({ type: IS_FETCHING_MESSAGES });
 
 export const RECEIVE_MESSAGES = 'RECEIVE_MESSAGES';
-export const receiveMessages = (messages) => {
-  return {
-    type: RECEIVE_MESSAGES,
-    messages: messages.data
-  }
-}
+export const receiveMessages = messages => ({ type: RECEIVE_MESSAGES, messages: messages.data });
+
+export const requestSearch = query => ({ type: 'REQUEST_SEARCH', query });
 
 // thunk action creators to enable async calls
 // thunk returns functions instead of objects
 
 // @return Object of messages Array
-export const fetchMessages = () => {
-  return (dispatch) => {
-    // starts get request to API
-    dispatch(requestMessages())
-     return axios.get(`/api/messages/`)
-     .then( (messagesReceived) => {
-        dispatch(receiveMessages(messagesReceived))
-     })
-     .catch( (err) => {
-        console.log(err);
-     })
-  }
-}
+export const fetchMessages = () => dispatch => {
+  // starts get request to API
+  dispatch(requestMessages());
+  return axios.get('/api/messages/')
+    .then(messagesReceived => dispatch(receiveMessages(messagesReceived)))
+    .catch(err => console.log(err));
+};
 
-export const searchKeyword = (input) => {
-  console.log('searching...')
-  return (dispatch) => {
-    return axios.get(`/api/messages/search?word=${input}`)
-      .then(messagesReceived => {
-        dispatch(receiveMessages(messagesReceived))
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  }
-}
-
-export const requestSearch = (query) => {
-  return {
-    type: 'REQUEST_SEARCH',
-    query
-  }
-}
+export const searchKeyword = (input) =>
+  dispatch => axios.get(`/api/messages/search?word=${input}`)
+    .then(messagesReceived => dispatch(receiveMessages(messagesReceived)))
+    .catch(err => console.log(err));
