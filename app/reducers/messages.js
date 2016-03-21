@@ -6,22 +6,24 @@ const initialState = {
   filter: 'SHOW_ALL',
 };
 
-const addNewMessages = (oldMessages, newMessages) => {
+const addUniqueMessages = (oldMessages, newMessages) => {
   let ids = oldMessages.map(message => message.id);
   return newMessages.filter(message => !ids.some(id => id === message.id))
-}
+};
+
 export default function messages(state = initialState, action) {
   switch (action.type) {
     case 'ADD_MESSAGE':
       return Object.assign({}, state, 
         { 
+          messages: [...state.messages, action.message],
           rawMessages: [...state.rawMessages, action.message]
         });
     case 'RECEIVE_MESSAGES':
       return Object.assign({}, state,
         {
           messages: action.messages,
-          rawMessages: state.rawMessages.concat(addNewMessages(state.rawMessages, action.messages))
+          rawMessages: state.rawMessages.concat(addUniqueMessages(state.rawMessages, action.messages))
         });
     case 'FILTER_MESSAGES':
       return Object.assign({}, state, 
