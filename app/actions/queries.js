@@ -22,6 +22,7 @@ export function getSearchResults(word) {
     );
 }
 
+// TODO: add number of messages for each hour?
 export function getAvgMessagesByHour({ year, month, day }) {
   return connection
     .then(conn =>
