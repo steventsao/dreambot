@@ -11,6 +11,12 @@ const addUniqueMessages = (oldMessages, newMessages) => {
   return newMessages.filter(message => !ids.some(id => id === message.id))
 };
 
+const sortMessages = (array) => {
+  return array.sort((a, b) => {
+    return new Date(b.ts) - new Date(a.ts)
+  });
+};
+
 export default function messages(state = initialState, action) {
   switch (action.type) {
     case 'ADD_MESSAGE':
@@ -22,20 +28,20 @@ export default function messages(state = initialState, action) {
     case 'RECEIVE_MESSAGES':
       return Object.assign({}, state,
         {
-          messages: action.messages,
-          rawMessages: state.rawMessages.concat(addUniqueMessages(state.rawMessages, action.messages))
+          messages: sortMessages(action.messages),
+          rawMessages: sortMessages(state.rawMessages.concat(addUniqueMessages(state.rawMessages, action.messages)))
         });
     case 'FILTER_MESSAGES':
       return Object.assign({}, state, 
         {
           filter: 'SHOW_USER',
           username: action.username,
-          messages: state.rawMessages.filter(message => message.name === action.username)
+          messages: sortMessages(state.rawMessages.filter(message => message.name === action.username))
         });
     case 'SHOW_ALL':
       return Object.assign({}, state,
         { 
-          messages: state.rawMessages 
+          messages: sortMessages(state.rawMessages) 
         });
     case 'REQUEST_MESSAGES':
     default:

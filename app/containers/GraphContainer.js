@@ -5,7 +5,7 @@ import Graph from '../components/Graph';
 
 // const GraphContainer = React.createClass({
 //   render: function() {
-    
+
 //     return (
 //       <Graph labels={this.props.labels} data={this.props.data} dataAvg={this.props.dataAvg}/>
 //     )
@@ -13,10 +13,11 @@ import Graph from '../components/Graph';
 // })
 
 const mapStateToProps = (state) => {
+ let reverseState = Object.assign({}, state);
   return {
-    labels: state.messages.messages.map(message => new Date(message.ts).toLocaleDateString()),
-    data: state.messages.messages.map(message => message.score ),
-    dataAvg: state.messages.messages.map(message => message.comparative)
+    labels: reverseState.messages.messages.map(message => new Date(message.ts)).sort((a, b) => a - b).map(a => a.toLocaleDateString()),
+    data: reverseState.messages.messages.map(message => message.score),
+    dataAvg: reverseState.messages.messages.map(message => message.comparative)
   };
 };
 
