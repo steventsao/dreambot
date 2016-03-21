@@ -7,7 +7,7 @@ export const requestAverages = delimiter => (
 
 export const RECEIVE_AVERAGES = 'RECEIVE_AVERAGES';
 export const receiveAverages = (data, delimiter, date) => (
-  { type: RECEIVE_AVERAGES, data, delimiter, date }
+  { type: RECEIVE_AVERAGES, data, delimiter, date, receivedAt: Date.now() }
 );
 
 export const CHANGE_DATE = 'CHANGE_DATE';

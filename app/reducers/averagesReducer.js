@@ -31,7 +31,7 @@ function byHour(state = initialState, action) {
         available: {
           ...state.available,
           [`${year}-${month}-${day}`]: {
-            receivedAt: Date.now(),
+            receivedAt: action.receivedAt,
             data: action.data
           }
         }
