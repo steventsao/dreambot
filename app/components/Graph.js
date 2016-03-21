@@ -47,6 +47,7 @@ const Graph = ({labels = [], data = [], dataAvg = [] }) => {
         }
       ]
     };
+    console.log('*********',dataset);
       return (
       <LineChart style={styles.graph} data={dataset} options={dataOptions} width="500" height="500"/>
     )
