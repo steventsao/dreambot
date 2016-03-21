@@ -1,15 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import Test from '../components/Test';
 
-import { getAvgMessagesByHour, getAvgMessagesByDayOfWeek } from '../actions/queries';
+import { getAveragesByHour } from '../actions';
 
 const TestContainer = React.createClass({
   componentDidMount() {
-    getAvgMessagesByHour({ year: 2016, month: 3, day: 19 })
-      .then(data => console.log('DATA: ', data));
+    const { year, month, day } = {
+      year: moment().year(),
+      month: moment().month() + 1,
+      day: moment().date()
+    };
+    this.props.dispatch(getAveragesByHour({ year, month, day }));
   },
+
   render() {
     return (
       <Test {...this.props} />
