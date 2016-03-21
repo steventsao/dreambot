@@ -2,9 +2,8 @@ import React from 'react';
 
 const Test = React.createClass({
   render() {
-    console.log('PROPS: ', this.props);
     return (
-      <div>hello world</div>
+      <div>hello world: {JSON.stringify(this.props.averages)}</div>
     );
   }
 });
