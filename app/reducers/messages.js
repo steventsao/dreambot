@@ -16,6 +16,7 @@ export default function messages(state = initialState, action) {
     case 'ADD_MESSAGE':
       return Object.assign({}, state, 
         { 
+          messages: [...state.messages, action.message],
           rawMessages: [...state.rawMessages, action.message]
         });
     case 'RECEIVE_MESSAGES':
