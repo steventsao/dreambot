@@ -5,34 +5,28 @@ import moment from 'moment';
 import Graph from '../components/Graph';
 import Test from '../components/Test';
 
-import { getAveragesByHour } from '../actions';
+import { getHoursIfNeeded } from '../actions';
 
 const TestContainer = React.createClass({
-  getDefaultProps() {
-    return {
-      year: moment().year(),
-      month: moment().month() + 1,
-      day: moment().date() - 2
-    };
-  },
-
   componentDidMount() {
-    const { year, month, day } = this.props;
-    this.props.dispatch(getAveragesByHour({ year, month, day }));
+    const { year, month, day } = this.props.displayedDate;
+    this.props.dispatch(getHoursIfNeeded({ year, month, day }));
   },
 
   getAverages(date) {
-    const { year, month, day } = date;
-    this.props.dispatch(getAveragesByHour({ year, month, day }));
+    this.props.dispatch(getHoursIfNeeded(date));
   },
 
   render() {
-    const { currentDate, averages } = this.props;
-    const labels = averages[currentDate] && averages[currentDate].map(obj => moment().hour(obj.group).format('hA'));
-    const data = averages[currentDate] && averages[currentDate].map(obj => obj.reduction);
+    const { displayedDate: { year, month, day }, available } = this.props;
+    const key = `${year}-${month}-${day}`;
+    console.log('KEY IS: ', key);
+    const labels = available[key] && available[key].data.map(obj => moment().hour(obj.group).format('hA'));
+    const data = available[key] && available[key].data.map(obj => obj.reduction);
     return (
       <div>
         <Test {...this.props} />
+        <Selector onSubmit={this.getAverages} />
         <Graph labels={labels} data={data} />
       </div>
     );
@@ -41,9 +35,31 @@ const TestContainer = React.createClass({
 
 function mapStateToProps(state) {
   return {
-    averages: state.averages.byHour.averages,
-    currentDate: state.averages.byHour.currentDate
+    available: state.averages.byHour.available,
+    displayedDate: state.averages.byHour.displayedDate
   };
 }
 
 export default connect(mapStateToProps)(TestContainer);
+
+
+const Selector = React.createClass({
+  handleClick() {
+    this.props.onSubmit({
+      year: Number(this._year.value),
+      month: Number(this._month.value),
+      day: Number(this._day.value)
+    });
+  },
+
+  render() {
+    return (
+      <div>
+        <input type="input" placeholder="year" defaultValue="2016" ref={ref => this._year = ref} />
+        <input type="input" placeholder="month" ref={ref => this._month = ref} />
+        <input type="input" placeholder="day" ref={ref => this._day = ref} />
+        <button type="submit" onClick={this.handleClick}>submit</button>
+      </div>
+    );
+  }
+});
