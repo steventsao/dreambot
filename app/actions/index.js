@@ -1,5 +1,6 @@
-import * as queries from './queries';
+import { getSearchResults, getMessages } from './queries';
 
+export * from './averagesActions';
 export * from './notificationsActions';
 
 export const ADD_MESSAGE = 'ADD_MESSAGE';
@@ -33,7 +34,7 @@ export const requestSearch = query => ({ type: 'REQUEST_SEARCH', query });
 
 export const fetchMessages = () => dispatch => {
   dispatch(requestMessages());
-  return queries.getMessages()
+  return getMessages()
     .then(messagesReceived => dispatch(receiveMessages(messagesReceived)))
     .catch(err => console.log(err));
 };
@@ -53,28 +54,9 @@ export const fetchCategories = () => dispatch => {
 };
 
 export const searchKeyword = (input) =>
-  dispatch => queries.getSearchResults(input)
+  dispatch => getSearchResults(input)
     .then(messagesReceived => dispatch(receiveMessages(messagesReceived)))
     .catch(err => console.log(err));
-
-
-
-export const requestAverages = delimiter => (
-  { type: REQUEST_AVERAGES, delimiter }
-);
-
-export const RECEIVE_AVERAGES = 'RECEIVE_AVERAGES';
-export const receiveAverages = (averages, delimiter, date) => (
-  { type: RECEIVE_AVERAGES, averages, delimiter, date }
-);
-
-
-export const getAveragesByHour = date => dispatch => {
-  dispatch(requestAverages('BY_HOUR'));
-  return queries.getAvgMessagesByHour(date)
-    .then(averages => dispatch(receiveAverages(averages, 'BY_HOUR', date)))
-    .catch(err => console.log(err));
-};
 
 export const receiveMessageVolume = (groups) => (
   {
@@ -102,7 +84,7 @@ export const receiveWordCount = (dict) => (
   {
     type: 'RECEIVE_WORD_COUNT',
     words: dict
-  }  
+  }
 )
 
 export const getWordCount = () => dispatch => {
