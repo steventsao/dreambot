@@ -48,7 +48,7 @@ import styles from '../styles';
 
 // USING REACT-CHARTJS
 
-const Graph = ({labels, data, dataAvg}) => {
+const Graph = ({labels = [], data = [], dataAvg = [] }) => {
   const dataOptions = {
         animation: {
           duration: 2000,
