@@ -1,5 +1,7 @@
 import * as queries from './queries';
 
+export * from './notificationsActions';
+
 export const ADD_MESSAGE = 'ADD_MESSAGE';
 export const addMessage = message => ({ type: ADD_MESSAGE, message });
 
