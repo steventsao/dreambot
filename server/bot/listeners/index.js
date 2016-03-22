@@ -6,6 +6,6 @@ import glob from 'glob';
 export default glob.sync('*.js', { ignore: 'index.js', cwd: __dirname })
   .reduce((obj, file) => {
     file = file.replace('.js', '');
-    obj[file] = require(`./${file}`);
+    obj[file] = require(`./${file}`).default;
     return obj;
   }, {});
