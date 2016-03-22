@@ -6,9 +6,9 @@ if (!process.env.token) {
 }
 
 // Start the bot and grab the controller
-import controller from '../utils/spawnBot';
+var controller = require('../utils/spawnBot');
 
-import listeners from './listeners';
+var listeners = require('./listeners');
 
 // add listeners to controller
 Object.keys(listeners).forEach((listener) => {
