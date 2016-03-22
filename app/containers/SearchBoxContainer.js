@@ -15,6 +15,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     detectChange,
+    disableFilter() {
+      dispatch(disableFilterMessages());
+    },
     handleKeyPress: (input) => {
       if (input) {
         dispatch(searchKeyword(input))
