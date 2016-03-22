@@ -6,7 +6,7 @@ import { connection, r } from '../utils/rethink';
 import { addMessage, fetchMessages } from '../actions';
 
 export default function configureStore(initialState) {
-  const logger = createLogger();
+  const logger = createLogger({collapsed: true});
   const store = createStore(
     rootReducer,
     applyMiddleware(thunk, logger)
