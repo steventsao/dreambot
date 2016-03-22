@@ -1,13 +1,13 @@
-import { getUserInfo } from '../../utils/botUtils';
-import botModel from '../botModel.js';
+var getUserInfo = require('../../utils/botUtils').getUserInfo;
+var botModel = require('../botModel.js');
 
-export default function (controller) {
-  controller.hears(['join'], 'direct_message', (bot, message) => {
+module.exports = function (controller) {
+  controller.hears(['join'], 'direct_message',function(bot, message) {
     getUserInfo(bot, message.user)
       .then((user) => {
         botModel.subscribeUser(user);
     });
-    bot.startConversation(message, (err, convo) => {
+    bot.startConversation(message, function (err, convo) {
       convo.say('You have been resubscribed, thanks!')
     });
   });
