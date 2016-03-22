@@ -1,8 +1,7 @@
 import path from 'path';
 
 import express from 'express';
-import app = express();
-import server from 'http'.createServer(app);
+import http from 'http';
 import RethinkdbWebsocketServer from 'rethinkdb-websocket-server';
 
 import webpack from 'webpack';
@@ -11,6 +10,9 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 
 import config from '../webpack.config.js';
 import env from './utils/envDefaults';
+
+const app = express();
+const server = http.createServer(app)
 
 RethinkdbWebsocketServer.listen({
   httpServer: server,
