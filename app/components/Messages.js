@@ -12,7 +12,7 @@ const Messages = ({ messages, filterUserMessages }) => {
         return (
           <div onClick={()=>{filterUserMessages(message.name)}}
             className="box">
-            <div className="content">
+            <div key={message.id} className="content">
               <p>
               <strong>{message.name}:</strong> {message.text} <small>{time.fromNow()}</small>
               </p>
