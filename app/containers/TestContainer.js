@@ -9,8 +9,8 @@ import { getHoursIfNeeded } from '../actions';
 
 const TestContainer = React.createClass({
   componentDidMount() {
-    const { year, month, day } = this.props.displayedDate;
-    this.props.dispatch(getHoursIfNeeded({ year, month, day }));
+    const { displayedDate } = this.props;
+    this.props.dispatch(getHoursIfNeeded(displayedDate));
   },
 
   getAverages(date) {
@@ -20,7 +20,6 @@ const TestContainer = React.createClass({
   render() {
     const { displayedDate: { year, month, day }, available } = this.props;
     const key = `${year}-${month}-${day}`;
-    console.log('KEY IS: ', key);
     const labels = available[key] && available[key].data.map(obj => moment().hour(obj.group).format('hA'));
     const data = available[key] && available[key].data.map(obj => obj.reduction);
     return (
