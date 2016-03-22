@@ -5,26 +5,36 @@ import moment from 'moment';
 import Graph from '../components/Graph';
 import Test from '../components/Test';
 
-import { getHoursIfNeeded } from '../actions';
+import { getHoursIfNeeded, notify } from '../actions';
 
 const TestContainer = React.createClass({
   componentDidMount() {
-    const { displayedDate } = this.props;
-    this.props.dispatch(getHoursIfNeeded(displayedDate));
+    const { year, month, day } = this.props.displayedDate;
+    this.props.dispatch(getHoursIfNeeded({ year, month, day }));
   },
 
   getAverages(date) {
     this.props.dispatch(getHoursIfNeeded(date));
   },
 
+  act() {
+    if (!this.n) {
+      this.n = 1;
+    }
+    this.props.dispatch(notify(`This is message ${this.n}`, 'error'));
+    this.n++;
+  },
+
   render() {
     const { displayedDate: { year, month, day }, available } = this.props;
     const key = `${year}-${month}-${day}`;
+    console.log('KEY IS: ', key);
     const labels = available[key] && available[key].data.map(obj => moment().hour(obj.group).format('hA'));
     const data = available[key] && available[key].data.map(obj => obj.reduction);
     return (
       <div>
         <Test {...this.props} />
+        <button onClick={this.act}>act</button>
         <Selector onSubmit={this.getAverages} />
         <Graph labels={labels} data={data} />
       </div>
