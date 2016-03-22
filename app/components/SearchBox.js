@@ -12,7 +12,7 @@ const SearchBox = React.createClass({
   },
   render() {
     return (
-      <input ref= { (c) =>{ this._input = c; } }
+      <input ref= { (c) => { this._input = c; } }
         type="text"
         // onChange={this.props.detectChange}
         onChange={this.handleChange}

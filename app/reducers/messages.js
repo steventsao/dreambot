@@ -13,7 +13,7 @@ const addUniqueMessages = (oldMessages, newMessages) => {
 
 const sortMessages = (array) => {
   return array.sort((a, b) => {
-    return new Date(b.ts) - new Date(a.ts)
+    return new Date(b.ts).getTime() - new Date(a.ts).getTime()
   });
 };
 
@@ -41,7 +41,7 @@ export default function messages(state = initialState, action) {
     case 'SHOW_ALL':
       return Object.assign({}, state,
         { 
-          messages: sortMessages(state.rawMessages) 
+          messages: state.rawMessages 
         });
     case 'REQUEST_MESSAGES':
     default:
