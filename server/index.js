@@ -1,16 +1,16 @@
-var path = require('path');
+import path from 'path';
 
-var express = require('express');
-var app = express();
-var server = require('http').createServer(app);
-var RethinkdbWebsocketServer = require('rethinkdb-websocket-server');
+import express from 'express';
+import app = express();
+import server from 'http'.createServer(app);
+import RethinkdbWebsocketServer from 'rethinkdb-websocket-server';
 
-var webpack = require('webpack');
-var webpackMiddleware = require('webpack-dev-middleware');
-var webpackHotMiddleware = require('webpack-hot-middleware');
+import webpack from 'webpack';
+import webpackMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
 
-var config = require('../webpack.config.js');
-var env = require('./utils/envDefaults');
+import config from '../webpack.config.js';
+import env from './utils/envDefaults';
 
 RethinkdbWebsocketServer.listen({
   httpServer: server,
@@ -20,15 +20,15 @@ RethinkdbWebsocketServer.listen({
   unsafelyAllowAnyQuery: true
 });
 
-require('./bot/bot.js');
+import './bot/bot.js';
 
 // Add routes to app here:
 // ex: app.use('/api', apiRoutes);
 
 // referenced https://github.com/christianalfoni/webpack-express-boilerplate
 if (env.isDev) {
-  var compiler = webpack(config);
-  var middleware = webpackMiddleware(compiler, {
+  const compiler = webpack(config);
+  const middleware = webpackMiddleware(compiler, {
     publicPath: config.output.publicPath,
     contentBase: 'src',
     stats: {

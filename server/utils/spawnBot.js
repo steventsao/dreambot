@@ -1,8 +1,8 @@
 // This file spawns a new bot, then exports the controller for use elsewhere
 
-var Botkit = require('botkit');
+import Botkit from 'botkit';
 
-var controller = Botkit.slackbot({
+const controller = Botkit.slackbot({
     debug: true,
 });
 
@@ -10,4 +10,4 @@ controller.spawn({
     token: process.env.token
 }).startRTM();
 
-module.exports = controller;
+export default controller;
