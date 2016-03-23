@@ -3,13 +3,18 @@ import { connect } from 'react-redux';
 import VolumeGraph from '../components/VolumeGraph';
 
 const mapStateToProps = (state) => {
-  let reverseState = Object.assign({}, state);
-  const comparator = (a, b) => { return new Date(a.ts) - new Date(b.ts) };
-  reverseState.messages.messages.sort(comparator);
+  // create an array plotting 24 hours
+  let messageByHours = [];
+  for (var i = 0; i < 23; i ++) {
+    messageByHours.push({ hour: i, count: 0 });
+  }
+  state.messageVolume.forEach(item => {
+    messageByHours[item[group]].count = item['reduction'];
+  });
+
   return {
-    labels: reverseState.messages.messages.map(message => new Date(message.ts).toLocaleString()),
-    data: reverseState.messages.messages.map(message => message.score),
-    dataAvg: reverseState.messages.messages.map(message => message.comparative)
+    labels: messageByHours.map((item , i) => i),
+    data: messageByHours.map(item => item.count),
   };
 };
 

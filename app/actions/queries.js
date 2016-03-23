@@ -31,7 +31,7 @@ export function getAvgMessagesByHour({ year, month, day }) {
           r.row('ts').date().eq(r.time(year, month, day, 'Z'))
         )
         .group(r.row('ts').hours())
-        .avg('score')
+        .count()
         .run(conn)
         .then(cursor => cursor.toArray())
     );

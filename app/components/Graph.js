@@ -5,7 +5,7 @@ import styles from '../styles';
 
 // USING REACT-CHARTJS
 
-const Graph = ({labels = [], data = [], dataAvg = [] }) => {
+const Graph = ({labels = [], data = [], dataAvg = [], barChartDatasets = [], barChartLabels = [] }) => {
   const dataOptions = {
         animation: {
           duration: 2000,
@@ -49,7 +49,7 @@ const Graph = ({labels = [], data = [], dataAvg = [] }) => {
       ]
     };
   const barChartData = {
-    labels: ["9AM", "10AM", "11AM", "12PM", "1PM", "2PM", "3PM", "4PM", "5PM", '6PM', '7PM', '8PM'],
+    labels: [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23' ],
     datasets: [
         {
             label: "My First dataset",
@@ -57,7 +57,7 @@ const Graph = ({labels = [], data = [], dataAvg = [] }) => {
             strokeColor: "rgba(220,220,220,0.8)",
             highlightFill: "rgba(220,220,220,0.75)",
             highlightStroke: "rgba(220,220,220,1)",
-            data: [30, 30, 30, 30, 30, 50, 30, 35, 30, 30, 30]
+            data: barChartDatasets
         }
     ]
   };

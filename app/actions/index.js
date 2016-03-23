@@ -59,6 +59,28 @@ export const getAveragesByHour = date => dispatch => {
     .catch(err => console.log(err));
 };
 
+export const receiveMessageVolume = (groups) => (
+  {
+    type: 'RECEIVE_MESSAGE_VOLUME',
+    groups,
+  }
+)
+
+export const getMessageVolume = () => dispatch => {
+  let today = new Date();
+  let todaySpecs = {
+    year: today.getYear() + 1900,
+    month: today.getMonth() + 1,
+    day: today.getDate()
+  }
+  return queries.getAvgMessagesByHour(todaySpecs)
+    .then(res => {
+      dispatch(receiveMessageVolume(res))
+      console.log('BY VOLUME*******');
+      console.log(res);
+    })
+}
+
 export const receiveWordCount = (dict) => (
   {
     type: 'RECEIVE_WORD_COUNT',

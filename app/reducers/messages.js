@@ -3,6 +3,7 @@
 const initialState = {
   messages: [],
   rawMessages: [],
+  messageVolume: {},
   filter: 'SHOW_ALL',
 };
 
@@ -31,6 +32,10 @@ export default function messages(state = initialState, action) {
           messages: sortMessages(action.messages),
           rawMessages: sortMessages(state.rawMessages.concat(addUniqueMessages(state.rawMessages, action.messages)))
         });
+    case 'RECEIVE_MESSAGE_VOLUME':
+      return Object.assign({}, state, {
+        messageVolume: action.groups
+      });
     case 'FILTER_MESSAGES':
       return Object.assign({}, state, 
         {
