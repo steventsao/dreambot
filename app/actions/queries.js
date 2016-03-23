@@ -22,8 +22,21 @@ export function getSearchResults(word) {
     );
 }
 
-// TODO: add number of messages for each hour?
 export function getAvgMessagesByHour({ year, month, day }) {
+   return connection
+     .then(conn =>
+       r.table('messages')
+         .filter(
+            r.row('ts').date().eq(r.time(year, month, day, 'Z'))
+          )
+          .group(r.row('ts').hours())
+          .avg('score')
+          .run(conn)
+          .then(cursor => cursor.toArray())
+      );
+}
+// TODO: add number of messages for each hour?
+export function getVolumeOfMessagesByHour({ year, month, day }) {
   return connection
     .then(conn =>
       r.table('messages')
@@ -31,7 +44,7 @@ export function getAvgMessagesByHour({ year, month, day }) {
           r.row('ts').date().eq(r.time(year, month, day, 'Z'))
         )
         .group(r.row('ts').hours())
-        .avg('score')
+        .count()
         .run(conn)
         .then(cursor => cursor.toArray())
     );
@@ -46,4 +59,15 @@ export function getAvgMessagesByDayOfWeek() {
         .run(conn)
         .then(cursor => cursor.toArray())
     );
+}
+
+export function getAllUniqueWords() {
+  return connection
+    .then(conn =>
+      r.table('messages')
+      .getField('tokens')
+      .concatMap(doc => doc)
+      .run(conn)
+      .then(cursor => cursor.toArray())
+      )
 }

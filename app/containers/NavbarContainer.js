@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import React from 'react';
 import Navbar from '../components/Navbar';
+import _ from 'lodash';
 
 const getAnalytics = (messages) => {
   let analytics = messages.reduce((acc, message) => {
@@ -19,15 +20,10 @@ const getAnalytics = (messages) => {
     return acc;
   }, { names: {}, totalSentiment: 0, topics: {} });
 
-  let topThreeTopics = Object.keys(analytics.topics).sort((a, b) =>
-    analytics.topics[b] - analytics.topics[a]
-  ).slice(0, 3);
-
   let mostActiveUsers = Object.keys(analytics.names).sort((a, b) =>
     analytics.names[b].length - analytics.names[a].length
   );
 
-  analytics.topics = topThreeTopics;
   analytics.mostActiveUsers = mostActiveUsers;
 
   return analytics;
@@ -36,7 +32,12 @@ const getAnalytics = (messages) => {
 let mapStateToProps = (state) => {
   return {
     messages: state.messages.messages,
-    analytics: getAnalytics(state.messages.messages)
+    analytics: Object.assign({}, getAnalytics(state.messages.messages), {
+      topics: Object.keys(state.wordCount).map(key => ({ [key]:state.wordCount[key] } ))
+      .sort((a, b) => b[Object.keys(b).join('')] - a[Object.keys(a).join('')])
+      .slice(0,3)
+      .map(pair => Object.keys(pair).join(''))
+    })
   }
 };
 
