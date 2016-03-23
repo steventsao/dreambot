@@ -20,15 +20,10 @@ const getAnalytics = (messages) => {
     return acc;
   }, { names: {}, totalSentiment: 0, topics: {} });
 
-  // let topThreeTopics = Object.keys(analytics.topics).sort((a, b) =>
-  //   analytics.topics[b] - analytics.topics[a]
-  // ).slice(0, 3);
-
   let mostActiveUsers = Object.keys(analytics.names).sort((a, b) =>
     analytics.names[b].length - analytics.names[a].length
   );
 
-  // analytics.topics = topThreeTopics;
   analytics.mostActiveUsers = mostActiveUsers;
 
   return analytics;
