@@ -70,7 +70,7 @@ export function getAllUniqueWords() {
       .run(conn)
       .then(cursor => cursor.toArray())
       )
-
+}
 export function getClassifications(){
   return connection
   .then(conn =>

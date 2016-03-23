@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
   SearchBoxReducer,
   averages,
   notifications,
-  wordCount
+  wordCount,
   classify
 });
 
