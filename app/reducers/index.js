@@ -4,6 +4,7 @@ import SearchBoxReducer from './SearchBoxReducer';
 import averages from './averagesReducer';
 import notifications from './notificationsReducer';
 import wordCount from './wordCountReducer';
+import classify from './questionReducer'
 
 const rootReducer = combineReducers({
   messages,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   averages,
   notifications,
   wordCount
+  classify
 });
 
 export default rootReducer;

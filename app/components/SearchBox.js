@@ -1,6 +1,4 @@
 import React from 'react';
-
-
 const SearchBox = React.createClass({
   handleKeyPress(e) {
     if (e.which === 13) {
@@ -24,5 +22,4 @@ const SearchBox = React.createClass({
       );
   }
 });
-
 export default SearchBox;
