@@ -2,10 +2,10 @@ import _ from 'lodash';
 import botModel from '../botModel.js';
 import sentiment from 'sentiment';
 import natural from 'natural';
-import { getUserInfo } from '../../utils/botUtils';
+import getUserInfo from '../../utils/botUtils';
 
 export default (controller) => {
-  controller.hears('', 'ambient', function (bot, message) {
+  controller.hears('', 'ambient', (bot, message) => {
     getUserInfo(bot, message.user)
       .then((user) => {
         // add real name to message object and convert timestamp to Date object
