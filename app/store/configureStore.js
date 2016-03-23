@@ -25,12 +25,10 @@ export default function configureStore(initialState) {
     .then(() => {
       console.log('Fetched all messages from database');
       store.dispatch(getWordCount());
-    })
-    .then(() => {
       store.dispatch(getMessageVolume());
-      console.log('Fetched all words')
     })
     .then(() => {
+      console.log('Fetched all words')
       console.log('Fetched message volume');
     })
     .catch((err) => {
