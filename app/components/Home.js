@@ -3,20 +3,25 @@ import ReactRouter from 'react-router';
 import MessagesContainer from '../containers/MessagesContainer';
 import GraphContainer from '../containers/GraphContainer';
 import NavbarContainer from '../containers/NavbarContainer';
-import LeftPanel from './LeftPanel';
+import LeftPanelContainer from '../containers/LeftPanelContainer';
+import SearchBoxContainer from '../containers/SearchBoxContainer';
+import WordCountBarGraphContainer from '../containers/WordCountBarGraphContainer';
 
 const Home = React.createClass({
   render: function () {
     return (
       <div className="container is-fluid">
         <NavbarContainer/>
-        <h1 className="title is-text-centered" >Dream Bot</h1>
+        <h1 className="control">
+          <SearchBoxContainer />
+        </h1>
         <div className='columns'>
           <div className="column is-2">
-            <LeftPanel />
+            <LeftPanelContainer />
           </div>
           <div className="column is-text-centered">
             <GraphContainer />
+            <WordCountBarGraphContainer />
           </div>
           <div className="column is-quarter">
             <MessagesContainer />

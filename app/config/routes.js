@@ -1,13 +1,15 @@
 import React from 'react';
-import { Router, Route, IndexRoute } from 'react-router';
+import { Route, IndexRoute } from 'react-router';
 
 import Main from '../components/Main';
 import Home from '../components/Home';
+import TestContainer from '../containers/TestContainer';
 
 const Routes = (
-    <Route path='/' component={Main}>
-      <IndexRoute component={Home} />
-    </Route>
+  <Route path="/" component={Main}>
+    <IndexRoute component={Home} />
+    <Route path="/test" component={TestContainer} />
+  </Route>
 );
 
 export default Routes;

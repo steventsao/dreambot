@@ -1,16 +1,18 @@
 import React from 'react';
 import moment from 'moment';
 
-const Messages = ({ messages }) => {
-  const comparator = (a, b) => { return b.ts - a.ts };
+const Messages = ({ messages, filterUserMessages }) => {
+  const comparator = (a, b) => { return new Date(b.ts) - new Date(a.ts) };
+  console.log()
   const sorted = messages.sort(comparator);
   return (
     <div>
       {sorted.map(message => {
-        let time = moment(new Date(message.ts * 1000));
+        let time = moment(new Date(message.ts));
         return (
-          <div className="box">
-            <div className="content">
+          <div onClick={()=>{filterUserMessages(message.name)}}
+            className="box">
+            <div key={message.id} className="content">
               <p>
               <strong>{message.name}:</strong> {message.text} <small>{time.fromNow()}</small>
               </p>
