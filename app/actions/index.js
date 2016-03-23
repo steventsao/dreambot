@@ -73,7 +73,7 @@ export const getMessageVolume = () => dispatch => {
     month: today.getMonth() + 1,
     day: today.getDate()
   }
-  return queries.getAvgMessagesByHour(todaySpecs)
+  return queries.getVolumeOfMessagesByHour(todaySpecs)
     .then(res => {
       dispatch(receiveMessageVolume(res))
       console.log('BY VOLUME*******');
