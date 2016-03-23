@@ -1,14 +1,14 @@
-var r = require('rethinkdb')
-var sentiment = require('sentiment');
-var _ = require('lodash');
-var connect = require('../utils/connect');
+import r from 'rethinkdb';
+import sentiment from 'sentiment';
+import _ from 'lodash';
+import connect from '../utils/connect';
 
-module.exports = {
+export default {
 
-  storeMessage: function(msg, cb){
+  storeMessage: (msg, cb) => {
     console.log('saving message');
 
-    var allData = _.extend(msg, sentiment(msg.text));
+    let allData = _.extend(msg, sentiment(msg.text));
 
     connect()
       .then(conn => {
@@ -24,7 +24,7 @@ module.exports = {
         console.log(err);
       });
   },
-  storeUser: function(user, cb){
+  storeUser: (user, cb) => {
     connect()
       .then(conn => {
         r.table('users').insert(user).run(conn)
@@ -35,8 +35,8 @@ module.exports = {
         console.log(err);
       })
   },
-  updateUser: function(user, cb){
-    var name = user.name;
+  updateUser: (user, cb) => {
+    let name = user.name;
     connect()
       .then(conn => {
         r.table('users').filter({name: name}).update({dnd: true}).run(conn)
@@ -47,8 +47,8 @@ module.exports = {
         console.log(err);
       })
   },
-  checkUser: function(user, cb){
-    var name = user.name;
+  checkUser: (user, cb) => {
+    let name = user.name;
       connect()
       .then(conn => {
         var user = r.table('users').filter({name: name}).run(conn)
@@ -62,8 +62,8 @@ module.exports = {
         console.log(err);
       })
     },
-  subscribeUser: function(user){
-    var name = user.name;
+  subscribeUser: (user) => {
+    let name = user.name;
     connect()
       .then(conn => {
         r.table('users').filter({name: name}).update({dnd: false}).run(conn)

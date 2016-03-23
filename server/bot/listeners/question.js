@@ -1,10 +1,10 @@
-var _ = require('lodash');
-var botModel = require('../botModel.js');
-var sentiment = require('sentiment');
-var natural = require('natural');
-var getUserInfo = require('../../utils/botUtils').getUserInfo;
+import _ from 'lodash';
+import botModel from '../botModel.js';
+import sentiment from 'sentiment';
+import natural from 'natural';
+import { getUserInfo } from '../../utils/botUtils';
 
-module.exports = function (controller) {
+export default (controller) => {
   controller.hears('', 'ambient', function (bot, message) {
     getUserInfo(bot, message.user)
       .then((user) => {
@@ -27,9 +27,9 @@ module.exports = function (controller) {
       });
   });
 
-  var isQuestion = function (message) {
-    var array = message.split(' ');
-    var questionWords = ['who', 'what', 'where', 'how', 'when', 'why', 'does', 'can', 'is'];
+  const isQuestion = (message) => {
+    const array = message.split(' ');
+    const questionWords = ['who', 'what', 'where', 'how', 'when', 'why', 'does', 'can', 'is'];
     if (questionWords.indexOf(array[0]) !== -1) {
       return true;
     }
@@ -41,15 +41,15 @@ module.exports = function (controller) {
   };
 
   // TODO: find a way to extract classifier so we aren't loading the json file on each request
-  var classifyQuestion = function (bot, message, user) {
-    natural.BayesClassifier.load('./data/classifier.json', null, function (err, classifier) {
-      botModel.checkUser(user, function(status){
+  const classifyQuestion = (bot, message, user) => {
+    natural.BayesClassifier.load('./data/classifier.json', null, (err, classifier) => {
+      botModel.checkUser(user, (status) => {
           if(status === false || status === undefined){
-            bot.startPrivateConversation(message, function (err, convo) {
+            bot.startPrivateConversation(message, (err, convo) => {
               convo.ask('Was your question about ' + classifier.classify(message.text) + '? If you would like to stop recieving these messages, please reply with "stop".', [
                 {
                   pattern: bot.utterances.yes,
-                  callback: function (response, convo) {
+                  callback: (response, convo) => {
                     convo.say('Noted, thanks for making me smarter!');
 
                     saveMsg(message, classifier.classify(message.text));
@@ -71,25 +71,25 @@ module.exports = function (controller) {
                 {
                   pattern: bot.utterances.no,
                   default: true,
-                  callback: function (response, convo) {
-                    var sortedArr = classifier.getClassifications(message.text).sort(function (a, b) {
+                  callback: (response, convo) => {
+                    let sortedArr = classifier.getClassifications(message.text).sort(function (a, b) {
                         return b.value - a.value;
                     });
 
-                    var topThree = [sortedArr[0].label, sortedArr[1].label, sortedArr[2].label];
+                    let topThree = [sortedArr[0].label, sortedArr[1].label, sortedArr[2].label];
                     //convo.say(JSON.stringify(sortedArr));
                     convo.ask('Hmm, was it about ' + topThree[0] + ', ' + topThree[1] + ' or ' + topThree[2] + '? If you do not see a fitting category, reply with "none"', [
                       {
                         pattern: 'none',
                         default: false,
-                        callback: function(response, convo){
+                        callback: (response, convo) => {
                           convo.say("Okay, sorry we couldn't categorize your question!");
                           convo.next();
                         },
                       },
                       {
                         default: true,
-                        callback: function(res, convo){
+                        callback: (res, convo) => {
                           convo.next();
                           // saveMsg(message, res.text);
                           convo.say('Recorded your question about ' + res.text + ', thanks for making me smarter!');
@@ -107,7 +107,7 @@ module.exports = function (controller) {
                 {
                   pattern: 'stop',
                   default: false,
-                  callback: function (response, convo){
+                  callback: (response, convo) => {
                     convo.say('You have been added to my do not disturb list, if you would ever like to contribute in the future please DM me with they keyword, "join", thanks!');
                     user.dnd = true;
                     botModel.updateUser(user);
@@ -121,12 +121,12 @@ module.exports = function (controller) {
 
 
 
-      var saveMsg = function (message, label) {
-        var classification = {
+      const saveMsg = (message, label) => {
+        let classification = {
           classification: label
         };
-        var allData = _.extend(message, classification);
-        botModel.storeMessage(allData, function () {
+        let allData = _.extend(message, classification);
+        botModel.storeMessage(allData, () => {
           console.log('I am categorizing your question');
         });
       };
