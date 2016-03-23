@@ -47,3 +47,14 @@ export function getAvgMessagesByDayOfWeek() {
         .then(cursor => cursor.toArray())
     );
 }
+
+export function getAllUniqueWords() {
+  return connection
+    .then(conn =>
+      r.table('messages')
+      .getField('tokens')
+      .concatMap(doc => doc)
+      .run(conn)
+      .then(cursor => cursor.toArray())
+      )
+}
