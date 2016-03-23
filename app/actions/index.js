@@ -24,6 +24,8 @@ export const isFetchingMessages = () => ({ type: IS_FETCHING_MESSAGES });
 export const RECEIVE_MESSAGES = 'RECEIVE_MESSAGES';
 export const receiveMessages = messages => ({ type: RECEIVE_MESSAGES, messages });
 
+
+
 export const requestSearch = query => ({ type: 'REQUEST_SEARCH', query });
 
 // thunk action creators to enable async calls
@@ -36,13 +38,27 @@ export const fetchMessages = () => dispatch => {
     .catch(err => console.log(err));
 };
 
+export const REQUEST_CATEGORIES = 'REQUEST_CATEGORIES';
+export const requestCategories = () => ({type: REQUEST_CATEGORIES})
+
+export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
+export const receiveCategories = categories => ({type: RECEIVE_CATEGORIES, categories})
+
+export const FETCH_CATEGORIES = 'FETCH_CATEGORIES';
+export const fetchCategories = () => dispatch => {
+  dispatch(requestCategories());
+  return queries.getClassifications()
+    .then(categoriesReceived => dispatch(receiveCategories(categoriesReceived)))
+    .catch(err => console.log(err));
+};
+
 export const searchKeyword = (input) =>
   dispatch => queries.getSearchResults(input)
     .then(messagesReceived => dispatch(receiveMessages(messagesReceived)))
     .catch(err => console.log(err));
 
 
-export const REQUEST_AVERAGES = 'REQUEST_AVERAGES';
+
 export const requestAverages = delimiter => (
   { type: REQUEST_AVERAGES, delimiter }
 );
@@ -51,6 +67,7 @@ export const RECEIVE_AVERAGES = 'RECEIVE_AVERAGES';
 export const receiveAverages = (averages, delimiter, date) => (
   { type: RECEIVE_AVERAGES, averages, delimiter, date }
 );
+
 
 export const getAveragesByHour = date => dispatch => {
   dispatch(requestAverages('BY_HOUR'));
