@@ -6,11 +6,14 @@ import Home from '../components/Home';
 import Questions from '../components/Questions'
 import TestContainer from '../containers/TestContainer';
 import QuestionsContainer from '../containers/QuestionsContainer';
+import AveragesContainer from '../containers/AveragesContainer';
+
 const Routes = (
   <Route path="/" component={Main}>
     <IndexRoute component={Home} />
     <Route path="/test" component={TestContainer} />
     <Route path="/questions" component={Questions} />
+    <Route path="/averages" component={AveragesContainer} />
   </Route>
 );
 

@@ -1,25 +1,43 @@
 import { combineReducers } from 'redux';
+import moment from 'moment';
 
-import { REQUEST_AVERAGES, RECEIVE_AVERAGES } from '../actions';
+import { REQUEST_AVERAGES, RECEIVE_AVERAGES, CHANGE_DATE } from '../actions';
 
-function byHour(state = { currentDate: '', isFetching: false, averages: {} }, action) {
+const initialState = {
+  displayedDate: {
+    year: 0,
+    month: 0,
+    day: 0
+  },
+  isFetching: false,
+  available: {}
+};
+
+function byHour(state = initialState, action) {
   if (action.delimiter !== 'BY_HOUR') {
     return state;
   }
 
   switch (action.type) {
     case REQUEST_AVERAGES:
-      return Object.assign({}, state, { isFetching: true });
+      return { ...state, isFetching: true };
     case RECEIVE_AVERAGES:
       // wrap this case in a block? see http://eslint.org/docs/rules/no-case-declarations
       const { year, month, day } = action.date;
-      return Object.assign({}, state, {
-        currentDate: `${year}-${month}-${day}`,
+      return {
+        ...state,
+        displayedDate: { ...action.date },
         isFetching: false,
-        averages: Object.assign({}, state.averages, {
-          [`${year}-${month}-${day}`]: action.averages
-        })
-      });
+        available: {
+          ...state.available,
+          [`${year}-${month}-${day}`]: {
+            receivedAt: action.receivedAt,
+            data: action.data
+          }
+        }
+      };
+    case CHANGE_DATE:
+      return { ...state, displayedDate: { ...action.date } };
     default:
       return state;
   }
