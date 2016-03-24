@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import styles from '../styles';
+import { Link } from 'react-router';
 
 const Messages = ({ messages, filterUserMessages }) => {
   const comparator = (a, b) => { return new Date(b.ts) - new Date(a.ts) };
@@ -11,12 +12,13 @@ const Messages = ({ messages, filterUserMessages }) => {
       {sorted.map(message => {
         let time = moment(new Date(message.ts));
         return (
-          <div onClick={()=>{filterUserMessages(message.name)}}
-            className="box">
+          <div className="box">
             <div key={message.id} className="content">
               <p>
               <strong>{message.name}:</strong> {message.text} <small>{time.fromNow()}</small>
               </p>
+              <p onClick={()=>{filterUserMessages(message.name)}}> Filter </p>
+              <Link to={`/user/${message.user}`}> Details </Link>
             </div>
           </div>
           )

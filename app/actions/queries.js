@@ -81,15 +81,29 @@ export function getClassifications(){
     .run(conn)
     .then(cursor => cursor.toArray())
   );
-
 }
 
 export function getUserMessageReduction(){
   return connection
-  .then(conn => 
+  .then(conn =>
     r.table('messages')
     .hasFields('name')
     .group('name')
+    .count()
+    .run(conn)
+    .then(cursor => cursor.toArray())
+  );
+}
+
+export function getSingleUserMessageReduction(userId){
+  return connection
+  .then(conn =>
+    r.table('messages')
+    .filter({user: userId})
+    .filter(
+      r.row('ts').month().eq(moment().month() + 1)
+    )
+    .group(r.row('ts').day())
     .count()
     .run(conn)
     .then(cursor => cursor.toArray())

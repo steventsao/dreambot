@@ -4,7 +4,7 @@ import styles from '../styles';
 
 // USING REACT-CHARTJS
 
-const BarGraph = ({labels = [], data = []} ) => {
+const BarGraph = ({labels = [], data = [], width='500', height='500'} ) => {
   const dataOptions = {
     scales:{
       yAxes:[{
@@ -27,7 +27,7 @@ const BarGraph = ({labels = [], data = []} ) => {
       ],
     };
       return (
-      <BarChart style={styles.graph} data={dataset} options={dataOptions} width="500" height="500"/>
+      <BarChart style={styles.graph} data={dataset} options={dataOptions} width={width} height={height}/>
     )
 }
 

@@ -2,6 +2,7 @@ import * as queries from './queries';
 
 export * from './averagesActions';
 export * from './notificationsActions';
+export * from './userProfileActions';
 
 export const ADD_MESSAGE = 'ADD_MESSAGE';
 export const addMessage = message => ({ type: ADD_MESSAGE, message });
@@ -103,7 +104,7 @@ export const receiveEngagementByUser = (count) => (
   {
     type: 'RECEIVE_ENGAGEMENT_BY_USER',
     count
-  }  
+  }
 )
 
 export const getEngagementByUser = () => dispatch => {
