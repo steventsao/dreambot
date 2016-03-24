@@ -18,6 +18,10 @@ const TestContainer = React.createClass({
   },
 
   getAverages(date) {
+    const { year, month, day } = date;
+    if (!year || !month || !day ) {
+      return this.props.dispatch(notify('You must enter a year, month, and day', 'error'));
+    }
     this.props.dispatch(getHoursIfNeeded(date));
   },
 
