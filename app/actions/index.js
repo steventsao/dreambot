@@ -75,8 +75,6 @@ export const getMessageVolume = () => dispatch => {
   return queries.getVolumeOfMessagesByHour(todaySpecs)
     .then(res => {
       dispatch(receiveMessageVolume(res))
-      console.log('BY VOLUME*******');
-      console.log(res);
     })
 }
 
@@ -101,3 +99,17 @@ export const getWordCount = () => dispatch => {
       dispatch(receiveWordCount(dictionary));
     });
 }
+export const receiveEngagementByUser = (count) => (
+  {
+    type: 'RECEIVE_ENGAGEMENT_BY_USER',
+    count
+  }  
+)
+
+export const getEngagementByUser = () => dispatch => {
+  return queries.getUserMessageReduction()
+    .then(res => {
+      dispatch(receiveEngagementByUser(res));
+    })
+}
+//

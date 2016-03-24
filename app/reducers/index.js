@@ -5,6 +5,7 @@ import averages from './averagesReducer';
 import notifications from './notificationsReducer';
 import wordCount from './wordCountReducer';
 import classify from './questionReducer'
+import engagement from './engagement';
 
 const rootReducer = combineReducers({
   messages,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   averages,
   notifications,
   wordCount,
-  classify
+  classify,
+  engagement
 });
 
 export default rootReducer;

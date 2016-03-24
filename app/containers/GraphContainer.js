@@ -24,7 +24,6 @@ const mapStateToProps = (state) => {
     messageByHours.push({ hour: i, count: 0 });
   }
   for(var i = 0; i < reverseState.messages.messageVolume.length; i++){
-    console.log(reverseState.messages.messageVolume[i]);
     messageByHours[reverseState.messages.messageVolume[i].group].count = reverseState.messages.messageVolume[i].reduction;
   }
 
