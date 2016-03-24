@@ -1,5 +1,7 @@
 import { getAvgMessagesByHour } from './queries';
 
+import { notify } from './notificationsActions';
+
 export const REQUEST_AVERAGES = 'REQUEST_AVERAGES';
 export const RECEIVE_AVERAGES = 'RECEIVE_AVERAGES';
 export const CHANGE_DATE = 'CHANGE_DATE';
@@ -14,7 +16,7 @@ export const getHours = date => dispatch => {
   dispatch(requestAverages('BY_HOUR'));
   return getAvgMessagesByHour(date)
     .then(data => dispatch(receiveAverages(data, 'BY_HOUR', date)))
-    .catch(err => console.log(err));
+    .catch(err => dispatch(notify(err.msg, 'error')));
 };
 
 export const getHoursIfNeeded = date =>
