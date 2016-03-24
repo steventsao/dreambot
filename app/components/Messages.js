@@ -12,18 +12,32 @@ const Messages = ({ messages, filterUserMessages }) => {
       {sorted.map(message => {
         let time = moment(new Date(message.ts));
         return (
-          <div className="box">
-            <div key={message.id} className="content">
-              <p>
-              <strong>{message.name}:</strong> {message.text} <small>{time.fromNow()}</small>
-              </p>
-              <p onClick={()=>{filterUserMessages(message.name)}}> Filter </p>
-              <Link to={`/user/${message.user}`}> Details </Link>
+
+          <div className="card">
+            <div className="card-content">
+
+              <div className="media">
+                <div className="media-left">
+                  <figure className="image is-32x32">
+                    <img src={message.profile.image_24} />
+                  </figure>
+                </div>
+                <div className="media-content">
+                  <p className="title is-5">{message.name}</p>
+                  <p className="subtitle is-6">{message.profile.real_name? message.profile.real_name : message.profile.email}</p>
+                </div>
+              </div>
+
+              <div className="content">
+                {message.text} 
+                <br></br>
+                <small>{time.fromNow()}</small>
+              </div>
             </div>
           </div>
           )
       })}
-    </div>
+   </div>
   );
 };
 export default Messages;
