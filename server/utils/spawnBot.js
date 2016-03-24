@@ -3,7 +3,7 @@
 import Botkit from 'botkit';
 
 const controller = Botkit.slackbot({
-    debug: true,
+  debug: process.env.NODE_ENV !== 'production'
 });
 
 controller.spawn({
