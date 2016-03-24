@@ -16,6 +16,10 @@ var styles = {
   },
   user: {
     color: 'blue'
+  },
+  ofprot: {
+    height: '750px',
+    overflow: 'scroll'
   }
 };
 
