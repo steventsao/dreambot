@@ -3,7 +3,7 @@ import rootReducer from '../reducers';
 import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 import { connection, r } from '../utils/rethink';
-import { addMessage, fetchMessages, getWordCount, getMessageVolume } from '../actions';
+import { addMessage, fetchMessages, getWordCount, getMessageVolume, getEngagementByUser } from '../actions';
 
 export default function configureStore(initialState) {
   const logger = createLogger({collapsed: true});
@@ -26,6 +26,7 @@ export default function configureStore(initialState) {
       console.log('Fetched all messages from database');
       store.dispatch(getWordCount());
       store.dispatch(getMessageVolume());
+      store.dispatch(getEngagementByUser());
     })
     .then(() => {
       console.log('Fetched all words')

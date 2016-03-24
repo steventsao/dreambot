@@ -83,3 +83,15 @@ export function getClassifications(){
   );
 
 }
+
+export function getUserMessageReduction(){
+  return connection
+  .then(conn => 
+    r.table('messages')
+    .hasFields('name')
+    .group('name')
+    .count()
+    .run(conn)
+    .then(cursor => cursor.toArray())
+  );
+}
