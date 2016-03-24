@@ -5,9 +5,9 @@ import { REQUEST_AVERAGES, RECEIVE_AVERAGES, CHANGE_DATE } from '../actions';
 
 const initialState = {
   displayedDate: {
-    year: moment().year(),
-    month: moment().month() + 1,
-    day: moment().date()
+    year: 0,
+    month: 0,
+    day: 0
   },
   isFetching: false,
   available: {}
