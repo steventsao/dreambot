@@ -9,8 +9,12 @@ import { getHoursIfNeeded, notify } from '../actions';
 
 const TestContainer = React.createClass({
   componentDidMount() {
-    const { year, month, day } = this.props.displayedDate;
-    this.props.dispatch(getHoursIfNeeded({ year, month, day }));
+    // Grab today's data by default
+    this.props.dispatch(getHoursIfNeeded({
+      year: moment().year(),
+      month: moment().month() + 1,
+      day: moment().date()
+    }));
   },
 
   getAverages(date) {
@@ -26,11 +30,7 @@ const TestContainer = React.createClass({
   },
 
   render() {
-    const { displayedDate: { year, month, day }, available } = this.props;
-    const key = `${year}-${month}-${day}`;
-    console.log('KEY IS: ', key);
-    const labels = available[key] && available[key].data.map(obj => moment().hour(obj.group).format('hA'));
-    const data = available[key] && available[key].data.map(obj => obj.reduction);
+    const { labels, data } = this.props;
     return (
       <div>
         <Test {...this.props} />
@@ -43,14 +43,16 @@ const TestContainer = React.createClass({
 });
 
 function mapStateToProps(state) {
+  const { available } = state.averages.byHour
+  const { year, month, day } = state.averages.byHour.displayedDate;
+  const key = `${year}-${month}-${day}`;
   return {
-    available: state.averages.byHour.available,
-    displayedDate: state.averages.byHour.displayedDate
+    labels: available[key] && available[key].data.map(obj => moment().hour(obj.group).format('hA')),
+    data: available[key] && available[key].data.map(obj => obj.reduction),
   };
 }
 
 export default connect(mapStateToProps)(TestContainer);
-
 
 const Selector = React.createClass({
   handleClick() {
