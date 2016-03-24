@@ -10,6 +10,7 @@ export default (controller) => {
       .then((user) => {
         // add real name to message object and convert timestamp to Date object
         Object.assign(message, {
+          profile: user.profile,
           name: user.name,
           ts: new Date(parseFloat(message.ts) * 1000)
         });
