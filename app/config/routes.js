@@ -7,10 +7,12 @@ import Questions from '../components/Questions'
 import TestContainer from '../containers/TestContainer';
 import QuestionsContainer from '../containers/QuestionsContainer';
 import AveragesContainer from '../containers/AveragesContainer';
+import UserProfileContainer from '../containers/UserProfileContainer';
 
 const Routes = (
   <Route path="/" component={Main}>
     <IndexRoute component={Home} />
+    <Route path='/user/:id' component={UserProfileContainer} />
     <Route path="/test" component={TestContainer} />
     <Route path="/questions" component={Questions} />
     <Route path="/averages" component={AveragesContainer} />
