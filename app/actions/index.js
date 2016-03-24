@@ -1,4 +1,4 @@
-import { getSearchResults, getMessages } from './queries';
+import * as queries from './queries';
 
 export * from './averagesActions';
 export * from './notificationsActions';
@@ -34,7 +34,7 @@ export const requestSearch = query => ({ type: 'REQUEST_SEARCH', query });
 
 export const fetchMessages = () => dispatch => {
   dispatch(requestMessages());
-  return getMessages()
+  return queries.getMessages()
     .then(messagesReceived => dispatch(receiveMessages(messagesReceived)))
     .catch(err => console.log(err));
 };
@@ -54,7 +54,7 @@ export const fetchCategories = () => dispatch => {
 };
 
 export const searchKeyword = (input) =>
-  dispatch => getSearchResults(input)
+  dispatch => queries.getSearchResults(input)
     .then(messagesReceived => dispatch(receiveMessages(messagesReceived)))
     .catch(err => console.log(err));
 
