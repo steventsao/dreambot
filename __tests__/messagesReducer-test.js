@@ -1,10 +1,10 @@
 /* global describe, it, expect, jest */
 
+jest.unmock('../app/actions/messagesActions');
 jest.unmock('../app/reducers/messages');
 jest.unmock('redux');
-jest.unmock('../app/actions/index');
 
-import { addMessage } from '../app/actions/index';
+import { addMessage } from '../app/actions/messagesActions';
 import messages from '../app/reducers/messages';
 import { createStore } from 'redux';
 
