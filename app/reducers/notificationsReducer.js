@@ -1,4 +1,4 @@
-import { ADD_NOTIFICATION, NEXT_NOTIFICATION } from '../actions';
+import { ADD_NOTIFICATION, NEXT_NOTIFICATION } from '../actions/notificationsActions';
 
 const initialState = {
   currentNotification: false,
