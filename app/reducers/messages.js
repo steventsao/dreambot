@@ -1,3 +1,12 @@
+import {
+  ADD_MESSAGE,
+  RECEIVE_MESSAGES,
+  RECEIVE_MESSAGE_VOLUME,
+  FILTER_MESSAGES,
+  SHOW_ALL,
+  REQUEST_MESSAGES
+} from '../actions/messagesActions'
+
 // TODO: convert state to an object to enhance description of state
 // ie. isFetching and time stamp of messages received.
 const initialState = {
@@ -20,35 +29,35 @@ const sortMessages = (array) => {
 
 export default function messages(state = initialState, action) {
   switch (action.type) {
-    case 'ADD_MESSAGE':
-      return Object.assign({}, state, 
-        { 
+    case ADD_MESSAGE:
+      return Object.assign({}, state,
+        {
           messages: [...state.messages, action.message],
           rawMessages: [...state.rawMessages, action.message]
         });
-    case 'RECEIVE_MESSAGES':
+    case RECEIVE_MESSAGES:
       return Object.assign({}, state,
         {
           messages: sortMessages(action.messages),
           rawMessages: sortMessages(state.rawMessages.concat(addUniqueMessages(state.rawMessages, action.messages)))
         });
-    case 'RECEIVE_MESSAGE_VOLUME':
+    case RECEIVE_MESSAGE_VOLUME:
       return Object.assign({}, state, {
         messageVolume: action.groups
       });
-    case 'FILTER_MESSAGES':
-      return Object.assign({}, state, 
+    case FILTER_MESSAGES:
+      return Object.assign({}, state,
         {
           filter: 'SHOW_USER',
           username: action.username,
           messages: sortMessages(state.rawMessages.filter(message => message.name === action.username))
         });
-    case 'SHOW_ALL':
+    case SHOW_ALL:
       return Object.assign({}, state,
-        { 
-          messages: state.rawMessages 
+        {
+          messages: state.rawMessages
         });
-    case 'REQUEST_MESSAGES':
+    case REQUEST_MESSAGES:
     default:
       return state;
   }
