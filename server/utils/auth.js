@@ -1,6 +1,5 @@
 import passport from 'passport';
-// import {Strategy as GitHubStrategy} from 'passport-github2';
-import {Strategy as GitHubStrategy} from 'passport-github';
+import {Strategy as GitHubStrategy} from 'passport-github2';
 import axios from 'axios';
 
 // From passport-github example
@@ -40,7 +39,6 @@ export default function(app) {
         // console.log('refreshToken: ', refreshToken);
         // console.log('profile: ', profile);
 
-        console.log(passport);
         // If we've made it to this point...we have successfully authenticated with github...
         // axios.get(profile._json.organizations_url)
         //   .then(res => {
