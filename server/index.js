@@ -1,5 +1,5 @@
 import path from 'path';
-
+import authSetup from './utils/auth';
 import express from 'express';
 import http from 'http';
 import { listen } from 'rethinkdb-websocket-server';
@@ -23,6 +23,8 @@ listen({
 });
 
 import './bot/bot.js';
+
+authSetup(app);
 
 // Add routes to app here:
 // ex: app.use('/api', apiRoutes);

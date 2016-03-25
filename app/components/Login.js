@@ -4,9 +4,7 @@ const Login = React.createClass({
   render() {
     return (
       <div>
-        <button>
-        Login with Github
-        </button>
+        <a href="/auth/github" className="button"> Login with Github </a>
       </div>
     )
   }
