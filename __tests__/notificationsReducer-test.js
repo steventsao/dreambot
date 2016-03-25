@@ -1,12 +1,9 @@
 /* global describe, it, expect, jest, beforeEach */
 
-jest.unmock('../app/actions');
 jest.unmock('../app/actions/notificationsActions');
-jest.unmock('../app/actions/averagesActions');
 jest.unmock('../app/reducers/notificationsReducer');
-jest.unmock('redux');
 
-import { addNotification, nextNotification } from '../app/actions';
+import { addNotification, nextNotification } from '../app/actions/notificationsActions';
 import notifications from '../app/reducers/notificationsReducer';
 
 describe('notifications', () => {
