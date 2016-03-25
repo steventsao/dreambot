@@ -25,6 +25,9 @@ var styles = {
     margin: '8px',
     'border-radius': '2px',
     width: 'auto'
+  },
+  userInfo:{
+    'word-wrap': 'break-word'
   }
 };
 

@@ -20,10 +20,9 @@ const QuestionMessages = ({ messages, filterUserMessages }) => {
                     <img src={message.profile.image_24} />
                   </figure>
                 </div>
-
                 <div className="media-content">
-                  <p className="title is-5">{message.name}</p>
-                  <p className="subtitle is-6">{message.profile.real_name? message.profile.real_name : message.profile.email}</p>
+                  <p className="title is-5" style={styles.userInfo}>{message.name}</p>
+                  <p className="subtitle is-6" style={styles.userInfo}>{message.profile.real_name? message.profile.real_name : message.profile.email}</p>
                 </div>
               </div>
 
