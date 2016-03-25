@@ -92,10 +92,16 @@ export default (controller) => {
                         default: true,
                         callback: (res, convo) => {
                           convo.next();
-                          // saveMsg(message, res.text);
-                          convo.say('Recorded your question about ' + res.text + ', thanks for making me smarter!');
-                          classifier.addDocument(message.text, res.text);
-                          classifier.train();
+                          //check to make sure user entered a valid category
+                          if(res.text === topThree[0] || res.text === topThree[1] || res.text === topThree[2]){
+
+                            saveMsg(message, res.text);
+                            convo.say('Recorded your question about ' + res.text + ', thanks for making me smarter!');
+                            classifier.addDocument(message.text, res.text);
+                            classifier.train();
+                          } else{
+                            convo.say('Sorry, that wasn\'t one of the categories listed, I\'ll try again next time.');
+                          }
                           convo.next();
                         }
                       }
