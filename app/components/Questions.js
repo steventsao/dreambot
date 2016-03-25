@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactRouter from 'react-router';
-import MessagesContainer from '../containers/MessagesContainer';
 import QuestionsContainer from '../containers/QuestionsContainer'
 import NavbarContainer from '../containers/NavbarContainer';
 import QuestionNavbarContainer from '../containers/QuestionNavbarContainer';
 import LeftPanelContainer from '../containers/LeftPanelContainer';
 import SearchBoxContainer from '../containers/SearchBoxContainer';
+import QuestionMessageContainer from '../containers/QuestionMessageContainer';
 
 const Questions = React.createClass({
   render: function () {
@@ -23,7 +23,7 @@ const Questions = React.createClass({
             <QuestionsContainer />
           </div>
           <div className="column is-quarter">
-            <MessagesContainer />
+            <QuestionMessageContainer />
           </div>
           </div>
       </div>
