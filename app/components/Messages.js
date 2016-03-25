@@ -5,14 +5,12 @@ import { Link } from 'react-router';
 
 const Messages = ({ messages, filterUserMessages }) => {
   const comparator = (a, b) => { return new Date(b.ts) - new Date(a.ts) };
-  console.log()
   const sorted = messages.sort(comparator);
   return (
     <div style={styles.ofprot}>
       {sorted.map(message => {
         let time = moment(new Date(message.ts));
         return (
-
           <div className="card">
             <div className="card-content">
 
@@ -22,6 +20,7 @@ const Messages = ({ messages, filterUserMessages }) => {
                     <img src={message.profile.image_24} />
                   </figure>
                 </div>
+
                 <div className="media-content">
                   <p className="title is-5">{message.name}</p>
                   <p className="subtitle is-6">{message.profile.real_name? message.profile.real_name : message.profile.email}</p>
@@ -29,15 +28,21 @@ const Messages = ({ messages, filterUserMessages }) => {
               </div>
 
               <div className="content">
-                {message.text} 
+                {message.text}
                 <br></br>
+                <small>
+                  <Link to={`/user/${message.user}`}> Details </Link>
+                </small>
+                <br/>
                 <small>{time.fromNow()}</small>
               </div>
+
             </div>
           </div>
-          )
+        )
       })}
-   </div>
+    </div>
   );
 };
+
 export default Messages;
