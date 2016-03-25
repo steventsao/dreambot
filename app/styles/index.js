@@ -20,6 +20,14 @@ var styles = {
   ofprot: {
     height: '750px',
     overflow: 'scroll'
+  },
+  cards:{
+    margin: '8px',
+    'border-radius': '2px',
+    width: 'auto'
+  },
+  userInfo:{
+    'word-wrap': 'break-word'
   }
 };
 

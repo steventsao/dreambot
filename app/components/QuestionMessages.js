@@ -3,7 +3,7 @@ import moment from 'moment';
 import styles from '../styles';
 import { Link } from 'react-router';
 
-const Messages = ({ messages, filterUserMessages }) => {
+const QuestionMessages = ({ messages, filterUserMessages }) => {
   const comparator = (a, b) => { return new Date(b.ts) - new Date(a.ts) };
   const sorted = messages.sort(comparator);
   return (
@@ -20,7 +20,6 @@ const Messages = ({ messages, filterUserMessages }) => {
                     <img src={message.profile.image_24} />
                   </figure>
                 </div>
-
                 <div className="media-content">
                   <p className="title is-5" style={styles.userInfo}>{message.name}</p>
                   <p className="subtitle is-6" style={styles.userInfo}>{message.profile.real_name? message.profile.real_name : message.profile.email}</p>
@@ -45,4 +44,4 @@ const Messages = ({ messages, filterUserMessages }) => {
   );
 };
 
-export default Messages;
+export default QuestionMessages;
