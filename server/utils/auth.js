@@ -1,5 +1,7 @@
 import passport from 'passport';
-import {Strategy as GitHubStrategy} from 'passport-github2';
+// import {Strategy as GitHubStrategy} from 'passport-github2';
+import {Strategy as GitHubStrategy} from 'passport-github';
+import axios from 'axios';
 
 // From passport-github example
 
@@ -13,10 +15,12 @@ export default function(app) {
   //   have a database of user records, the complete GitHub profile is serialized
   //   and deserialized.
   passport.serializeUser( (user, done) => {
+    // console.log('USER IN SERIALIZE: ', user);
     done(null, user);
   });
 
   passport.deserializeUser( (obj, done) => {
+    // console.log('OBJ IN DESERIALIZE: ', obj);
     done(null, obj);
   });
 
@@ -27,11 +31,32 @@ export default function(app) {
   passport.use(new GitHubStrategy({
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: "http://localhost:1337/auth/github/callback"
-    },
-    (accessToken, refreshToken, profile, done) => {
+      callbackURL: "http://localhost:1337/auth/github/callback",
+      scope: [ 'user:email', 'read:org', 'notifications', 'public_repo' ]
+    }, (accessToken, refreshToken, profile, done) => {
       // asynchronous verification, for effect...
       process.nextTick( () => {
+        // console.log('accessToken: ', accessToken);
+        // console.log('refreshToken: ', refreshToken);
+        // console.log('profile: ', profile);
+
+        console.log(passport);
+        // If we've made it to this point...we have successfully authenticated with github...
+        // axios.get(profile._json.organizations_url)
+        //   .then(res => {
+        //     console.log(res);
+        //   })
+        //   .catch(err => console.log(err))
+        // look up user in DB
+          // If they exist...
+            // check if they are allowed
+              // if they are allowed, give them a JWT
+              // If not make sure they're from correct org
+                // If they are from the correct org, give them a JWT
+                // If not, refuse
+          // If they don't exist...
+            // make sure they're from correct org
+            // add them
 
         // To keep the example simple, the user's GitHub profile is returned to
         // represent the logged-in user.  In a typical application, you would want
@@ -44,25 +69,13 @@ export default function(app) {
 
   app.use(passport.initialize());
 
-  // app.get('/', function(req, res){
-  //   res.render('index', { user: req.user });
-  // });
-
-  // app.get('/account', ensureAuthenticated, function(req, res){
-  //   res.render('account', { user: req.user });
-  // });
-
-  // app.get('/login', function(req, res){
-  //   res.render('login', { user: req.user });
-  // });
-
   // GET /auth/github
   //   Use passport.authenticate() as route middleware to authenticate the
   //   request.  The first step in GitHub authentication will involve redirecting
   //   the user to github.com.  After authorization, GitHub will redirect the user
   //   back to this application at /auth/github/callback
   app.get('/auth/github',
-    passport.authenticate('github', { scope: [ 'user:email' ] }),
+    passport.authenticate('github'),
     function(req, res){
       // The request will be redirected to GitHub for authentication, so this
       // function will not be called.
@@ -76,6 +89,7 @@ export default function(app) {
   app.get('/auth/github/callback',
     passport.authenticate('github', { failureRedirect: '/login' }),
     function(req, res) {
+      // console.log(passport);
       res.redirect('/');
     });
 
@@ -83,15 +97,4 @@ export default function(app) {
     req.logout();
     res.redirect('/');
   });
-
-  // Simple route middleware to ensure user is authenticated.
-  //   Use this route middleware on any resource that needs to be protected.  If
-  //   the request is authenticated (typically via a persistent login session),
-  //   the request will proceed.  Otherwise, the user will be redirected to the
-  //   login page.
-  function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) { return next(); }
-    res.redirect('/login')
-  }
-
 }
