@@ -7,7 +7,6 @@ import styles from '../styles';
 
 
 const Graph = ({labels = [], data = [], dataAvg = [], barChartDatasets = [], barChartLabels = [] }) => {
-
   const dataOptions = {
         animation: {
           duration: 2000,
@@ -54,7 +53,7 @@ const Graph = ({labels = [], data = [], dataAvg = [], barChartDatasets = [], bar
     labels: [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23' ],
     datasets: [
         {
-            label: "Top words",
+            label: "Words per Hour",
             fillColor: "rgba(220,220,220,0.5)",
             strokeColor: "rgba(220,220,220,0.8)",
             highlightFill: "rgba(220,220,220,0.75)",
@@ -65,7 +64,13 @@ const Graph = ({labels = [], data = [], dataAvg = [], barChartDatasets = [], bar
   };
 
   const barChartOptions = {
-
+    scales:{
+      yAxes:[{
+        ticks:{
+          beginAtZero:true
+        }
+      }]
+    },
     //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
     scaleBeginAtZero : true,
 
@@ -104,7 +109,7 @@ const Graph = ({labels = [], data = [], dataAvg = [], barChartDatasets = [], bar
       return (
       <div>
       <LineChart style={styles.graph} data={dataset} options={dataOptions} width="500" height="500"/>
-      <BarChart data={barChartData} options={barChartOptions} width="500" height="300" />
+      <BarChart style = {styles.graph} data={barChartData} options={barChartOptions} width="500" height="300" />
       </div>
     )
 }
