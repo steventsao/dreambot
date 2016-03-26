@@ -23,11 +23,11 @@ var styles = {
   },
   cards:{
     margin: '8px',
-    'border-radius': '2px',
+    'borderRadius': '2px',
     width: 'auto'
   },
   userInfo:{
-    'word-wrap': 'break-word'
+    'wordWrap': 'break-word'
   }
 };
 
