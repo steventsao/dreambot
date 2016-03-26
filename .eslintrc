@@ -16,7 +16,7 @@
       "comma-dangle": 0,
       "react/prefer-es6-class": [1, "never"],
       "react/react-in-jsx-scope": 1,
-      "no-use-before-define": "nofunc"
+      "no-use-before-define": [1, "nofunc"]
   },
   "env": {
       "es6": true,
