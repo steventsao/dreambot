@@ -1,4 +1,5 @@
 import * as queries from './queries';
+import { receiveMessages } from './messagesActions';
 
 export * from './averagesActions';
 export * from './notificationsActions';
@@ -23,6 +24,7 @@ export const fetchCategories = () => dispatch => {
     .then(categoriesReceived => dispatch(receiveCategories(categoriesReceived)))
     .catch(err => console.log(err));
 };
+
 
 export const searchKeyword = (input) =>
   dispatch => queries.getSearchResults(input)
