@@ -23,12 +23,12 @@ const mapStateToProps = (state) => {
   for (var i = 0; i < 24; i ++) {
     messageByHours.push({ hour: i, count: 0 });
   }
-  for(var i = 0; i < reverseState.messages.messageVolume.length; i++){
-    messageByHours[reverseState.messages.messageVolume[i].group].count = reverseState.messages.messageVolume[i].reduction;
+  for(var i = 0; i < reverseState.messages.messages.length; i++){
+    messageByHours[reverseState.messages.messages[i].ts.getHours()].count ++;
   }
 
   return {
-    barChartDatasets: messageByHours.map(item => item.count),
+    barChartDatasets: messageByHours.map(message => message.count),
     labels: reverseState.messages.messages.map(message => new Date(message.ts).toLocaleString()),
     data: reverseState.messages.messages.map(message => message.score),
     dataAvg: reverseState.messages.messages.map(message => message.comparative)
