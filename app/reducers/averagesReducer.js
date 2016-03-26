@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
-import moment from 'moment';
 
-import { REQUEST_AVERAGES, RECEIVE_AVERAGES, CHANGE_DATE } from '../actions';
+import { REQUEST_AVERAGES, RECEIVE_AVERAGES, CHANGE_DATE } from '../actions/averagesActions';
 
 const initialState = {
   displayedDate: {
