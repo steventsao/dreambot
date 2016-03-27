@@ -9,6 +9,7 @@ import QuestionsContainer from '../containers/QuestionsContainer';
 import AveragesContainer from '../containers/AveragesContainer';
 import UserProfileContainer from '../containers/UserProfileContainer';
 import LoginContainer from '../containers/LoginContainer';
+import CatchContainer from '../containers/CatchContainer';
 
 
 const Routes = (
@@ -19,6 +20,7 @@ const Routes = (
     <Route path='/login' component={LoginContainer} />
     <Route path="/questions" component={Questions} />
     <Route path="/averages" component={AveragesContainer} />
+    <Route path="/catch" component={CatchContainer} />
   </Route>
 );
 
