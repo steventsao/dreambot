@@ -5,5 +5,8 @@ export default {
   // RethinkDb
   rethinkHost: process.env.RETHINK_HOST || 'localhost',
   rethinkPort: process.env.RETHINK_PORT || 28015,
-  rethinkDb: process.env.RETHINK_DB || 'test'
+  rethinkDb: process.env.RETHINK_DB || 'test',
+
+  // Auth
+  secret: process.env.SECRET || 'KEYBOARDLKJR;B34BQP3O4BGAKCATCATCAT434490'
 };
