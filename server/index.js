@@ -1,8 +1,11 @@
 import path from 'path';
-import authSetup from './utils/auth';
+import authSetup from './auth/auth';
 import express from 'express';
 import http from 'http';
 import { listen } from 'rethinkdb-websocket-server';
+import r from 'rethinkdb';
+import connect from './utils/connect.js';
+import jwt from 'jwt-simple';
 
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
@@ -10,16 +13,38 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 
 import config from '../webpack.config.js';
 import env from './utils/envDefaults';
+import { queryWhitelist } from './auth/queries';
 
 const app = express();
-const server = http.createServer(app)
+const server = http.createServer(app);
+
+function runQuery(query) {
+  return connect().then(function(conn) {
+    return query.run(conn);
+  });
+}
+
 
 listen({
   httpServer: server,
   httpPath: '/db',
   dbHost: env.rethinkHost,
   dbPort: env.rethinkPort,
-  unsafelyAllowAnyQuery: true
+  unsafelyAllowAnyQuery: false, //env.isDev,
+  queryWhitelist,
+  sessionCreator(urlQueryParams) {
+    const { iss: userId } = jwt.decode(urlQueryParams.token, env.secret)
+    const userQuery = r.table('authorized_users').get(userId);
+
+    return runQuery(userQuery).then((user) => {
+      console.log(user);
+      if (user.login === 'Thr1ve') {
+        return user
+      } else {
+        return Promise.reject('Invalid auth token');
+      }
+    });
+  }
 });
 
 import './bot/bot.js';
