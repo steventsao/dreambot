@@ -1,8 +1,15 @@
 import passport from 'passport';
 import { Strategy as GitHubStrategy } from 'passport-github2';
 import r from 'rethinkdb';
-import connect from './connect';
+import jwt from 'jwt-simple';
+import moment from 'moment';
 import axios from 'axios';
+
+import connect from '../utils/connect';
+import env from '../utils/envDefaults';
+
+// TODO put ALLOWED_ORG in env
+const ALLOWED_ORG = process.env.ALLOWED_ORG || 'hrr13-thedreamteam';
 
 const findAuthorizedUser = (filter) => connect()
   .then(conn => r.table('authorized_users').filter(filter).run(conn)
@@ -11,6 +18,7 @@ const findAuthorizedUser = (filter) => connect()
 const createAuthorizedUser = (user) => connect()
   .then(conn => r.table('authorized_users').insert(user, { returnChanges: true }).run(conn));
 
+// referenced: https://github.com/cfsghost/passport-github/blob/master/examples/login/app.js
 // Passport session setup.
 //   To support persistent login sessions, Passport needs to be able to
 //   serialize users into and deserialize users out of the session.  Typically,
@@ -41,7 +49,7 @@ passport.use(new GitHubStrategy({
       access_token: accessToken
     }
   }).then(res => {
-    const hasOrg = res.data.some(org => org.login === 'hrr13-thedreamteam');
+    const hasOrg = res.data.some(org => org.login === ALLOWED_ORG);
     const { id: githubId, login, avatar_url, name, email } = profile._json;
 
     // res.data will contain an array of org objects that look like:
@@ -82,7 +90,6 @@ passport.use(new GitHubStrategy({
   .catch(err => console.log(err));
 }));
 
-// referenced: https://github.com/cfsghost/passport-github/blob/master/examples/login/app.js
 export default function (app) {
   app.use(passport.initialize());
 
@@ -91,9 +98,14 @@ export default function (app) {
   app.get('/auth/github/callback',
     passport.authenticate('github', { failureRedirect: '/login' }),
     (req, res) => {
-      // TODO: create / add JWT token here
-      res.redirect('/');
+      var expires = moment().add(2, 'days').valueOf();
+      var token = jwt.encode({
+        // TODO: how to reference user id here?
+        iss: '1e046d50-1b71-40e7-b0cc-e8e4bbb85975',
+        exp: expires
+      }, env.secret);
+
+      res.redirect(`/catch/?token=${token}`);
     }
   );
 }
-
