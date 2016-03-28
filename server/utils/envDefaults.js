@@ -8,5 +8,6 @@ export default {
   rethinkDb: process.env.RETHINK_DB || 'test',
 
   // Auth
-  secret: process.env.SECRET || 'KEYBOARDLKJR;B34BQP3O4BGAKCATCATCAT434490'
+  secret: process.env.SECRET || 'KEYBOARDLKJR;B34BQP3O4BGAKCATCATCAT434490',
+  allowedOrg: process.env.ALLOWED_ORG || 'hrr13-thedreamteam'
 };
