@@ -4,12 +4,13 @@ import { replaceProfile } from '../actions';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import BarGraph from '../components/BarGraph';
-import MessagesContainer from '../containers/MessagesContainer';
+import UserMessagesContainer from '../containers/UserMessagesContainer';
 import GraphContainer from '../containers/GraphContainer';
-import NavbarContainer from '../containers/NavbarContainer';
+import UserNavbarContainer from '../containers/UserNavbarContainer';
 import LeftPanelContainer from '../containers/LeftPanelContainer';
 import SearchBoxContainer from '../containers/SearchBoxContainer';
-import WordCountBarGraphContainer from '../containers/WordCountBarGraphContainer';
+
+
 
 const UserProfileContainer = React.createClass({
   componentDidMount() {
@@ -23,7 +24,7 @@ const UserProfileContainer = React.createClass({
     const { labels, data } = this.props;
     return (
       <div className="container is-fluid">
-        <NavbarContainer/>
+        <UserNavbarContainer/>
         <h1 className="control">
           <SearchBoxContainer />
         </h1>
@@ -33,6 +34,9 @@ const UserProfileContainer = React.createClass({
           </div>
           <div className="column is-text-centered">
             <BarGraph labels={labels} data={data} width='200' height='125'/>
+          </div>
+        <div className="column is-quarter">
+            <UserMessagesContainer />
           </div>
         </div>
       </div>
