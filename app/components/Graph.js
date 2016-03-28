@@ -46,6 +46,20 @@ const Graph = ({labels = [], data = [], dataAvg = [], barChartDatasets = [], bar
           pointHoverBorderColor: "rgba(0,144,255,1)",
           pointHoverBorderWidth: 2,
           data: dataAvg
+        },
+        {
+          label: "Channel Engagement",
+          fill: true,
+          backgroundColor: "rgba(0,255,0,0.2)",
+          borderColor: "rgba(0,144,255,1)",
+          pointBorderColor: "rgba(0,144,255,1)",
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: "rgba(0,144,255,1)",
+          pointHoverBorderColor: "rgba(0,144,255,1)",
+          pointHoverBorderWidth: 2,
+          data: barChartDatasets
         }
       ]
     };
@@ -108,8 +122,8 @@ const Graph = ({labels = [], data = [], dataAvg = [], barChartDatasets = [], bar
   }
       return (
       <div>
-      <LineChart style={styles.graph} data={dataset} options={dataOptions} width="500" height="500"/>
-      <BarChart style = {styles.graph} data={barChartData} options={barChartOptions} width="500" height="300" />
+      <LineChart style={styles.graph} data={dataset} options={dataOptions} width="500" height="250"/>
+      <BarChart style = {styles.graph} data={barChartData} options={barChartOptions} width="500" height="250" />
       </div>
     )
 }

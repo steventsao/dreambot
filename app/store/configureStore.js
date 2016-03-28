@@ -3,7 +3,7 @@ import rootReducer from '../reducers';
 import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 import { connection, r } from '../utils/rethink';
-import { addMessage, fetchMessages, getWordCount, getMessageVolume, getEngagementByUser } from '../actions';
+import { getHours, addMessage, fetchMessages, getWordCount, getMessageVolume, getEngagementByUser } from '../actions';
 
 export default function configureStore(initialState) {
   const logger = createLogger({collapsed: true});
@@ -22,8 +22,17 @@ export default function configureStore(initialState) {
     );
 
   store.dispatch(fetchMessages())
+  // TODO: revise day to be dynamic again
     .then(() => {
       console.log('Fetched all messages from database');
+      let today = new Date();
+      store.dispatch(getHours(
+        {
+          year: today.getYear() + 1900,
+          month: today.getMonth() + 1,
+          day: 12
+        }
+      ));
       store.dispatch(getWordCount());
       store.dispatch(getMessageVolume());
       store.dispatch(getEngagementByUser());
