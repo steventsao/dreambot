@@ -15,6 +15,7 @@ import _ from 'lodash';
 
 const mapStateToProps = (state) => {
   let reverseState = Object.assign({}, state);
+  console.log(reverseState.messages.messages,'comparative')
   const comparator = (a, b) => { return new Date(a.ts) - new Date(b.ts) };
   reverseState.messages.messages.sort(comparator);
 
@@ -28,15 +29,18 @@ const mapStateToProps = (state) => {
   }
 
   let scoreByHours = [];
-  let scoreData = reverseState.averages.byHour.available['2016-3-12'].data;
-  for (var i = 0; i < 24; i ++) {
-    scoreByHours.push({ hour: i, averageScore: 0 });
-  }
 
-  for(var i = 0; i < scoreData.length; i++){
-    scoreByHours[scoreData[i].group].averageScore = scoreData[i].reduction;
-  }
+  // prevent crashing
+  if (reverseState.averages.byHour.available['2016-3-12']) {
+    let scoreData = reverseState.averages.byHour.available['2016-3-12'].data;
+    for (var i = 0; i < 24; i ++) {
+      scoreByHours.push({ hour: i, averageScore: 0 });
+    }
 
+    for(var i = 0; i < scoreData.length; i++){
+      scoreByHours[scoreData[i].group].averageScore = scoreData[i].reduction;
+    }
+  }
   return {
     barChartDatasets: messageByHours.map(message => message.count),
     labels: scoreByHours.map(message => message.hour),
