@@ -7,7 +7,7 @@ var styles = {
     marginTop: '25px'
   },
   graph: {
-    backgroundColor: 'rgba(245,245,245,1)'
+    // backgroundColor: 'rgba(245,245,245,1)'
   },
   messages: {
     width: '500px',

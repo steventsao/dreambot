@@ -19,7 +19,7 @@ function byHour(state = initialState, action) {
 
   switch (action.type) {
     case REQUEST_AVERAGES:
-      return { ...state, isFetching: true };
+      return Object.assign({}, state, { isFetching: true});
     case RECEIVE_AVERAGES:
       // wrap this case in a block? see http://eslint.org/docs/rules/no-case-declarations
       const { year, month, day } = action.date;
@@ -28,7 +28,6 @@ function byHour(state = initialState, action) {
         displayedDate: { ...action.date },
         isFetching: false,
         available: {
-          ...state.available,
           [`${year}-${month}-${day}`]: {
             receivedAt: action.receivedAt,
             data: action.data

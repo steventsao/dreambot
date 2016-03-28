@@ -27,10 +27,23 @@ const mapStateToProps = (state) => {
     messageByHours[reverseState.messages.messages[i].ts.getHours()].count ++;
   }
 
+  let scoreByHours = [];
+
+  // prevent crashing
+  if (reverseState.averages.byHour.available['2016-3-12']) {
+    let scoreData = reverseState.averages.byHour.available['2016-3-12'].data;
+    for (var i = 0; i < 24; i ++) {
+      scoreByHours.push({ hour: i, averageScore: 0 });
+    }
+
+    for(var i = 0; i < scoreData.length; i++){
+      scoreByHours[scoreData[i].group].averageScore = scoreData[i].reduction;
+    }
+  }
   return {
     barChartDatasets: messageByHours.map(message => message.count),
-    labels: reverseState.messages.messages.map(message => new Date(message.ts).toLocaleString()),
-    data: reverseState.messages.messages.map(message => message.score),
+    labels: scoreByHours.map(message => message.hour),
+    data: scoreByHours.map(message => message.averageScore),
     dataAvg: reverseState.messages.messages.map(message => message.comparative)
   };
 };

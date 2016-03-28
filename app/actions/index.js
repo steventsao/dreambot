@@ -12,10 +12,10 @@ export const requestSearch = query => ({ type: 'REQUEST_SEARCH', query });
 // thunk returns functions instead of objects
 
 export const REQUEST_CATEGORIES = 'REQUEST_CATEGORIES';
-export const requestCategories = () => ({type: REQUEST_CATEGORIES})
+export const requestCategories = () => ({ type: REQUEST_CATEGORIES });
 
 export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
-export const receiveCategories = categories => ({type: RECEIVE_CATEGORIES, categories})
+export const receiveCategories = categories => ({ type: RECEIVE_CATEGORIES, categories });
 
 export const FETCH_CATEGORIES = 'FETCH_CATEGORIES';
 export const fetchCategories = () => dispatch => {
@@ -36,7 +36,7 @@ export const receiveMessageVolume = (groups) => (
     type: 'RECEIVE_MESSAGE_VOLUME',
     groups,
   }
-)
+);
 
 export const getMessageVolume = () => dispatch => {
   let today = new Date();
@@ -44,12 +44,12 @@ export const getMessageVolume = () => dispatch => {
     year: today.getYear() + 1900,
     month: today.getMonth() + 1,
     day: today.getDate()
-  }
+  };
   return queries.getVolumeOfMessagesByHour(todaySpecs)
     .then(res => {
-      dispatch(receiveMessageVolume(res))
-    })
-}
+      dispatch(receiveMessageVolume(res));
+    });
+};
 
 export const receiveWordCount = (dict) => (
   {
