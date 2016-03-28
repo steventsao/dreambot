@@ -15,7 +15,6 @@ import _ from 'lodash';
 
 const mapStateToProps = (state) => {
   let reverseState = Object.assign({}, state);
-  console.log(reverseState.messages.messages,'comparative')
   const comparator = (a, b) => { return new Date(a.ts) - new Date(b.ts) };
   reverseState.messages.messages.sort(comparator);
 
