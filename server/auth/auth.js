@@ -1,22 +1,11 @@
 import passport from 'passport';
 import { Strategy as GitHubStrategy } from 'passport-github2';
-import r from 'rethinkdb';
 import jwt from 'jwt-simple';
 import moment from 'moment';
 import axios from 'axios';
 
-import connect from '../utils/connect';
 import env from '../utils/envDefaults';
-
-// TODO put ALLOWED_ORG in env
-const ALLOWED_ORG = process.env.ALLOWED_ORG || 'hrr13-thedreamteam';
-
-const findAuthorizedUser = (filter) => connect()
-  .then(conn => r.table('authorized_users').filter(filter).run(conn)
-    .then(cursor => cursor.toArray()));
-
-const createAuthorizedUser = (user) => connect()
-  .then(conn => r.table('authorized_users').insert(user, { returnChanges: true }).run(conn));
+import { findAuthorizedUser, createAuthorizedUser } from './queries';
 
 // referenced: https://github.com/cfsghost/passport-github/blob/master/examples/login/app.js
 // Passport session setup.
@@ -49,9 +38,6 @@ passport.use(new GitHubStrategy({
       access_token: accessToken
     }
   }).then(res => {
-    const hasOrg = res.data.some(org => org.login === ALLOWED_ORG);
-    const { id: githubId, login, avatar_url, name, email } = profile._json;
-
     // res.data will contain an array of org objects that look like:
     // {
     //   login: 'hrr13-thedreamteam',
@@ -67,30 +53,37 @@ passport.use(new GitHubStrategy({
     //   description: null
     // }
 
+    const hasOrg = res.data.some(org => org.login === env.allowedOrg);
+    const { id: githubId, login, avatar_url, name, email } = profile._json;
+
     // make sure the user belongs to the correct org
     if (hasOrg) {
       // look up user in DB
       findAuthorizedUser({ githubId })
         .then(res => {
-          // If they exist...
+          // return it if it exists...
           if (res.length) {
             return done(null, res[0]);
           }
-          // If they don't exist, add them
+          // If it doesn't exist, add it
           createAuthorizedUser({ githubId, login, avatar_url, name, email })
             .then(res => done(null, res.changes[0].new_val));
         });
     } else {
       // If they are not from correct org, return nothing so
       // they get redirected to /login
-      console.log(`User ${login} (${name}) attempted to log in, but was not a member of the correct github organization`);
+      console.log(
+        `User ${login} (${name}) attempted to log in, but was not
+        a member of the correct github organization`
+      );
+
       return done(null, null, 'No valid github org');
     }
   })
   .catch(err => console.log(err));
 }));
 
-export default function (app) {
+export default function applyAuth(app) {
   app.use(passport.initialize());
 
   app.get('/auth/github', passport.authenticate('github'));
@@ -98,10 +91,9 @@ export default function (app) {
   app.get('/auth/github/callback',
     passport.authenticate('github', { failureRedirect: '/login' }),
     (req, res) => {
-      var expires = moment().add(2, 'days').valueOf();
-      var token = jwt.encode({
-        // TODO: how to reference user id here?
-        iss: '1e046d50-1b71-40e7-b0cc-e8e4bbb85975',
+      const expires = moment().add(2, 'days').valueOf();
+      const token = jwt.encode({
+        iss: req.user.id,
         exp: expires
       }, env.secret);
 
