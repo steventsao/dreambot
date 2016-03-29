@@ -7,14 +7,16 @@ import { listen } from 'rethinkdb-websocket-server';
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-
+import request from 'request';
 import config from '../webpack.config.js';
 import { queryWhitelist, sessionCreator } from './auth/queries';
 import { isDev, port, rethinkHost, rethinkPort } from './utils/envDefaults';
+import slackToken from './utils/slackToken';
 
 console.log('isDev is: -----', isDev);
 
 import './bot/bot.js';
+
 
 const app = express();
 const server = http.createServer(app);
@@ -26,7 +28,7 @@ listen({
   httpPath: '/db',
   dbHost: rethinkHost,
   dbPort: rethinkPort,
-  unsafelyAllowAnyQuery: false, // env.isDev,
+  unsafelyAllowAnyQuery: true, // env.isDev,
   queryWhitelist,
   sessionCreator
 });
@@ -49,6 +51,22 @@ if (isDev) {
       modules: false
     }
   });
+  app.get('/api/cohort', function(req, res) {
+    var cohort = { members: [], profiles: [] };
+    request('https://slack.com/api/channels.info?token=' + slackToken + '&channel=C0J4P1LHE', function (error, response, body) {
+      if (!error && response.statusCode === 200) {
+        cohort.members = JSON.parse(body).channel.members;
+        request('https://slack.com/api/users.list?token=' + slackToken + '', function(err, response, body) {
+          if (response.statusCode === 200) {
+            cohort.profiles = JSON.parse(body).members;
+            res.send(JSON.stringify(cohort));
+          }
+        });
+      }
+    });
+
+  });
+
 
   app.use(middleware);
   app.use(webpackHotMiddleware(compiler));
