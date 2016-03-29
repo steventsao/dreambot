@@ -3,8 +3,22 @@ import botModel from '../botModel.js';
 import sentiment from 'sentiment';
 import natural from 'natural';
 import getUserInfo from '../../utils/botUtils';
+import google from 'google';
 
 export default (controller) => {
+  controller.hears('', ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
+    // bot.reply(message, 'Hello yourself.',message.text);
+    let parseNumber = Number(message.text.split(' ').pop()) || 1;
+    google.resultsPerPage = parseNumber;
+    google(message.text, (err, res) => {
+      if (err) console.log(err);
+
+      for (var i = 0; i < ( parseNumber > 5 ? 5 : parseNumber ); i ++) {
+        bot.reply(message, res.links[i].title + '\n' + res.links[i].link);
+      }
+    });
+
+  });
   controller.hears('', 'ambient', (bot, message) => {
     getUserInfo(bot, message.user)
       .then((user) => {
