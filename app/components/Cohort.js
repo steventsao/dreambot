@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router';
 export default function Cohort({members, profiles}){
   return (
     <div className="columns is-multiline">
@@ -17,6 +17,7 @@ export default function Cohort({members, profiles}){
               <div className="media">
                 <div className="media-content">
                   <p className="title is-5">{student.name}</p>
+                   <Link className="subtitle is-6" to={`/user/${student.id}`}> Details </Link>
                   <p className="subtitle is-6">{student.profile.email}</p>
                 </div>
               </div>
