@@ -4,8 +4,10 @@ export default function Cohort({members, profiles}){
   return (
     <div className="columns is-multiline">
       {profiles.map(student => {
-        return (
-          <div key={student.id} className="card column-isquarter">
+        return members.indexOf(student.id) === -1
+        ? null
+        : (
+          <div key={student.id} className="card">
             <div className="card-image">
               <figure className="image is-4by3">
                 <img src={student.profile.image_192} alt="" />
