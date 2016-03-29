@@ -11,7 +11,6 @@ import request from 'request';
 import config from '../webpack.config.js';
 import { queryWhitelist, sessionCreator } from './auth/queries';
 import { isDev, port, rethinkHost, rethinkPort } from './utils/envDefaults';
-import slackAPI from './utils/slackToken';
 
 console.log('isDev is: -----', isDev);
 
@@ -53,10 +52,10 @@ if (isDev) {
   });
   app.get('/api/cohort', function(req, res) {
     var cohort = { members: [], profiles: [] };
-    request(`https://slack.com/api/channels.info?token=${slackAPI.token}&channel=${slackAPI.channel}`, function (error, response, body) {
+    request(`https://slack.com/api/channels.info?token=${process.env.token}&channel=${process.env.CHANNEL}`, function (error, response, body) {
       if (!error && response.statusCode === 200) {
         cohort.members = JSON.parse(body).channel.members;
-        request(`https://slack.com/api/users.list?token=${slackAPI.token}`, function(err, response, body) {
+        request(`https://slack.com/api/users.list?token=${process.env.token}`, function(err, response, body) {
           if (response.statusCode === 200) {
             cohort.profiles = JSON.parse(body).members;
             res.send(JSON.stringify(cohort));
