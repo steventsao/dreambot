@@ -21,6 +21,10 @@ const LeftPanel = ({ printMessage }) => {
         Questions</Link>
       </div>
       <div className="menu-block">
+      <Link to="/cohort" className="button is-fullwidth">
+        Cohort</Link>
+      </div>
+      <div className="menu-block">
       <button className="button is-fullwidth">
         Settings</button>
       </div>

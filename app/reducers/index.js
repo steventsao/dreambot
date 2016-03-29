@@ -7,6 +7,7 @@ import wordCount from './wordCountReducer';
 import classify from './questionReducer'
 import engagement from './engagement';
 import profile from './userProfileReducer';
+import cohortProfiles from './cohortProfilesReducer';
 
 const rootReducer = combineReducers({
   messages,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   wordCount,
   classify,
   engagement,
-  profile
+  profile,
+  cohortProfiles
 });
 
 export default rootReducer;
