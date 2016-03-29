@@ -9,8 +9,10 @@ import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
 import config from '../webpack.config.js';
-import env from './utils/envDefaults';
 import { queryWhitelist, sessionCreator } from './auth/queries';
+import { isDev, port, rethinkHost, rethinkPort } from './utils/envDefaults';
+
+console.log('isDev is: -----', isDev);
 
 import './bot/bot.js';
 
@@ -22,8 +24,8 @@ applyAuth(app);
 listen({
   httpServer: server,
   httpPath: '/db',
-  dbHost: env.rethinkHost,
-  dbPort: env.rethinkPort,
+  dbHost: rethinkHost,
+  dbPort: rethinkPort,
   unsafelyAllowAnyQuery: false, // env.isDev,
   queryWhitelist,
   sessionCreator
@@ -33,7 +35,7 @@ listen({
 // ex: app.use('/api', apiRoutes);
 
 // referenced https://github.com/christianalfoni/webpack-express-boilerplate
-if (env.isDev) {
+if (isDev) {
   const compiler = webpack(config);
   const middleware = webpackMiddleware(compiler, {
     publicPath: config.output.publicPath,
@@ -66,4 +68,4 @@ if (env.isDev) {
   });
 }
 
-server.listen(env.port, () => console.log(`App Listening on port ${env.port}`));
+server.listen(port, () => console.log(`App Listening on port ${port}`));

@@ -4,8 +4,8 @@ import jwt from 'jwt-simple';
 import moment from 'moment';
 import axios from 'axios';
 
-import env from '../utils/envDefaults';
 import { findAuthorizedUser, createAuthorizedUser } from './queries';
+import { jwtSecret, githubClientSecret, githubClientId, allowedOrg } from '../utils/envDefaults';
 
 // referenced: https://github.com/cfsghost/passport-github/blob/master/examples/login/app.js
 // Passport session setup.
@@ -26,17 +26,15 @@ passport.deserializeUser((obj, done) => {
 });
 
 passport.use(new GitHubStrategy({
-  clientID: process.env.GITHUB_CLIENT_ID,
-  clientSecret: process.env.GITHUB_CLIENT_SECRET,
+  clientID: githubClientSecret,
+  clientSecret: githubClientId,
   callbackURL: 'http://localhost:1337/auth/github/callback',
   scope: ['user', 'read:org']
 }, (accessToken, refreshToken, profile, done) => {
   // If we've made it to this point...we have successfully authenticated with github...
   // Now, lets reach out to see what organizations the user is in
   axios.get('https://api.github.com/user/orgs', {
-    params: {
-      access_token: accessToken
-    }
+    params: { access_token: accessToken }
   }).then(res => {
     // res.data will contain an array of org objects that look like:
     // {
@@ -53,32 +51,35 @@ passport.use(new GitHubStrategy({
     //   description: null
     // }
 
-    const hasOrg = res.data.some(org => org.login === env.allowedOrg);
+    // TODO: Find/Create user and give them token whether or not
+    // they have correct org. If they have the correct org, set their
+    // authLevel to 'admin'
+    const hasOrg = res.data.some(org => org.login === allowedOrg);
     const { id: githubId, login, avatar_url, name, email } = profile._json;
 
     // make sure the user belongs to the correct org
     if (hasOrg) {
       // look up user in DB
-      findAuthorizedUser({ githubId })
+      return findAuthorizedUser({ githubId })
         .then(res => {
           // return it if it exists...
           if (res.length) {
             return done(null, res[0]);
           }
           // If it doesn't exist, add it
-          createAuthorizedUser({ githubId, login, avatar_url, name, email })
-            .then(res => done(null, res.changes[0].new_val));
+          return createAuthorizedUser({
+            githubId, login, avatar_url, name, email, authLevel: 'admin'
+          }).then(res => done(null, res.changes[0].new_val));
         });
-    } else {
-      // If they are not from correct org, return nothing so
-      // they get redirected to /login
-      console.log(
-        `User ${login} (${name}) attempted to log in, but was not
-        a member of the correct github organization`
-      );
-
-      return done(null, null, 'No valid github org');
     }
+    console.log(
+      `User ${login} (${name}) attempted to log in, but was not
+      a member of the correct github organization`
+    );
+
+    // If they are not from correct org, return nothing so
+    // they get redirected to /login
+    return done(null, null, 'No valid github org');
   })
   .catch(err => console.log(err));
 }));
@@ -95,7 +96,7 @@ export default function applyAuth(app) {
       const token = jwt.encode({
         iss: req.user.id,
         exp: expires
-      }, env.secret);
+      }, jwtSecret);
 
       res.redirect(`/catch/?token=${token}`);
     }
