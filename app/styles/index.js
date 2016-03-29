@@ -1,4 +1,4 @@
-var styles = {
+const styles = {
   title: {
     marginLeft: '40%',
     color: 'darkblue'
@@ -31,4 +31,4 @@ var styles = {
   }
 };
 
-module.exports = styles;
+export default styles;

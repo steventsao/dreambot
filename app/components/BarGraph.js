@@ -20,7 +20,7 @@ const BarGraph = ({labels = [], data = [], width='500', height='500'} ) => {
         {
           label: "Questions",
           fill: false,
-          backgroundColor: "rgba(220,220,220, 1)",
+          backgroundColor: "rgba(2,152,245, 1)",
           borderColor: "rgba(220,220,220,1)",
           data: data
         }
