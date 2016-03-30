@@ -3,13 +3,31 @@ import botModel from '../botModel.js';
 import sentiment from 'sentiment';
 import natural from 'natural';
 import getUserInfo from '../../utils/botUtils';
+import google from 'google';
 
 export default (controller) => {
+  controller.hears('', ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
+    // bot.reply(message, 'Hello yourself.',message.text);
+    let parseNumber = Math.abs(Number(message.text.split(' ').pop()));
+    if (parseNumber) {
+      let keyword = message.text.split(' ');
+      keyword = keyword.slice(0, keyword.length - 1).join(' ');
+      google.resultsPerPage = parseNumber;
+      google(keyword, (err, res) => {
+        if (err) console.log(err);
+        for (var i = 0; i < ( parseNumber > 5 ? 5 : parseNumber ); i ++) {
+          bot.reply(message, res.links[i].title + '\n' + res.links[i].link);
+        }
+      });
+    }
+  });
+
   controller.hears('', 'ambient', (bot, message) => {
     getUserInfo(bot, message.user)
       .then((user) => {
         // add real name to message object and convert timestamp to Date object
         Object.assign(message, {
+          profile: user.profile,
           name: user.name,
           ts: new Date(parseFloat(message.ts) * 1000)
         });
@@ -91,10 +109,16 @@ export default (controller) => {
                         default: true,
                         callback: (res, convo) => {
                           convo.next();
-                          // saveMsg(message, res.text);
-                          convo.say('Recorded your question about ' + res.text + ', thanks for making me smarter!');
-                          classifier.addDocument(message.text, res.text);
-                          classifier.train();
+                          //check to make sure user entered a valid category
+                          if(res.text === topThree[0] || res.text === topThree[1] || res.text === topThree[2]){
+
+                            saveMsg(message, res.text);
+                            convo.say('Recorded your question about ' + res.text + ', thanks for making me smarter!');
+                            classifier.addDocument(message.text, res.text);
+                            classifier.train();
+                          } else{
+                            convo.say('Sorry, that wasn\'t one of the categories listed, I\'ll try again next time.');
+                          }
                           convo.next();
                         }
                       }

@@ -1,5 +1,16 @@
 import { connection, r } from '../utils/rethink';
 import moment from 'moment';
+import axios from 'axios';
+
+export function queryCohortProfiles(cb) {
+  axios.get('/api/cohort')
+  .then(res => {
+    cb(res);
+  })
+  .catch(err => {
+    console.log(err);
+  });
+}
 
 export function getMessages() {
   return connection
@@ -70,4 +81,42 @@ export function getAllUniqueWords() {
       .run(conn)
       .then(cursor => cursor.toArray())
       )
+}
+export function getClassifications(){
+  return connection
+  .then(conn =>
+    r.table('messages')
+    .hasFields('classification')
+    .group('classification')
+    .count()
+    .run(conn)
+    .then(cursor => cursor.toArray())
+  );
+}
+
+export function getUserMessageReduction(){
+  return connection
+  .then(conn =>
+    r.table('messages')
+    .hasFields('name')
+    .group('name')
+    .count()
+    .run(conn)
+    .then(cursor => cursor.toArray())
+  );
+}
+
+export function getSingleUserMessageReduction(userId){
+  return connection
+  .then(conn =>
+    r.table('messages')
+    .filter({user: userId})
+    .filter(
+      r.row('ts').month().eq(moment().month() + 1)
+    )
+    .group(r.row('ts').day())
+    .count()
+    .run(conn)
+    .then(cursor => cursor.toArray())
+  );
 }

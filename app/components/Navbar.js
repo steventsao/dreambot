@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React from 'react';
 
-const Navbar = ({messages, analytics}) => {
+const Navbar = ({ messages, analytics, users }) => {
 
   return (
     <nav className="navbar">
@@ -14,8 +14,8 @@ const Navbar = ({messages, analytics}) => {
       <p className="heading">Average Sentiment</p>
     </div>
      <div className="navbar-item is-text-centered">
-      <p className="title">{analytics.mostActiveUsers.join(', ')}</p>
-      <p className="heading">{analytics.mostActiveUsers.length <= 1 ? 'is' : 'are'} Active</p>
+      <p className="title">{ users.join(', ')}</p>
+      <p className="heading">{ users.length <= 1 ? 'is' : 'are'} Active</p>
     </div>
     <div className="navbar-item is-text-centered">
       <p className="title">{analytics.topics.join(', ') || 'N/A'}</p>

@@ -8,7 +8,7 @@ let WordCountBarGraph = ({data = [], labels = []}) => {
       labels: labels,
       datasets: [
           {
-              label: "My First dataset",
+              label: "Word Count",
               fillColor: "rgba(220,220,220,0.5)",
               strokeColor: "rgba(220,220,220,0.8)",
               highlightFill: "rgba(220,220,220,0.75)",
@@ -19,9 +19,13 @@ let WordCountBarGraph = ({data = [], labels = []}) => {
     };
 
   const barChartOptions = {
-
-  //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
-  scaleBeginAtZero : true,
+    scales:{
+      yAxes:[{
+        ticks:{
+          beginAtZero:true
+        }
+      }]
+    },
 
   //Boolean - Whether grid lines are shown across the chart
   scaleShowGridLines : true,

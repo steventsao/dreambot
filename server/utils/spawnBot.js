@@ -1,13 +1,14 @@
 // This file spawns a new bot, then exports the controller for use elsewhere
+import { isDev, slackToken } from './envDefaults';
 
 import Botkit from 'botkit';
 
 const controller = Botkit.slackbot({
-    debug: true,
+  debug: isDev
 });
 
 controller.spawn({
-    token: process.env.token
+  token: slackToken
 }).startRTM();
 
 export default controller;

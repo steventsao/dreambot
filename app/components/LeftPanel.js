@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 
 const LeftPanel = ({ printMessage }) => {
   return (
@@ -7,13 +8,21 @@ const LeftPanel = ({ printMessage }) => {
       GUEST
       </p>
       <div className="menu-block">
-        <button className="button is-fullwidth">
-          Profile
-        </button>
+        <Link to="/" className="button is-fullwidth">
+          Dashboard
+        </Link>
       </div>
       <div className="menu-block">
       <button onClick={ printMessage } className="button is-fullwidth">
         Messages</button>
+      </div>
+      <div className="menu-block">
+      <Link to="/questions" className="button is-fullwidth">
+        Questions</Link>
+      </div>
+      <div className="menu-block">
+      <Link to="/cohort" className="button is-fullwidth">
+        Cohort</Link>
       </div>
       <div className="menu-block">
       <button className="button is-fullwidth">

@@ -1,11 +1,17 @@
+// referenced:
+// https://github.com/mikemintz/rethinkdb-websocket-client/tree/master/examples/tutorial
+// https://github.com/mikemintz/react-rethinkdb/blob/master/examples/chat/client/AuthWrapper.jsx
+
 import RethinkdbWebsocketClient from 'rethinkdb-websocket-client';
 
-// https://github.com/mikemintz/rethinkdb-websocket-client/tree/master/examples/tutorial
+const token = window.localStorage.getItem('token');
+const path = `/db?token=${encodeURIComponent(token)}`
+
 // Open a WebSocket connection to the server to send RethinkDB queries over
 const options = {
-  host: 'localhost', // hostname of the websocket server
-  port: 1337,        // port number of the websocket server
-  path: '/db',       // HTTP path to websocket route
+  host: window.RETHINK_HOST || 'localhost', // hostname of the websocket server
+  port: window.PORT || '1337',        // port number of the websocket server
+  path: path,       // HTTP path to websocket route
   secure: false,     // set true to use secure TLS websockets
   db: 'test',        // default database, passed to rethinkdb.connect
 };

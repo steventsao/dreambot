@@ -23,15 +23,27 @@ const mapStateToProps = (state) => {
   for (var i = 0; i < 24; i ++) {
     messageByHours.push({ hour: i, count: 0 });
   }
-  for(var i = 0; i < reverseState.messages.messageVolume.length; i++){
-    console.log(reverseState.messages.messageVolume[i]);
-    messageByHours[reverseState.messages.messageVolume[i].group].count = reverseState.messages.messageVolume[i].reduction;
+  for(var i = 0; i < reverseState.messages.messages.length; i++){
+    messageByHours[reverseState.messages.messages[i].ts.getHours()].count ++;
   }
 
+  let scoreByHours = [];
+
+  // prevent crashing
+  if (reverseState.averages.byHour.available['2016-3-12']) {
+    let scoreData = reverseState.averages.byHour.available['2016-3-12'].data;
+    for (var i = 0; i < 24; i ++) {
+      scoreByHours.push({ hour: i, averageScore: 0 });
+    }
+
+    for(var i = 0; i < scoreData.length; i++){
+      scoreByHours[scoreData[i].group].averageScore = scoreData[i].reduction;
+    }
+  }
   return {
-    barChartDatasets: messageByHours.map(item => item.count),
-    labels: reverseState.messages.messages.map(message => new Date(message.ts).toLocaleString()),
-    data: reverseState.messages.messages.map(message => message.score),
+    barChartDatasets: messageByHours.map(message => message.count),
+    labels: scoreByHours.map(message => message.hour),
+    data: scoreByHours.map(message => message.averageScore),
     dataAvg: reverseState.messages.messages.map(message => message.comparative)
   };
 };

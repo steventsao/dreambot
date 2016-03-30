@@ -21,7 +21,6 @@ const Home = React.createClass({
           </div>
           <div className="column is-text-centered">
             <GraphContainer />
-            <WordCountBarGraphContainer />
           </div>
           <div className="column is-quarter">
             <MessagesContainer />

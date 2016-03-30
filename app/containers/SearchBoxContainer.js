@@ -9,7 +9,7 @@ const detectChange = () => {
 
 const mapStateToProps = (state) => {
   return {
-    filteredUsername: state.SearchBoxReducer.inputField
+    filteredUsername: state.searchBox.inputField
   }
 };
 const mapDispatchToProps = (dispatch) => {
