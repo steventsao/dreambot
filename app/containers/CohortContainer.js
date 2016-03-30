@@ -1,8 +1,9 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import Cohort from '../components/Cohort';
-import { getCohortProfiles, receiveCohortProfiles, receiveWordCountByUser, sortUsersByEngagement } from '../actions/userProfileActions';
-import { queryCohortProfiles, queryWordCountByUser } from '../actions/queries';
+import { getCohortProfiles, receiveCohortProfiles, receiveWordCountByUser, sortUsersByEngagement, sortUserByMessageLenAction } from '../actions/userProfileActions';
+import { queryCohortProfiles, queryWordCountByUser, queryUserMessagesById } from '../actions/queries';
 import LeftPanelContainer from '../containers/LeftPanelContainer';
 import { getWordCountByUser } from '../actions/userProfileActions';
 
@@ -12,7 +13,12 @@ let CohortContainer = React.createClass({
     this.props.handleWordCountByUser();
   },
   handleWordCountByUser() {
-    this.props.sortWordCountByUser(this.props.members, this.props.profiles);
+    this.props.sortWordCountByUser(this.props.members, this.props.profiles, this.props.orderByDesc);
+    this.forceUpdate();
+  },
+  handleTerseRanking() {
+    this.props.sortUserByMessageLen(this.props.members, this.props.profiles, this.props.orderByDesc);
+    this.forceUpdate();
   },
   render() {
     let navbarStyle = 'navbar-item button is-large is-info is-outlined';
@@ -21,7 +27,7 @@ let CohortContainer = React.createClass({
         <nav className="navbar">
           <p className={navbarStyle} onClick={this.handleWordCountByUser}><a>Most Engaged</a></p>
           <p className={navbarStyle}><a>Most Emoji'ed</a></p>
-          <p className={navbarStyle}><a>Most blah blah</a></p>
+          <p className={navbarStyle} onClick={this.handleTerseRanking}><a>Most Terse</a></p>
         </nav>
         <div className="columns">
           <div className="column is-2">
@@ -47,7 +53,7 @@ let mapStateToProps = (state) => {
   });
 
 
-  return { profiles: state.cohortProfiles.profiles, members: state.cohortProfiles.members };
+  return { profiles: state.cohortProfiles.profiles, members: state.cohortProfiles.members, orderByDesc: state.cohortProfiles.orderByDesc };
 };
 
 let mapDispatchToProps = (dispatch) => {
@@ -63,14 +69,26 @@ let mapDispatchToProps = (dispatch) => {
         data.data.profiles.forEach(student => {
           profileObj.profiles[student.id] = student;
         });
-        dispatch(receiveCohortProfiles(profileObj));
+        queryUserMessagesById()
+        .then(res => {
+          res.forEach(user => {
+            if (profileObj.profiles[user.group]) {
+              profileObj.profiles[user.group].messagesCount = user.reduction;
+            }
+          });
+          dispatch(receiveCohortProfiles(profileObj));
+        })
+        .catch(err => console.log(err));
       });
     },
     handleWordCountByUser() {
       dispatch(getWordCountByUser());
     },
-    sortWordCountByUser(members, profiles) {
-      dispatch(sortUsersByEngagement(members, profiles));
+    sortWordCountByUser(members, profiles, sortByDesc) {
+      dispatch(sortUsersByEngagement(members, profiles,'wordCount'));
+    },
+    sortUserByMessageLen(members, profiles, sortByDesc) {
+      dispatch(sortUserByMessageLenAction(members, profiles,'terse'));
     }
   };
 };
