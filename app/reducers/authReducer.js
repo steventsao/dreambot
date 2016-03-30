@@ -1,13 +1,12 @@
-// import { } from '../actions/authActions';
+import { ADD_TOKEN } from '../actions/authActions';
 
-// This is kinda breaking the "purity" of the reducer
-// Might there be a better way to do this?
-const initialState = {
-  token: window.localStorage.get('token') || false
-};
-
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = {
+  token: false,
+  routeBeforeAuth: false
+}, action) => {
   switch (action.type) {
+    case ADD_TOKEN:
+      return { ...state, token: action.token };
     default:
       return state;
   }
