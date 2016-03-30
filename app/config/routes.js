@@ -1,9 +1,10 @@
 import React from 'react';
-import { Route, IndexRoute } from 'react-router';
+import { Route, IndexRoute, IndexRedirect } from 'react-router';
 
 import Main from '../components/Main';
+import App from '../containers/App';
 import Home from '../components/Home';
-import Questions from '../components/Questions'
+import Questions from '../components/Questions';
 import TestContainer from '../containers/TestContainer';
 import QuestionsContainer from '../containers/QuestionsContainer';
 import AveragesContainer from '../containers/AveragesContainer';
@@ -14,14 +15,17 @@ import CohortContainer from '../containers/CohortContainer';
 
 const Routes = (
   <Route path="/" component={Main}>
-    <IndexRoute component={Home} />
-    <Route path='/user/:id' component={UserProfileContainer} />
-    <Route path="/test" component={TestContainer} />
-    <Route path='/login' component={LoginContainer} />
-    <Route path="/questions" component={Questions} />
-    <Route path="/averages" component={AveragesContainer} />
+    <IndexRedirect to="/app" />
+    <Route path="/login" component={LoginContainer} />
     <Route path="/catch" component={CatchContainer} />
-    <Route path='/cohort' component={CohortContainer} />
+    <Route path="/app" component={App} >
+      <IndexRoute component={Home} />
+      <Route path="/user/:id" component={UserProfileContainer} />
+      <Route path="/test" component={TestContainer} />
+      <Route path="/questions" component={Questions} />
+      <Route path="/averages" component={AveragesContainer} />
+      <Route path="/cohort" component={CohortContainer} />
+    </Route>
   </Route>
 );
 
