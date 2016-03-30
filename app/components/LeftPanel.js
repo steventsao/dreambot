@@ -14,7 +14,7 @@ const LeftPanel = ({ printMessage }) => {
       </div>
       <div className="menu-block">
       <button onClick={ printMessage } className="button is-fullwidth">
-        Messages</button>
+        Hi</button>
       </div>
       <div className="menu-block">
       <Link to="/questions" className="button is-fullwidth">
@@ -23,10 +23,6 @@ const LeftPanel = ({ printMessage }) => {
       <div className="menu-block">
       <Link to="/cohort" className="button is-fullwidth">
         Cohort</Link>
-      </div>
-      <div className="menu-block">
-      <button className="button is-fullwidth">
-        Settings</button>
       </div>
       <div className="menu-block">
       <button className="button is-fullwidth">
