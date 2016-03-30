@@ -39,7 +39,7 @@ const Messages = ({ messages, filterUserMessages }) => {
 
             </div>
           </div>
-        )
+        );
       })}
     </div>
   );
