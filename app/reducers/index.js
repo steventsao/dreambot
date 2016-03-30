@@ -9,6 +9,7 @@ import classify from './questionReducer';
 import engagement from './engagement';
 import profile from './userProfileReducer';
 import cohortProfiles from './cohortProfilesReducer';
+import auth from './authReducer';
 
 const rootReducer = combineReducers({
   routing,
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
   classify,
   engagement,
   profile,
-  cohortProfiles
+  cohortProfiles,
+  auth
 });
 
 export default rootReducer;
