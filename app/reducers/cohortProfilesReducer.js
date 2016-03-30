@@ -2,12 +2,17 @@ const initialState = {
   profiles: {},
   members: [],
   wordCount: [],
+  orderByDesc: true,
 };
 
 function cohortProfilesReducer(state = initialState, action) {
-  let sortUsersByEngagement = (members, profiles) => {
+  let sortUsersByEngagement = (members, profiles, sortByDesc) => {
     return members.sort((a, b) => {
-      return (profiles[b].wordCount || 0 ) - (profiles[a].wordCount || 0);
+      if (sortByDesc) {
+        return (profiles[b].wordCount || 0 ) - (profiles[a].wordCount || 0);
+      } else {
+        return (profiles[a].wordCount || 0 ) - (profiles[b].wordCount || 0);
+      }
     });
   };
 
@@ -23,7 +28,7 @@ function cohortProfilesReducer(state = initialState, action) {
         wordCount: action.data
       });
     case 'SORT_USERS_BY_ENGAGEMENT':
-      return Object.assign({}, state, { members: sortUsersByEngagement(action.members, action.profiles)});
+      return Object.assign({}, state, { members: sortUsersByEngagement(action.members, action.profiles, state.orderByDesc), orderByDesc: !state.orderByDesc });
     default:
       return state;
   }

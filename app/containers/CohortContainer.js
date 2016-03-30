@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import Cohort from '../components/Cohort';
 import { getCohortProfiles, receiveCohortProfiles, receiveWordCountByUser, sortUsersByEngagement } from '../actions/userProfileActions';
@@ -12,7 +13,8 @@ let CohortContainer = React.createClass({
     this.props.handleWordCountByUser();
   },
   handleWordCountByUser() {
-    this.props.sortWordCountByUser(this.props.members, this.props.profiles);
+    this.props.sortWordCountByUser(this.props.members, this.props.profiles, this.props.orderByDesc);
+    this.forceUpdate();
   },
   render() {
     let navbarStyle = 'navbar-item button is-large is-info is-outlined';
@@ -47,7 +49,7 @@ let mapStateToProps = (state) => {
   });
 
 
-  return { profiles: state.cohortProfiles.profiles, members: state.cohortProfiles.members };
+  return { profiles: state.cohortProfiles.profiles, members: state.cohortProfiles.members, orderByDesc: state.cohortProfiles.orderByDesc };
 };
 
 let mapDispatchToProps = (dispatch) => {
@@ -69,8 +71,8 @@ let mapDispatchToProps = (dispatch) => {
     handleWordCountByUser() {
       dispatch(getWordCountByUser());
     },
-    sortWordCountByUser(members, profiles) {
-      dispatch(sortUsersByEngagement(members, profiles));
+    sortWordCountByUser(members, profiles, sortByDesc) {
+      dispatch(sortUsersByEngagement(members, profiles, sortByDesc));
     }
   };
 };
