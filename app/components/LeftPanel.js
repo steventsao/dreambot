@@ -22,11 +22,6 @@ const LeftPanel = ({ logout }) => (
       </Link>
     </div>
     <div className="menu-block">
-      <button className="button is-fullwidth">
-        Settings
-      </button>
-    </div>
-    <div className="menu-block">
       <button onClick={logout} className="button is-fullwidth">
         Logout
       </button>
