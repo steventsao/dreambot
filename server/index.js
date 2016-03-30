@@ -56,10 +56,10 @@ if (isDev) {
       if (!error && response.statusCode === 200) {
         cohort.members = JSON.parse(body).channel.members;
         request(`https://slack.com/api/users.list?token=${process.env.token}`, function(err, response, body) {
-          if (response.statusCode === 200) {
+          if(err) console.log(err);
             cohort.profiles = JSON.parse(body).members;
+            console.log(cohort);
             res.send(JSON.stringify(cohort));
-          }
         });
       }
     });
