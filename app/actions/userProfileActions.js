@@ -40,11 +40,20 @@ export function getWordCountByUser() {
   };
 }
 
-export function sortUsersByEngagement(members, profiles) {
+export function sortUsersByEngagement(members, profiles, filter) {
   return {
     type: 'SORT_USERS_BY_ENGAGEMENT',
     members, 
-    profiles
+    profiles,
+    filter
   };
+};
+
+export function sortUserByMessageLenAction(members, profiles, filter) {
+  return {
+    type: 'SORT_USER_BY_MESSAGE_LEN',
+    members, 
+    profiles,
+    filter,
+  }
 }
-  
