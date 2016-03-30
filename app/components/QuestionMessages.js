@@ -11,7 +11,7 @@ const QuestionMessages = ({ messages, filterUserMessages }) => {
       {sorted.map(message => {
         let time = moment(new Date(message.ts));
         return (
-          <div className="card" style={styles.cards}>
+          <div className="card" key={message.id} style={styles.cards}>
             <div className="card-content">
 
               <div className="media">

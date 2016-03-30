@@ -82,6 +82,21 @@ export function getAllUniqueWords() {
       .then(cursor => cursor.toArray())
       )
 }
+
+export function queryWordCountByUser() {
+  return connection
+    .then(conn => 
+      r.table('messages')
+      .limit(1000)
+      .group('user')
+      .getField('tokens')
+      .concatMap(w => w)
+      .count()
+      .run(conn)
+      .then(cursor => cursor.toArray())
+      );
+}
+
 export function getClassifications(){
   return connection
   .then(conn =>

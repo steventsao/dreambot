@@ -13,6 +13,7 @@ import { browserHistory } from 'react-router';
 import configureStore from './config/configureStore';
 import { syncHistoryWithStore } from 'react-router-redux';
 import 'bulma/css/bulma.css';
+import { routeLocationDidUpdate } from './actions/index';
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
