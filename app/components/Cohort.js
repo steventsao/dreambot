@@ -6,8 +6,13 @@ export default function Cohort({profiles, members}){
       {members.map(student => {
         if (profiles[student]) {
         return (
-          <div className="column is-quarter">
-          <div key={student} className="card">
+          <div key={student} className="column is-quarter">
+          <div className="card">
+            <header className="card-header">
+              <div className="card-header-title">
+                <p className="is-text-centered"><strong>{profiles[student].wordCount || 'N/A'}</strong></p>
+              </div>
+            </header>
             <div className="card-image">
               <figure className="image is-4by3">
                 <img src={profiles[student].profile.image_192} alt="" />
@@ -17,7 +22,6 @@ export default function Cohort({profiles, members}){
               <div className="media">
                 <div className="media-content">
                   <p className="title is-5">{profiles[student].name}</p>
-                  <p className="title is-5">{profiles[student].wordCount}</p>
                    <Link className="subtitle is-6" to={`/user/${profiles[student].id}`}> Details </Link>
                   <p className="subtitle is-6">{profiles[student].profile.email}</p>
                 </div>
