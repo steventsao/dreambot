@@ -5,6 +5,7 @@ export * from './averagesActions';
 export * from './notificationsActions';
 export * from './userProfileActions';
 export * from './messagesActions';
+export * from './authActions';
 
 export const requestSearch = query => ({ type: 'REQUEST_SEARCH', query });
 
