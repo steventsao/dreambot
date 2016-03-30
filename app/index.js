@@ -29,9 +29,6 @@ let render = () => {
   );
 };
 
-
-browserHistory.listen(location => store.dispatch(routeLocationDidUpdate(location)));
-
 if (module.hot) {
   // Support hot reloading of components
   // and display an overlay for runtime errors
