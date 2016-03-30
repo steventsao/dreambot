@@ -1,6 +1,5 @@
 import React from 'react';
 import GlobalNotifications from '../containers/GlobalNotifications';
-import AuthContainer from '../containers/AuthContainer';
 
 const Main = React.createClass({
   render() {
@@ -13,10 +12,10 @@ const Main = React.createClass({
     };
 
     return (
-      <AuthContainer>
+      <div>
         <GlobalNotifications styleMap={NotificationsStyleMap} />
         {this.props.children}
-      </AuthContainer>
+      </div>
     );
   }
 });
