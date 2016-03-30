@@ -1,8 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { redirectIfNoToken } from '../actions/authActions';
 
 const AuthContainer = React.createClass({
-  componentDidMount() {
-    console.log('Hai. Im the auth container');
+  componentWillMount() {
+    const { token, dispatch } = this.props;
+    if (!token) {
+      dispatch(redirectIfNoToken());
+    }
   },
 
   render() {
@@ -14,4 +19,10 @@ const AuthContainer = React.createClass({
   }
 });
 
-export default AuthContainer;
+function mapStateToProps(state) {
+  return {
+    token: state.auth.token
+  };
+}
+
+export default connect(mapStateToProps)(AuthContainer);
