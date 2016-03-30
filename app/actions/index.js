@@ -71,13 +71,20 @@ export const getWordCount = () => dispatch => {
       })
       dispatch(receiveWordCount(dictionary));
     });
-}
+};
 export const receiveEngagementByUser = (count) => (
   {
     type: 'RECEIVE_ENGAGEMENT_BY_USER',
     count
   }
-)
+);
+
+export const routeLocationDidUpdate = (location) => (
+  {
+    type: 'LOCATION_UPDATED',
+    location,  
+  }
+);
 
 export const getEngagementByUser = () => dispatch => {
   return queries.getUserMessageReduction()

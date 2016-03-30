@@ -12,6 +12,7 @@ import ReactDOM from 'react-dom';
 import { browserHistory } from 'react-router';
 import configureStore from './store/configureStore';
 import 'bulma/css/bulma.css';
+import { routeLocationDidUpdate } from './actions/index';
 
 // import { syncHistoryWithStore } from 'react-router-redux';
 // const history = syncHistoryWithStore(browserHistory, store)
@@ -27,6 +28,9 @@ let render = () => {
    rootEl
   );
 };
+
+
+browserHistory.listen(location => store.dispatch(routeLocationDidUpdate(location)));
 
 if (module.hot) {
   // Support hot reloading of components
