@@ -97,6 +97,17 @@ export function queryWordCountByUser() {
       );
 }
 
+export function queryUserMessagesById() {
+  return connection
+  .then(conn =>
+  r.table('messages')
+  .group('user')
+  .count()
+  .run(conn)
+  .then(cursor => cursor.toArray())
+  );
+}
+
 export function getClassifications(){
   return connection
   .then(conn =>
