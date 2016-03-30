@@ -11,8 +11,8 @@ var HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 
 var WebpackEnvPlugin = new webpack.DefinePlugin({
   __DEV__: JSON.stringify(process.env.NODE_ENV || 'development'),
-  RETHINK_HOST: JSON.stringify(process.env.RETHINK_HOST),
-  PORT: JSON.stringify(process.env.PORT)
+  HOST: JSON.stringify(process.env.HOST),
+  PORT: JSON.stringify(process.env.CLIENT_PORT)
 });
 
 module.exports = {
