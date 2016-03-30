@@ -26,7 +26,6 @@ const QuestionContainer = React.createClass({
   // },
 
   render() {
-      console.log(this.props);
       // const { currentDate, averages } = this.props;
       // const labels = averages[currentDate] && averages[currentDate].map(obj => moment().hour(obj.group).format('hA'));
       // const data = averages[currentDate] && averages[currentDate].map(obj => obj.reduction);

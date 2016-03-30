@@ -1,14 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router';
 export default function Cohort({profiles, members}){
-  console.log(members, profiles, ' cohort')
   return (
     <div className="columns is-multiline">
       {members.map(student => {
         if (profiles[student]) {
         return (
           <div className="column is-quarter">
-          <div key={profiles[student].id} className="card">
+          <div key={student} className="card">
             <div className="card-image">
               <figure className="image is-4by3">
                 <img src={profiles[student].profile.image_192} alt="" />
