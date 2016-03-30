@@ -5,11 +5,11 @@
 import RethinkdbWebsocketClient from 'rethinkdb-websocket-client';
 
 const token = window.localStorage.getItem('token');
-const path = `/db?token=${encodeURIComponent(token)}`
+const path = `/db?token=${encodeURIComponent(token)}`;
 
 // Open a WebSocket connection to the server to send RethinkDB queries over
 const options = {
-  host: window.RETHINK_HOST || 'localhost', // hostname of the websocket server
+  host: window.HOST || 'localhost', // hostname of the websocket server
   port: window.PORT || '1337',        // port number of the websocket server
   path: path,       // HTTP path to websocket route
   secure: false,     // set true to use secure TLS websockets
