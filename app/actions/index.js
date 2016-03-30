@@ -5,6 +5,7 @@ export * from './averagesActions';
 export * from './notificationsActions';
 export * from './userProfileActions';
 export * from './messagesActions';
+export * from './authActions';
 
 export const requestSearch = query => ({ type: 'REQUEST_SEARCH', query });
 
@@ -71,13 +72,20 @@ export const getWordCount = () => dispatch => {
       })
       dispatch(receiveWordCount(dictionary));
     });
-}
+};
 export const receiveEngagementByUser = (count) => (
   {
     type: 'RECEIVE_ENGAGEMENT_BY_USER',
     count
   }
-)
+);
+
+export const routeLocationDidUpdate = (location) => (
+  {
+    type: 'LOCATION_UPDATED',
+    location,  
+  }
+);
 
 export const getEngagementByUser = () => dispatch => {
   return queries.getUserMessageReduction()

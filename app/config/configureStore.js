@@ -3,10 +3,17 @@ import rootReducer from '../reducers';
 import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 import { connection, r } from '../utils/rethink';
-import { getHours, addMessage, fetchMessages, getWordCount, getMessageVolume, getEngagementByUser } from '../actions';
+import {
+  getHours,
+  addMessage,
+  fetchMessages,
+  getWordCount,
+  getMessageVolume,
+  getEngagementByUser
+} from '../actions';
 
-export default function configureStore(initialState) {
-  const logger = createLogger({collapsed: true});
+export default function configureStore() {
+  const logger = createLogger({ collapsed: true });
   const store = createStore(
     rootReducer,
     compose(
@@ -14,13 +21,13 @@ export default function configureStore(initialState) {
       window.devToolsExtension ? window.devToolsExtension() : f => f
     )
   );
-  let today = new Date();  
+  let today = new Date();
   store.dispatch(getHours(
-        {
-          year: today.getYear() + 1900,
-          month: today.getMonth() + 1,
-          day: 12
-        }
+    {
+      year: today.getYear() + 1900,
+      month: today.getMonth() + 1,
+      day: 12
+    }
   ));
 
   // TODO: move this to a separate file?
@@ -37,13 +44,12 @@ export default function configureStore(initialState) {
       store.dispatch(getEngagementByUser());
     })
     .then(() => {
-      console.log('Fetched all words')
+      console.log('Fetched all words');
       console.log('Fetched message volume');
     })
     .catch((err) => {
       console.log(err);
     });
-
 
   return store;
 }

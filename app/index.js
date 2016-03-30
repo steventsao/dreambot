@@ -10,23 +10,26 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { browserHistory } from 'react-router';
-import configureStore from './store/configureStore';
+import configureStore from './config/configureStore';
+import { syncHistoryWithStore } from 'react-router-redux';
 import 'bulma/css/bulma.css';
-
-// import { syncHistoryWithStore } from 'react-router-redux';
-// const history = syncHistoryWithStore(browserHistory, store)
+import { routeLocationDidUpdate } from './actions/index';
 
 const store = configureStore();
+const history = syncHistoryWithStore(browserHistory, store);
 
 const rootEl = document.getElementById('root');
 let render = () => {
   // https://github.com/reactjs/redux/pull/1455/files#r54380102
   const Root = require('./containers/Root').default;
   ReactDOM.render(
-    <Root store={store} history={browserHistory} />,
+    <Root store={store} history={history} />,
    rootEl
   );
 };
+
+
+browserHistory.listen(location => store.dispatch(routeLocationDidUpdate(location)));
 
 if (module.hot) {
   // Support hot reloading of components
