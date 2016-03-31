@@ -64,14 +64,15 @@ export const getWordCount = () => dispatch => {
   return queries.getAllUniqueWords()
     .then(res => {
       let dictionary = {};
+      // ******************
       res.forEach(word => {
         let lowerCaseWord = word.toLowerCase();
-        if (!dictionary[word] && !wordCountDictionary[word] && (/^[a-zA-Z]/.test(word))) {
-          dictionary[lowerCaseWord] = 1;
-        } else {
-          dictionary[word] = dictionary[word] + 1;
+      if (!dictionary[lowerCaseWord] && !wordCountDictionary[lowerCaseWord] && (/^[a-zA-Z]/.test(word))) {
+        dictionary[lowerCaseWord] = 1;
+      } else if (dictionary[lowerCaseWord]) {
+        dictionary[lowerCaseWord] = dictionary[lowerCaseWord] + 1;
         }
-      })
+      });
       dispatch(receiveWordCount(dictionary));
     });
 };
