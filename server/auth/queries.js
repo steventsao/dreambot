@@ -11,6 +11,7 @@ const runQuery = query => connect().then(conn => query.run(conn));
 const auth = authLevel => (refs, session) => session.authLevel === authLevel;
 
 const isNumber = () => RP.check(x => typeof x === 'number');
+const isString = () => RP.check(x => typeof x === 'string');
 
 export const sessionCreator = urlQueryParams => {
   try {
@@ -34,6 +35,16 @@ export const sessionCreator = urlQueryParams => {
 
 
 export const queryWhitelist = [
+
+  // r.table("messages").filter({"user": "U0S1PNSBY"}).filter(r.row("ts").month().eq(3)).group(r.row("ts").day()).count().opt("db", r.db("test"))
+  r.table('messages')
+    .filter({ 'user': isString() })
+    .filter(r.row('ts').month().eq(isNumber()))
+    .group(r.row('ts').day())
+    .count()
+    .opt('db', r.db('test'))
+    .validate(auth('admin')),
+
   // r.table("messages").hasFields("classification").group("classification").count().opt("db", r.db("test"))
   r.table('messages')
     .hasFields('classification')
