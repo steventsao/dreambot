@@ -9,7 +9,7 @@ import GraphContainer from '../containers/GraphContainer';
 import UserNavbarContainer from '../containers/UserNavbarContainer';
 import LeftPanelContainer from '../containers/LeftPanelContainer';
 import SearchBoxContainer from '../containers/SearchBoxContainer';
-import WordCountBarGraph from '../components/WordCountBarGraph';
+import UserEngagementContainer from '../containers/UserEngagementContainer';
 
 
 const UserProfileContainer = React.createClass({
@@ -34,7 +34,7 @@ const UserProfileContainer = React.createClass({
           </div>
           <div className="column is-text-centered">
             <BarGraph labels={labels} data={data} width='200' height='125'/>
-            <WordCountBarGraph width='200' height='125' />
+            <UserEngagementContainer />
           </div>
         <div className="column is-quarter">
             <UserMessagesContainer />
