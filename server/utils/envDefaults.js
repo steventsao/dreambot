@@ -13,9 +13,15 @@ export const jwtSecret = process.env.SECRET || 'KEYBOARDLKJR;B34BQP3O4BGAKCATCAT
 export const allowedOrg = process.env.ALLOWED_ORG || 'hrr13-thedreamteam';
 export const githubClientSecret = process.env.GITHUB_CLIENT_ID;
 export const githubClientId = process.env.GITHUB_CLIENT_SECRET;
+export const ghCallback = process.env.GITHUB_AUTH_CALLBACK;
 
 // Slack
 export const slackToken = process.env.token;
+
+if (!ghCallback) {
+  console.log('Error: You must specify a Github Authentication Callback URL');
+  process.exit(1);
+}
 
 if (!isDev && !process.env.SECRET) {
   console.log('Error: You must specify a JWT Secret in production');
