@@ -66,7 +66,7 @@ export const getWordCount = () => dispatch => {
       let dictionary = {};
       res.forEach(word => {
         let lowerCaseWord = word.toLowerCase();
-        if (!dictionary[word] && !wordCountDictionary[word]) {
+        if (!dictionary[word] && !wordCountDictionary[word] && (/^[a-zA-Z]/.test(word))) {
           dictionary[lowerCaseWord] = 1;
         } else {
           dictionary[word] = dictionary[word] + 1;
