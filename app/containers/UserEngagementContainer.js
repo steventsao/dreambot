@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import UserEngagement from '../components/UserEngagement';
 import _ from 'lodash';
+import moment from 'moment';
 // import d3 from 'd3';
 
 // const GraphContainer = React.createClass({
@@ -33,9 +34,14 @@ const mapStateToProps = (state) => {
 
   let scoreByHours = [];
 
+  const year = moment().year();
+  const month = moment().month() + 1;
+  const day = moment().date();
+  const key = `${year}-${month}-${day}`;
+
   // prevent crashing
-  if (reverseState.averages.byHour.available['2016-3-12']) {
-    let scoreData = reverseState.averages.byHour.available['2016-3-12'].data;
+  if (reverseState.averages.byHour.available[key]) {
+    let scoreData = reverseState.averages.byHour.available[key].data;
     for (var i = 0; i < 24; i ++) {
       scoreByHours.push({ hour: i, averageScore: 0 });
     }

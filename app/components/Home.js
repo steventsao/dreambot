@@ -8,6 +8,7 @@ import SearchBoxContainer from '../containers/SearchBoxContainer';
 import WordCountBarGraphContainer from '../containers/WordCountBarGraphContainer';
 import { connection, r } from '../utils/rethink';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import {
   getHours,
   addMessage,
@@ -41,14 +42,12 @@ const Home = React.createClass({
       .then(conn => r.table('messages').changes().run(conn)
         .then(cursor => cursor.each((err, data) => dispatch(addMessage(data.new_val))))
       );
-    let today = new Date();
-    dispatch(getHours(
-      {
-        year: today.getYear() + 1900,
-        month: today.getMonth() + 1,
-        day: 12
-      }
-    ));
+
+    const year = moment().year();
+    const month = moment().month() + 1;
+    const day = moment().date();
+
+    dispatch(getHours({ year, month, day }));
   },
 
   render() {
