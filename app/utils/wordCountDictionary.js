@@ -33,6 +33,8 @@ export let wordCountDictionary = {
   up: true,
   with: true,
   between: true,
+  the: true,
+  a: true,
   via: true,
   upon: true,
   versus: true,

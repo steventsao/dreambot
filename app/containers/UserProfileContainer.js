@@ -53,7 +53,7 @@ function mapStateToProps(state) {
     questionsByDay.push({ group: i, reduction: 0 });
   }
   profile.forEach(item => {
-    questionsByDay[item['group']].reduction = item['reduction'];
+    questionsByDay[item['group'] - 1].reduction = item['reduction'];
   });
   return {
     labels: questionsByDay.map((arr) => arr.group),
