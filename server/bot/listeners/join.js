@@ -1,4 +1,4 @@
-import { getUserInfo } from '../../utils/botUtils';
+import getUserInfo from '../../utils/botUtils';
 import botModel from '../botModel.js';
 
 export default function (controller) {
