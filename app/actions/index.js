@@ -8,6 +8,7 @@ export * from './messagesActions';
 export * from './authActions';
 
 export const requestSearch = query => ({ type: 'REQUEST_SEARCH', query });
+import { wordCountDictionary } from '../utils/wordCountDictionary'
 
 // thunk action creators to enable async calls
 // thunk returns functions instead of objects
@@ -64,8 +65,9 @@ export const getWordCount = () => dispatch => {
     .then(res => {
       let dictionary = {};
       res.forEach(word => {
-        if (!dictionary[word]) {
-          dictionary[word] = 1;
+        let lowerCaseWord = word.toLowerCase();
+        if (!dictionary[word] && !wordCountDictionary[word]) {
+          dictionary[lowerCaseWord] = 1;
         } else {
           dictionary[word] = dictionary[word] + 1;
         }
@@ -91,6 +93,5 @@ export const getEngagementByUser = () => dispatch => {
   return queries.getUserMessageReduction()
     .then(res => {
       dispatch(receiveEngagementByUser(res));
-    })
-}
-//
+    });
+};
