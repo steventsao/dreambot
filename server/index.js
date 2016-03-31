@@ -35,6 +35,22 @@ listen({
 // Add routes to app here:
 // ex: app.use('/api', apiRoutes);
 
+app.get('/api/cohort', function(req, res) {
+  var cohort = { members: [], profiles: [] };
+  request(`https://slack.com/api/channels.info?token=${process.env.token}&channel=${process.env.CHANNEL}`, function (error, response, body) {
+    if (!error && response.statusCode === 200) {
+      cohort.members = JSON.parse(body).channel.members;
+      request(`https://slack.com/api/users.list?token=${process.env.token}`, function(err, response, body) {
+        if(err) console.log(err);
+          cohort.profiles = JSON.parse(body).members;
+          console.log(cohort);
+          res.send(JSON.stringify(cohort));
+      });
+    }
+  });
+});
+
+
 // referenced https://github.com/christianalfoni/webpack-express-boilerplate
 if (isDev) {
   const compiler = webpack(config);
@@ -50,21 +66,6 @@ if (isDev) {
       modules: false
     }
   });
-  app.get('/api/cohort', function(req, res) {
-    var cohort = { members: [], profiles: [] };
-    request(`https://slack.com/api/channels.info?token=${process.env.token}&channel=${process.env.CHANNEL}`, function (error, response, body) {
-      if (!error && response.statusCode === 200) {
-        cohort.members = JSON.parse(body).channel.members;
-        request(`https://slack.com/api/users.list?token=${process.env.token}`, function(err, response, body) {
-          if(err) console.log(err);
-            cohort.profiles = JSON.parse(body).members;
-            console.log(cohort);
-            res.send(JSON.stringify(cohort));
-        });
-      }
-    });
-  });
-
 
   app.use(middleware);
   app.use(webpackHotMiddleware(compiler));
