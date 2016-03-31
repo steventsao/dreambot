@@ -5,7 +5,13 @@ import moment from 'moment';
 import axios from 'axios';
 
 import { findAuthorizedUser, createAuthorizedUser } from './queries';
-import { jwtSecret, githubClientSecret, githubClientId, allowedOrg } from '../utils/envDefaults';
+import {
+  jwtSecret,
+  githubClientSecret,
+  githubClientId,
+  ghCallback,
+  allowedOrg
+} from '../utils/envDefaults';
 
 // referenced: https://github.com/cfsghost/passport-github/blob/master/examples/login/app.js
 // Passport session setup.
@@ -28,7 +34,7 @@ passport.deserializeUser((obj, done) => {
 passport.use(new GitHubStrategy({
   clientID: githubClientSecret,
   clientSecret: githubClientId,
-  callbackURL: 'http://localhost:1337/auth/github/callback',
+  callbackURL: ghCallback,
   scope: ['user', 'read:org']
 }, (accessToken, refreshToken, profile, done) => {
   // If we've made it to this point...we have successfully authenticated with github...
