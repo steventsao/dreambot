@@ -1,5 +1,6 @@
 /* eslint-disable */
 
+require('dotenv').load();
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -10,7 +11,7 @@ var HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 });
 
 var WebpackEnvPlugin = new webpack.DefinePlugin({
-  __DEV__: JSON.stringify(process.env.NODE_ENV || 'development'),
+  __DEV__: JSON.stringify('production'),
   HOST: JSON.stringify(process.env.HOST),
   PORT: JSON.stringify(process.env.CLIENT_PORT)
 });
