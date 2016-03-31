@@ -1,5 +1,6 @@
 /* eslint-disable */
 
+require('dotenv').load();
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
