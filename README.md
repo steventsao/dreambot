@@ -1,4 +1,4 @@
-##About## 
+##About
 Dreambot is a message analyzer that provides engagement analytics on any Slack channel.
 
 ###Engage Users in Slack Channel###
@@ -9,6 +9,7 @@ Dreambot is a message analyzer that provides engagement analytics on any Slack c
 
 ###Summarize Channel Engagement###
 <img src="http://i.imgur.com/YyXYj7D.png" width="500">
+
 
 ##Tech Stack##
 RethinkDB, React, Redux, Express, Botkit, Sentiment, Natural, bulma, moment, socket.io, ES2015, Webpack
